@@ -97,6 +97,7 @@ public class SMSUtil {
                 byte[]  bt= new byte[stream.available()];
                 stream.read(bt);
                 String result = new String(bt);
+                logger.info("phone check result:"+phone+" "+result);
                 JSONObject json = JSONObject.fromObject(result);
 
                 return json.getInt("status");

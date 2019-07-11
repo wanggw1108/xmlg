@@ -4,6 +4,7 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.ValidateParam;
+import com.temporary.center.ls_service.dao.UserDao;
 import com.temporary.center.ls_service.domain.User;
 import com.temporary.center.ls_service.domain.UserAddress;
 import com.temporary.center.ls_service.service.LogUserService;
@@ -47,10 +48,15 @@ public class LoginController {
 	private LogUserService logUserService;
 
 	@Autowired
+	private UserDao userService;
+
+	@Autowired
 	SMSUtil smsService;
 
 	@Value("${fileBasePath}")
 	String fileBasePath;
+	@Value("${staticUrlPath}")
+	String staticUrlPath;
 	/**
 	 * 发送验证码
 	 * @return
@@ -99,12 +105,6 @@ public class LoginController {
 				return json;
 			}
 		}else {
-			String key=RedisKey.SMS+username;
-//			String realVerifty = redisBean.get(key);
-//			if(StringUtil.isEmpty(realVerifty)){
-//				json.setSattusCode(StatusCode.SMS_NULL_ERROR);
-//				return json;
-//			}
 			int code = smsService.checkSMS(username,veriftyCode);
 			if( code!= 200){
 				switch (code){
@@ -139,26 +139,16 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/createUser.do", method = RequestMethod.POST)
     @ResponseBody
-	public Json createUser(User user,String verifyCode) {
+	public Json createUser(String phone,String password,String verifyCode) {
 		logger.info("createUser"+Constant.METHOD_BEGIN);
 		
 		Json json=new Json ();
 		try {
-			//userName,phone,password,createBy,createTime,effective
-			//判断参数
-			String userName = user.getUserName();
-			if(null==userName || userName.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(json.getMsg()+"(userName)");
-				return json;
-			}
-			String phone = user.getPhone();
 			if(null==phone || phone.equals("")) {
 				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
 				json.setMsg(json.getMsg()+"(phone)");
 				return json;
 			}
-			String password = user.getPassword();
 			if(null==password || password.equals("")) {
 				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
 				json.setMsg(json.getMsg()+"(password)");
@@ -186,35 +176,30 @@ public class LoginController {
 			userParam.setPhone(phone);
 			userParam.setEffective(Constant.EFFECTIVE);
 			Long count=logUserService.countDataByParams(userParam);
-			
 			if(null!=count && count>0) {
 				json.setSattusCode(StatusCode.TEL_REGISTERED);
 				return json;
 			}
-			//判断是否用户名重名
-			User userCheckName=new User();
-			userCheckName.setUserName(userName);
-			userCheckName = logUserService.selectOne(userCheckName);
-			if(userCheckName!=null){
-				json.setSattusCode(StatusCode.USER_NAME_REGISTERED);
-				return json;
-			}
+			User user = new User();
 			user.setEmployeeReputation(0);//默认雇员信誉0
 			user.setBossReputation(0);//默认雇主信誉
 			user.setPassword(MD5Utils.getMD5(user.getPassword()));
 			user.setEffective(Constant.EFFECTIVE);
 			user.setCreateBy("system");
 			user.setCreateTime(new Date());
-			user.setUserImageUrl(Constant.USER_HEADER_IMAGE_URL_DEFAULT);//头像地址
-			logUserService.createUser(user);
-			User createdUser = logUserService.selectOne(userParam);
+			user.setPhone(phone);
+			user.setUserImageUrl(staticUrlPath+"/user/header/user_header_default.jpeg");//头像地址
+			userService.insert(user);
+			User selectByPhone = new User();
+			selectByPhone.setPhone(phone);
+			User createdUser = logUserService.selectOne(selectByPhone);
 			//生成IM账号
 			//todo
 
 
 			json.setSuc("注册成功");
 			Map<String,String> jgResultMap=new HashMap<String,String>();
-			jgResultMap.put("imAccount", userName);
+			jgResultMap.put("imAccount", phone);
 			//TODO  生成用户存储空间
 			createUserSpace(createdUser.getId());
 			json.setData(jgResultMap);

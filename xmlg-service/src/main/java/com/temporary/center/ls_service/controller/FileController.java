@@ -81,7 +81,8 @@ public class FileController {
 		String abspath;
 		switch (fileType){
 			case "1": {
-
+				path =  fileBasePath+"/user/"+user_id+"/header";
+				abspath = path+"/header_default.png";
 			}
 			case "2":{
 				path = fileBasePath+"/user/"+user_id+"/icard";
