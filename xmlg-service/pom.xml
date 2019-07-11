@@ -113,11 +113,6 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.gomejk</groupId>
-            <artifactId>gomejk-boot-common</artifactId>
-            <version>1.0.0</version>
-        </dependency>
         <!--&lt;!&ndash; https://mvnrepository.com/artifact/cn.jpush.api/jsms-client &ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>cn.jpush.api</groupId>-->
