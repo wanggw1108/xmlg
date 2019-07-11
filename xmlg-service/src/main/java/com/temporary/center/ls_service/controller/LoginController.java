@@ -8,6 +8,7 @@ import com.temporary.center.ls_service.dao.UserDao;
 import com.temporary.center.ls_service.domain.User;
 import com.temporary.center.ls_service.domain.UserAddress;
 import com.temporary.center.ls_service.service.LogUserService;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,14 +94,14 @@ public class LoginController {
 		json.setSuc("请求成功");
 		long currentTimeMillis = System.currentTimeMillis();
 		logger.info("start login>>>>>>>>>>>>");
-		User user = new User();
-		user.setPhone(username);
 		//校验密码或短验
         if("1".equals(loginType)){
 			String md5Password = MD5Utils.getMD5(password);
-			user.setPassword(md5Password);
-			user = logUserService.selectOne(user);
-			if(user==null){
+			Map<String,Object> params = new HashedMap();
+			params.put("phone",username);
+			params.put("password",md5Password);
+			List<User> list = userService.queryUserByParams(params);
+			if(list==null){
 				logger.info("账号或密码错误：",username+" "+password);
 				json.setSattusCode(StatusCode.USERNAME_PASS_ERROR);
 				return json;
@@ -116,8 +117,11 @@ public class LoginController {
 
 				return json;
 			}
-			user = logUserService.selectOne(user);
+
 		}
+        Map<String,Object> params = new HashedMap();
+        params.put("phone",username);
+		User user = userService.queryUserByParams(params).get(0);
 		//缓存token信息
 		String token = UUID.randomUUID().toString();
 		Map<String,String> token_params = new HashMap<>();
@@ -191,9 +195,9 @@ public class LoginController {
 			user.setPhone(phone);
 			user.setUserImageUrl(staticUrlPath+"/user/header/user_header_default.jpeg");//头像地址
 			userService.insert(user);
-			User selectByPhone = new User();
-			selectByPhone.setPhone(phone);
-			User createdUser = logUserService.selectOne(selectByPhone);
+			Map<String,Object> params = new HashedMap();
+			params.put("phone",phone);
+			User createdUser = userService.queryUserByParams(params).get(0);
 			//生成IM账号
 			//todo
 
