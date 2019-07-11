@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temporary.center.ls_service.dao.WalletDetailMapper">
+  <resultMap id="BaseResultMap" type="com.temporary.center.ls_service.domain.WalletDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userId" jdbcType="BIGINT" property="userid" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="createBy" jdbcType="VARCHAR" property="createby" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userId, amount, type, createBy, createTime, remark, url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wallet_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+   
+   <select id="currAmount" parameterType="com.temporary.center.ls_service.domain.WalletDetail" resultType="java.lang.Double">
+   	select sum(amount) from wallet_detail where userId=#{userid}
+   </select>
+   
+   <select id="count" parameterType="com.temporary.center.ls_service.domain.WalletDetail" resultType="java.lang.Long">
+   	select count(1) from wallet_detail
+   	<where>
+      <if test="id != null">
+         and id=#{id}
+      </if>
+      <if test="userid != null">
+        and userId=#{userid}
+      </if>
+      <if test="amount != null">
+        and amount=#{amount}
+      </if>
+      <if test="type != null">
+        and type=#{type}
+      </if>
+      <if test="createby != null">
+        and createBy=#{createby}
+      </if>
+      <if test="createtime != null">
+        and createTime=#{createtime}
+      </if>
+      <if test="remark != null">
+        and  remark=#{remark}
+      </if>
+      <if test="url != null">
+        and url=#{url}
+      </if>
+    </where>
+   </select>
+   <select id="list" parameterType="com.temporary.center.ls_service.domain.WalletDetail" resultMap="BaseResultMap">
+   		 select 
+    <include refid="Base_Column_List" />
+    from wallet_detail
+    <where>
+      <if test="id != null">
+         and id=#{id}
+      </if>
+      <if test="userid != null">
+        and userId=#{userid}
+      </if>
+      <if test="amount != null">
+        and amount=#{amount}
+      </if>
+      <if test="type != null">
+        and type=#{type}
+      </if>
+      <if test="createby != null">
+        and createBy=#{createby}
+      </if>
+      <if test="createtime != null">
+        and createTime=#{createtime}
+      </if>
+      <if test="remark != null">
+        and  remark=#{remark}
+      </if>
+      <if test="url != null">
+        and url=#{url}
+      </if>
+      <if test="start != null and end != null" >
+       limit  ${start} , ${end}  
+      </if>
+    </where>
+   </select>
+   
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wallet_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.temporary.center.ls_service.domain.WalletDetail">
+    insert into wallet_detail (id, userId, amount, 
+      type, createBy, createTime, 
+      remark, url)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{amount,jdbcType=DOUBLE}, 
+      #{type,jdbcType=INTEGER}, #{createby,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.temporary.center.ls_service.domain.WalletDetail">
+    insert into wallet_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createby != null">
+        createBy,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.temporary.center.ls_service.domain.WalletDetail">
+    update wallet_detail
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createby != null">
+        createBy = #{createby,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.temporary.center.ls_service.domain.WalletDetail">
+    update wallet_detail
+    set userId = #{userid,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DOUBLE},
+      type = #{type,jdbcType=INTEGER},
+      createBy = #{createby,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+   
+</mapper>

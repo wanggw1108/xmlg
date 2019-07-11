@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.temporary.center.ls_service.dao.CurriculumVitaeMapper" >
+  <resultMap id="BaseResultMap" type="com.temporary.center.ls_service.domain.CurriculumVitae" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="current_company" property="currentCompany" jdbcType="VARCHAR" />
+    <result column="current_position" property="currentPosition" jdbcType="VARCHAR" />
+    <result column="working_life" property="workingLife" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="nationality" property="nationality" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="household_register" property="householdRegister" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="REAL" />
+    <result column="expect_type" property="expectType" jdbcType="VARCHAR" />
+    <result column="expect_time" property="expectTime" jdbcType="VARCHAR" />
+    <result column="ok_work_time" property="okWorkTime" jdbcType="VARCHAR" />
+    <result column="full_time" property="fullTime" jdbcType="VARCHAR" />
+    <result column="self_evaluation" property="selfEvaluation" jdbcType="VARCHAR" />
+    <result column="expect_industry" property="expectIndustry" jdbcType="VARCHAR" />
+    <result column="expect_position" property="expectPosition" jdbcType="VARCHAR" />
+    <result column="expect_city" property="expectCity" jdbcType="VARCHAR" />
+    <result column="expect_salary" property="expectSalary" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="additional" property="additional" jdbcType="VARCHAR" />
+    <result column="createBy" property="createby" jdbcType="BIGINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateBy" property="updateby" jdbcType="BIGINT" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.temporary.center.ls_service.domain.CurriculumVitae" >
+    insert into curriculum_vitae (id, name, current_company, 
+      current_position, working_life, age, 
+      tel, nationality, status, 
+      household_register, email, city, 
+      height, expect_type, expect_time, 
+      ok_work_time, full_time, self_evaluation, 
+      expect_industry, expect_position, expect_city, 
+      expect_salary, language, additional, 
+      createBy, createTime, updateBy, 
+      updateTime)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{currentCompany,jdbcType=VARCHAR}, 
+      #{currentPosition,jdbcType=VARCHAR}, #{workingLife,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{tel,jdbcType=VARCHAR}, #{nationality,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{householdRegister,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{height,jdbcType=REAL}, #{expectType,jdbcType=VARCHAR}, #{expectTime,jdbcType=VARCHAR}, 
+      #{okWorkTime,jdbcType=VARCHAR}, #{fullTime,jdbcType=VARCHAR}, #{selfEvaluation,jdbcType=VARCHAR}, 
+      #{expectIndustry,jdbcType=VARCHAR}, #{expectPosition,jdbcType=VARCHAR}, #{expectCity,jdbcType=VARCHAR}, 
+      #{expectSalary,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{additional,jdbcType=VARCHAR}, 
+      #{createby,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, #{updateby,jdbcType=BIGINT}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.temporary.center.ls_service.domain.CurriculumVitae" >
+    insert into curriculum_vitae
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="currentCompany != null" >
+        current_company,
+      </if>
+      <if test="currentPosition != null" >
+        current_position,
+      </if>
+      <if test="workingLife != null" >
+        working_life,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="nationality != null" >
+        nationality,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="householdRegister != null" >
+        household_register,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="expectType != null" >
+        expect_type,
+      </if>
+      <if test="expectTime != null" >
+        expect_time,
+      </if>
+      <if test="okWorkTime != null" >
+        ok_work_time,
+      </if>
+      <if test="fullTime != null" >
+        full_time,
+      </if>
+      <if test="selfEvaluation != null" >
+        self_evaluation,
+      </if>
+      <if test="expectIndustry != null" >
+        expect_industry,
+      </if>
+      <if test="expectPosition != null" >
+        expect_position,
+      </if>
+      <if test="expectCity != null" >
+        expect_city,
+      </if>
+      <if test="expectSalary != null" >
+        expect_salary,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="additional != null" >
+        additional,
+      </if>
+      <if test="createby != null" >
+        createBy,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updateby != null" >
+        updateBy,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="currentCompany != null" >
+        #{currentCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPosition != null" >
+        #{currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="workingLife != null" >
+        #{workingLife,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null" >
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="householdRegister != null" >
+        #{householdRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=REAL},
+      </if>
+      <if test="expectType != null" >
+        #{expectType,jdbcType=VARCHAR},
+      </if>
+      <if test="expectTime != null" >
+        #{expectTime,jdbcType=VARCHAR},
+      </if>
+      <if test="okWorkTime != null" >
+        #{okWorkTime,jdbcType=VARCHAR},
+      </if>
+      <if test="fullTime != null" >
+        #{fullTime,jdbcType=VARCHAR},
+      </if>
+      <if test="selfEvaluation != null" >
+        #{selfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="expectIndustry != null" >
+        #{expectIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="expectPosition != null" >
+        #{expectPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="expectCity != null" >
+        #{expectCity,jdbcType=VARCHAR},
+      </if>
+      <if test="expectSalary != null" >
+        #{expectSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="additional != null" >
+        #{additional,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

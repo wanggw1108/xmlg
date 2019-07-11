@@ -1,0 +1,180 @@
+
+http://localhost:6060/dictionaries/list.do
+
+GET 请求
+
+type=1
+
+
+
+字段解释：
+type:  1:兼职类型 2：所属行业 3：企业类型4：人员规模
+
+返回：
+{
+    "msg": "请求成功",
+    "data": [
+        {
+            "id": 5,
+            "type": 1,
+            "name": "其他",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 6,
+            "type": 1,
+            "name": "校园活动",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 7,
+            "type": 1,
+            "name": "临时工",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 8,
+            "type": 1,
+            "name": "服务员",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 9,
+            "type": 1,
+            "name": "实习",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 10,
+            "type": 1,
+            "name": "调研",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 11,
+            "type": 1,
+            "name": "送餐员",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 12,
+            "type": 1,
+            "name": "导购",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 13,
+            "type": 1,
+            "name": "网络编辑",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 14,
+            "type": 1,
+            "name": "普工",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 15,
+            "type": 1,
+            "name": "设计",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 16,
+            "type": 1,
+            "name": "文员助理",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 17,
+            "type": 1,
+            "name": "派单",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 18,
+            "type": 1,
+            "name": "销售",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 19,
+            "type": 1,
+            "name": "安保",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 20,
+            "type": 1,
+            "name": "礼仪",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 21,
+            "type": 1,
+            "name": "促销",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 22,
+            "type": 1,
+            "name": "翻译",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 23,
+            "type": 1,
+            "name": "客服",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 24,
+            "type": 1,
+            "name": "演出",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 25,
+            "type": 1,
+            "name": "家庭导师",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 26,
+            "type": 1,
+            "name": "模特",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        },
+        {
+            "id": 27,
+            "type": 1,
+            "name": "快递",
+            "createby": "1",
+            "createtime": "2019-04-13 11:57:58"
+        }
+    ],
+    "code": "100"
+}

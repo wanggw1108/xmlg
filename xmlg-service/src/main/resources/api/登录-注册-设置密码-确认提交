@@ -1,0 +1,19 @@
+
+1.登录-注册-设置密码-确认提交
+请求POST
+http://localhost:6060/user/createUser.do?
+phone=15013445691
+&password=43443434
+&userName=userName1
+
+返回：
+成功：
+{
+    "msg": "请求成功",
+    "code": "100"
+}
+如果有相同的手机号码：
+{
+    "msg": "此号码已注册",
+    "code": "601"
+} 

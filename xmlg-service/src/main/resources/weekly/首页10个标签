@@ -1,0 +1,50 @@
+首页10个标签
+http://localhost:6060/index/tenTab.do
+请求POST
+返回:
+{
+    "msg": "请求成功",
+    "data": [
+        {
+            "name": "附近零工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "长招零工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "虚拟技能",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "周末零工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "简历库",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "跑腿",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "家政",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "企业直聘",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "个人用工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "全部工作",
+            "url": "/images/index_1.jpeg"
+        }
+    ],
+    "code": "100"
+}

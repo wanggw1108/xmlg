@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.temporary.center.ls_service.dao.CollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.temporary.center.ls_service.domain.MyCollection" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="recruitmentId" property="recruitmentid" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="basePay" property="basepay" jdbcType="REAL" />
+    <result column="basePayUnit" property="basepayunit" jdbcType="VARCHAR" />
+    <result column="createBy" property="createby" jdbcType="BIGINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, recruitmentId, title, district, basePay, basePayUnit, createBy, createTime
+  </sql>
+  
+  <select id="countByParam" resultType="java.lang.Long" parameterType="com.temporary.center.ls_service.domain.MyCollection">
+   select count(1) from collection
+   <where>
+   	 <if test="id!=null">
+   	  id=#{id}
+   	 </if>
+   	 <if test="recruitmentid!=null">
+   	  and recruitmentId=#{recruitmentid}
+   	 </if>
+   	 <if test="title!=null">
+   	  and title=#{title}
+   	 </if>
+   	 <if test="district!=null">
+   	  and district=#{district}
+   	 </if>
+   	 <if test="basepay!=null">
+   	  and basepay=#{basepay}
+   	 </if>
+   	 <if test="basepayunit!=null">
+   	  and basepayunit=#{basepayunit}
+   	 </if>
+   	 <if test="createby!=null">
+   	  and createby=#{createby}
+   	 </if>
+   	 <if test="createtime!=null">
+   	  and createtime=#{createtime}
+   	 </if>
+   </where>
+  </select>
+  
+  <select id="findByParam" resultMap="BaseResultMap" parameterType="com.temporary.center.ls_service.domain.MyCollection">
+   select * from collection
+   <where>
+   	 <if test="id!=null">
+   	  id=#{id}
+   	 </if>
+   	 <if test="recruitmentid!=null">
+   	  and recruitmentId=#{recruitmentid}
+   	 </if>
+   	 <if test="title!=null">
+   	  and title=#{title}
+   	 </if>
+   	 <if test="district!=null">
+   	  and district=#{district}
+   	 </if>
+   	 <if test="basepay!=null">
+   	  and basepay=#{basepay}
+   	 </if>
+   	 <if test="basepayunit!=null">
+   	  and basepayunit=#{basepayunit}
+   	 </if>
+   	 <if test="createby!=null">
+   	  and createby=#{createby}
+   	 </if>
+   	 <if test="createtime!=null">
+   	  and createtime=#{createtime}
+   	 </if>
+   </where>
+   <if test="start!=null and end!=null">
+   	 	limit ${start},${end}
+   </if>
+  </select>
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from collection
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from myCollection
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.temporary.center.ls_service.domain.MyCollection" >
+    insert into collection (id, recruitmentId, title,
+      district, basePay, basePayUnit, 
+      createBy, createTime)
+    values (#{id,jdbcType=BIGINT}, #{recruitmentid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{basepay,jdbcType=REAL}, #{basepayunit,jdbcType=VARCHAR}, 
+      #{createby,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.temporary.center.ls_service.domain.MyCollection" >
+    insert into collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="recruitmentid != null" >
+        recruitmentId,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="basepay != null" >
+        basePay,
+      </if>
+      <if test="basepayunit != null" >
+        basePayUnit,
+      </if>
+      <if test="createby != null" >
+        createBy,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="recruitmentid != null" >
+        #{recruitmentid,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="basepay != null" >
+        #{basepay,jdbcType=REAL},
+      </if>
+      <if test="basepayunit != null" >
+        #{basepayunit,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.temporary.center.ls_service.domain.MyCollection" >
+    update collection
+    <set >
+      <if test="recruitmentid != null" >
+        recruitmentId = #{recruitmentid,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="basepay != null" >
+        basePay = #{basepay,jdbcType=REAL},
+      </if>
+      <if test="basepayunit != null" >
+        basePayUnit = #{basepayunit,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        createBy = #{createby,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.temporary.center.ls_service.domain.MyCollection" >
+    update collection
+    set recruitmentId = #{recruitmentid,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      basePay = #{basepay,jdbcType=REAL},
+      basePayUnit = #{basepayunit,jdbcType=VARCHAR},
+      createBy = #{createby,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

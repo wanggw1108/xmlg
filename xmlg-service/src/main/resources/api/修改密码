@@ -1,0 +1,13 @@
+修改密码
+请求POST
+http://localhost:6060/user/updatePassword.do?
+token=c22150c2-5305-4679-b8c8-dd117a0df0d8
+&password=2
+&timeStamp=1553936847683
+&sign=64073E9D099D003F3EA78B64A73B2928
+
+返回：
+{
+    "msg": "请求成功",
+    "code": "100"
+}

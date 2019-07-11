@@ -1,0 +1,27 @@
+本周工作：
+
+1.搭建后台项目整体架构
+
+2.项目使用 mysql，spring ,springmvc,redis ,maven。
+项目有两个模块
+svn://47.107.103.97/repo/ls-common（基础包） 
+svn://47.107.103.97/repo/ls-service（服务项目）
+
+3.登录获取token接口 
+token请求：
+
+POST：
+http://localhost:6060/user/getToken.do?username=1&password=1
+返回：
+成功：
+{
+    "result": true,
+    "msg": "获取成功",
+    "timeStamp": 1553936500695,
+    "token": "c22150c2-5305-4679-b8c8-dd117a0df0d8"
+}
+失败
+{
+    "result": false,
+    "msg": "数据有误"
+}

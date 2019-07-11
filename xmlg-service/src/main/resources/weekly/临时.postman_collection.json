@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "59bd1ba3-1736-434f-b5fa-c210b47d52a2",
+		"name": "临时",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/user/getToken.do?username=1&password=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"user",
+						"getToken.do"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "1"
+						},
+						{
+							"key": "password",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改密码",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/user/updatePassword.do?token=c22150c2-5305-4679-b8c8-dd117a0df0d8&password=2&timeStamp=1553936847683&sign=64073E9D099D003F3EA78B64A73B2928\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"user",
+						"updatePassword.do"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "c22150c2-5305-4679-b8c8-dd117a0df0d8"
+						},
+						{
+							"key": "password",
+							"value": "2"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1553936847683"
+						},
+						{
+							"key": "sign",
+							"value": "64073E9D099D003F3EA78B64A73B2928\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "城市列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/provinceCity/cityList.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"provinceCity",
+						"cityList.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "首页-轮播四张图片",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/index/carouselPicture.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"index",
+						"carouselPicture.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "职位列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/recruitment/listPage.do?curr=1&pageSize=10&id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"recruitment",
+						"listPage.do"
+					],
+					"query": [
+						{
+							"key": "curr",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "首页10个标签",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/index/tenTab.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"index",
+						"tenTab.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "在线报名",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/joinController/join.do?token=c22150c2-5305-4679-b8c8-dd117a0df0d8&timeStamp=1553937131882&sign=BB897FB026EFCCC9824A5189423D763E&resumeId=4&remark=职位要求我很好&recruitmentInfoCreatebyId=2&recruitmentInfoId=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"joinController",
+						"join.do"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "c22150c2-5305-4679-b8c8-dd117a0df0d8"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1553937131882"
+						},
+						{
+							"key": "sign",
+							"value": "BB897FB026EFCCC9824A5189423D763E"
+						},
+						{
+							"key": "resumeId",
+							"value": "4"
+						},
+						{
+							"key": "remark",
+							"value": "职位要求我很好"
+						},
+						{
+							"key": "recruitmentInfoCreatebyId",
+							"value": "2"
+						},
+						{
+							"key": "recruitmentInfoId",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建用户",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/user/createUser.do?phone=15013445691&password=43443434&userName=userName1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"user",
+						"createUser.do"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "15013445691"
+						},
+						{
+							"key": "password",
+							"value": "43443434"
+						},
+						{
+							"key": "userName",
+							"value": "userName1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "文件上传",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "token",
+							"value": "9c8bf97d-4b61-44bf-b842-430cd717a535",
+							"type": "text"
+						},
+						{
+							"key": "sign",
+							"value": "CF788050056812A6DC5DF8BA02C6C605",
+							"type": "text"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1553991807516",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:6060/file/upload.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"file",
+						"upload.do"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

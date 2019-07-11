@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+	<typeAliases>
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Admin" alias="Admin" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Area" alias="Area" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Customer" alias="Customer" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.CallbackConfig" alias="CallbackConfig" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Field" alias="Field" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.IpMonit" alias="IpMonit" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.LoginType" alias="LoginType" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.LoginTypeField" alias="LoginTypeField" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Province" alias="Province" />-->
+		<!--&lt;!&ndash;<typeAlias type="com.gome.spider.common.model.admin.ShuJuMoHeCityCode" alias="ShuJuMoHeCityCode" />&ndash;&gt;-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Site" alias="Site" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.SiteIp" alias="SiteIp" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.SiteLoginType" alias="SiteLoginType" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.SiteType" alias="SiteType" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Task" alias="Task" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.IpProxy" alias="IpProxy" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Gov122Province" alias="Gov122Province" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.SpiderLog" alias="SpiderLog" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.ServiceDefine" alias="ServiceDefine" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.CrawlerTask" alias="CrawlerTask" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.YysAccountLog" alias="YysAccountLog" />-->
+		<!--<typeAlias type="com.gome.spider.common.model.admin.Gjj51" alias="Gjj51" />-->
+	</typeAliases>
+	
+</configuration>

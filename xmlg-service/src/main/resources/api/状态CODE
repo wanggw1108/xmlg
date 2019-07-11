@@ -1,0 +1,19 @@
+
+	NO_DATA("000","无数据"), 
+	NO_TIME_STAMP("001","没有时间戳"),
+	NO_SIGN("002","没有签名sign"),
+	
+	SUC("100", "请求成功"),
+	
+	FAIL("200", "请求失败"),
+	
+	PROGRAM_EXCEPTION("300","程序异常"), 
+	
+	TOKEN_ERROR("401","token有误"), 
+	TOKEN_TIME_OUT("402","token过期"), 
+	SIGN_ERROR("403","sign签名错误"), 
+	
+	TIME_OUT_FIVE_MINUTE("502","操作失败-时间过期5分钟之内才有效"), 
+	SIG_ERROR("503","签名失败"), 
+	
+	PARAMS_NO_NULL("600","参数不为空");

@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "59bd1ba3-1736-434f-b5fa-c210b47d52a2",
+		"name": "临时",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/user/getToken.do?username=userName1&password=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"user",
+						"getToken.do"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "userName1"
+						},
+						{
+							"key": "password",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改密码",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/user/updatePassword.do?token=c22150c2-5305-4679-b8c8-dd117a0df0d8&password=2&timeStamp=1553936847683&sign=64073E9D099D003F3EA78B64A73B2928\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"user",
+						"updatePassword.do"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "c22150c2-5305-4679-b8c8-dd117a0df0d8"
+						},
+						{
+							"key": "password",
+							"value": "2"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1553936847683"
+						},
+						{
+							"key": "sign",
+							"value": "64073E9D099D003F3EA78B64A73B2928\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "城市列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/provinceCity/cityList.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"provinceCity",
+						"cityList.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "首页-轮播四张图片",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/index/carouselPicture.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"index",
+						"carouselPicture.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "职位列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/recruitment/listPage.do?curr=1&pageSize=10&id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"recruitment",
+						"listPage.do"
+					],
+					"query": [
+						{
+							"key": "curr",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "首页10个标签",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/index/tenTab.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"index",
+						"tenTab.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "在线报名",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/joinController/join.do?token=c22150c2-5305-4679-b8c8-dd117a0df0d8&timeStamp=1553937131882&sign=BB897FB026EFCCC9824A5189423D763E&resumeId=4&remark=职位要求我很好&recruitmentInfoCreatebyId=2&recruitmentInfoId=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"joinController",
+						"join.do"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "c22150c2-5305-4679-b8c8-dd117a0df0d8"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1553937131882"
+						},
+						{
+							"key": "sign",
+							"value": "BB897FB026EFCCC9824A5189423D763E"
+						},
+						{
+							"key": "resumeId",
+							"value": "4"
+						},
+						{
+							"key": "remark",
+							"value": "职位要求我很好"
+						},
+						{
+							"key": "recruitmentInfoCreatebyId",
+							"value": "2"
+						},
+						{
+							"key": "recruitmentInfoId",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建用户",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/user/createUser.do?phone=15013445692&password=43443434&userName=userName1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"user",
+						"createUser.do"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "15013445692"
+						},
+						{
+							"key": "password",
+							"value": "43443434"
+						},
+						{
+							"key": "userName",
+							"value": "userName1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "文件上传",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "token",
+							"value": "9c8bf97d-4b61-44bf-b842-430cd717a535",
+							"type": "text"
+						},
+						{
+							"key": "sign",
+							"value": "DABB9C1DE8C369395FF29CD3A1835868",
+							"type": "text"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1553992716597",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:6060/file/upload.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"file",
+						"upload.do"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "token-线上",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://47.107.103.97:8081/user/getToken.do?username=1&password=2",
+					"protocol": "http",
+					"host": [
+						"47",
+						"107",
+						"103",
+						"97"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"getToken.do"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "1"
+						},
+						{
+							"key": "password",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "创建用户-线上",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://http:/47.107.103.97:8081/user/createUser.do?phone=15013445691&password=43443434&userName=userName1",
+					"protocol": "http",
+					"host": [
+						"http:"
+					],
+					"port": "",
+					"path": [
+						"",
+						"47.107.103.97:8081",
+						"user",
+						"createUser.do"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "15013445691"
+						},
+						{
+							"key": "password",
+							"value": "43443434"
+						},
+						{
+							"key": "userName",
+							"value": "userName1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "发布兼职",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:6060/recruitment/add.do?token=0e101463-2a61-43c1-9d2c-b02144109c79&sign=17DC56361FC3AE1B3D2E60301EA5D285&timeStamp=1555289156014&titleWork=兼职\"苹果手机随时赚APP试玩秒结算\"&typeWork=调研&number=30&settlementMethod=1&basePay=200&type=1&sex=0&welfare=1&workingStartTime=2019-04-14 11:56:11&workingEndTime=2019-04-30 11:56:30&workingTime=报名后通知&workPlace=深圳万达广场&longitude=111.65&latitude=222.3&detail=<div class=\"detail\" id=\"job_detail\">【招聘岗位】苹果APP试玩员（安卓勿入）<br>【工作薪资】30~300元/小时<br>【上班时间】时间不限<br>【工作地点】广东<a href=\"http://shenzhen.jianzhimao.com\" target=\"_blank\">深圳</a>罗湖<br>【工作内容】<br>1、使用苹果手机在下载指定App软件进行试用; <br>2、简单体验手机App 3分钟即可，任务完成即可删除;<br>3、可在家做，不限时间地点，一单一结，多劳多得。 <br>【任务步骤】<br> 进入公司账号后根据你的手机系统选择苹果专区，从平台第一个开始，点击进入，有的里面有视频教程讲解怎么操作的，花个几分钟就能学会，然后通过点击加入试玩开始在线任务。 <br>【工资支付】 任务完成后，薇信账号平台自动支付工资，满10元即可提现到微信或支付宝。 我们承诺:绝不收费，且全程无投入,纯收入，闲暇时间动动手指头即可 <br>【其他福利】另外有奖励红包<br>【加入方式】 报名后，直接添加客服微信领取任务，客服微信:17750522190</div>&recruitmentStartTime=2019-03-24 11:59:41&recruitmentEndTime=2019-05-24 11:59:41",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"recruitment",
+						"add.do"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "0e101463-2a61-43c1-9d2c-b02144109c79"
+						},
+						{
+							"key": "sign",
+							"value": "17DC56361FC3AE1B3D2E60301EA5D285"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1555289156014"
+						},
+						{
+							"key": "titleWork",
+							"value": "兼职\"苹果手机随时赚APP试玩秒结算\""
+						},
+						{
+							"key": "typeWork",
+							"value": "调研"
+						},
+						{
+							"key": "number",
+							"value": "30"
+						},
+						{
+							"key": "settlementMethod",
+							"value": "1"
+						},
+						{
+							"key": "basePay",
+							"value": "200"
+						},
+						{
+							"key": "type",
+							"value": "1"
+						},
+						{
+							"key": "sex",
+							"value": "0"
+						},
+						{
+							"key": "welfare",
+							"value": "1"
+						},
+						{
+							"key": "workingStartTime",
+							"value": "2019-04-14 11:56:11"
+						},
+						{
+							"key": "workingEndTime",
+							"value": "2019-04-30 11:56:30"
+						},
+						{
+							"key": "workingTime",
+							"value": "报名后通知"
+						},
+						{
+							"key": "workPlace",
+							"value": "深圳万达广场"
+						},
+						{
+							"key": "longitude",
+							"value": "111.65"
+						},
+						{
+							"key": "latitude",
+							"value": "222.3"
+						},
+						{
+							"key": "detail",
+							"value": "<div class=\"detail\" id=\"job_detail\">【招聘岗位】苹果APP试玩员（安卓勿入）<br>【工作薪资】30~300元/小时<br>【上班时间】时间不限<br>【工作地点】广东<a href=\"http://shenzhen.jianzhimao.com\" target=\"_blank\">深圳</a>罗湖<br>【工作内容】<br>1、使用苹果手机在下载指定App软件进行试用; <br>2、简单体验手机App 3分钟即可，任务完成即可删除;<br>3、可在家做，不限时间地点，一单一结，多劳多得。 <br>【任务步骤】<br> 进入公司账号后根据你的手机系统选择苹果专区，从平台第一个开始，点击进入，有的里面有视频教程讲解怎么操作的，花个几分钟就能学会，然后通过点击加入试玩开始在线任务。 <br>【工资支付】 任务完成后，薇信账号平台自动支付工资，满10元即可提现到微信或支付宝。 我们承诺:绝不收费，且全程无投入,纯收入，闲暇时间动动手指头即可 <br>【其他福利】另外有奖励红包<br>【加入方式】 报名后，直接添加客服微信领取任务，客服微信:17750522190</div>"
+						},
+						{
+							"key": "recruitmentStartTime",
+							"value": "2019-03-24 11:59:41"
+						},
+						{
+							"key": "recruitmentEndTime",
+							"value": "2019-05-24 11:59:41"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "身份验证",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "f1",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "f2",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "token",
+							"value": "417bdb2b-a50d-4959-ad86-dfa8d9d2c00c",
+							"type": "text"
+						},
+						{
+							"key": "sign",
+							"value": "F9B03098C08800063476D0002DD07F30",
+							"type": "text"
+						},
+						{
+							"key": "timeStamp",
+							"value": "1555302967204",
+							"type": "text"
+						},
+						{
+							"key": "teamId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "managerName",
+							"value": "范德萨",
+							"type": "text"
+						},
+						{
+							"key": "managerId",
+							"value": "430426199201248336",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:6060/idCard/add.do",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6060",
+					"path": [
+						"idCard",
+						"add.do"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

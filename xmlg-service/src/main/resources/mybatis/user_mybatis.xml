@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.temporary.center.ls_service.dao.UserDao">
+
+    <sql id="table_name">w_user</sql>
+	
+    <resultMap id="user" type="com.temporary.center.ls_service.domain.User"/>
+    
+    <select id="queryUserByParams" resultMap="user" parameterType="java.util.Map">
+        SELECT * FROM
+        <include refid="table_name"/>
+        <where>
+        	<if test="userName != null">
+	            and userName = #{userName}
+	        </if>
+	        <if test="password != null">
+	            and password = #{password}
+	        </if>
+	        <if test="effective != null">
+	            and effective = #{effective}
+	        </if>
+	        <if test="id != null">
+	            and id = #{id}
+	        </if>
+	        <if test="email != null">
+	            and email = #{email}
+	        </if>
+	        <if test="phone != null">
+	            and phone = #{phone}
+	        </if>
+	        <if test="createBy != null">
+	            and createBy = #{createBy}
+	        </if>
+	        <if test="createTime != null">
+	            and createTime = #{createTime}
+	        </if>
+	        <if test="updateBy != null">
+	            and updateBy = #{updateBy}
+	        </if>
+	        <if test="updateTime != null">
+	            and updateTime = #{updateTime}
+	        </if>
+	        <if test="qqKey != null">
+	        	and qqKey=#{qqKey}
+	        </if>
+	        <if test="wxKey != null">
+	        	and wxKey=#{wxKey}
+	        </if>
+	        <if test="wbKey != null">
+	        	and wbKey=#{wbKey}
+	        </if>
+        </where>
+    </select>
+
+	<select id="getUserById" resultMap="user" parameterType="java.lang.Long">
+		SELECT * FROM
+        <include refid="table_name"/>
+        where id = #{id}
+	</select>
+
+	<update id="updatePassword">
+		update <include refid="table_name"/>
+		<set>
+			<if test="password != null">password=#{password},</if>
+			<if test="updateBy != null">updateBy=#{updateBy},</if>
+			<if test="updateTime != null">updateTime=#{updateTime},</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<update id="updateUser" parameterType="java.util.Map" >
+		update <include refid="table_name"/>
+		<set>
+			<if test="updateBy != null">updateBy=#{updateBy},</if>
+			<if test="updateTime != null">updateTime=#{updateTime},</if>
+			<if test="chineseName != null">chineseName=#{chineseName},</if>
+			<if test="sex != null">sex=#{sex},</if>
+			<if test="city != null">city=#{city},</if>
+			<if test="birthday != null">birthday=#{birthday},</if>
+			<if test="height != null">height=#{height},</if>
+			<if test="qq != null">qq=#{qq},</if>
+			<if test="wx != null">wx=#{wx},</if>
+		</set>
+		where id=#{id}	
+	</update>
+
+	<insert id="createUser" parameterType="com.temporary.center.ls_service.domain.User">
+		insert into w_user(userName,phone,password,createBy,createTime,effective)
+		values(#{userName},#{phone},#{password},#{createBy},#{createTime},#{effective})
+	</insert>
+
+	<select id="countDataByParams" parameterType="com.temporary.center.ls_service.domain.User" resultType="java.lang.Long">
+		select count(1) from w_user
+		<where>
+        	<if test="userName != null">
+	            and userName = #{userName}
+	        </if>
+	        <if test="password != null">
+	            and password = #{password}
+	        </if>
+	        <if test="effective != null">
+	            and effective = #{effective}
+	        </if>
+	        <if test="id != null">
+	            and id = #{id}
+	        </if>
+	        <if test="email != null">
+	            and email = #{email}
+	        </if>
+	        <if test="phone != null">
+	            and phone = #{phone}
+	        </if>
+	        <if test="createBy != null">
+	            and createBy = #{createBy}
+	        </if>
+	        <if test="createTime != null">
+	            and createTime = #{createTime}
+	        </if>
+	        <if test="updateBy != null">
+	            and updateBy = #{updateBy}
+	        </if>
+	        <if test="updateTime != null">
+	            and updateTime = #{updateTime}
+	        </if>
+        </where>
+	</select>
+
+    <!-- <select id="findByCountryID" resultMap="areaPriceTypeConfig">
+        SELECT * FROM
+        <include refid="table_name"/>
+        WHERE apiType = #{apiType} AND countryID = #{countryID}
+    </select> -->
+
+    <!-- <update id="batchUpdate">
+        <foremyCollectiontion="configs" item="config" open="" close="" separator=";">
+            UPDATE
+            <include refid="table_name"/>
+            SET priceType = #{config.priceType}
+            WHERE apiType = #{config.apiType} AND countryID = #{config.countryID}
+        </foreach>
+    </update>updatePasswork-->
+
+	
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.temporary.center.ls_service.dao.EducationExperienceMapper" >
+  <resultMap id="BaseResultMap" type="com.temporary.center.ls_service.domain.EducationExperience" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="curriculum_vitea_id" property="curriculumViteaId" jdbcType="BIGINT" />
+    <result column="begin" property="begin" jdbcType="DATE" />
+    <result column="end" property="end" jdbcType="DATE" />
+    <result column="major_name" property="majorName" jdbcType="VARCHAR" />
+    <result column="cv" property="cv" jdbcType="VARCHAR" />
+    <result column="is_unified" property="isUnified" jdbcType="INTEGER" />
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+    <result column="createBy" property="createby" jdbcType="BIGINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateBy" property="updateby" jdbcType="BIGINT" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.temporary.center.ls_service.domain.EducationExperience" >
+    insert into education_experience (id, curriculum_vitea_id, begin, 
+      end, major_name, cv, is_unified, 
+      school_name, createBy, createTime, 
+      updateBy, updateTime)
+    values (#{id,jdbcType=BIGINT}, #{curriculumViteaId,jdbcType=BIGINT}, #{begin,jdbcType=DATE}, 
+      #{end,jdbcType=DATE}, #{majorName,jdbcType=VARCHAR}, #{cv,jdbcType=VARCHAR}, #{isUnified,jdbcType=INTEGER}, 
+      #{schoolName,jdbcType=VARCHAR}, #{createby,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updateby,jdbcType=BIGINT}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.temporary.center.ls_service.domain.EducationExperience" >
+    insert into education_experience
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="curriculumViteaId != null" >
+        curriculum_vitea_id,
+      </if>
+      <if test="begin != null" >
+        begin,
+      </if>
+      <if test="end != null" >
+        end,
+      </if>
+      <if test="majorName != null" >
+        major_name,
+      </if>
+      <if test="cv != null" >
+        cv,
+      </if>
+      <if test="isUnified != null" >
+        is_unified,
+      </if>
+      <if test="schoolName != null" >
+        school_name,
+      </if>
+      <if test="createby != null" >
+        createBy,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updateby != null" >
+        updateBy,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="curriculumViteaId != null" >
+        #{curriculumViteaId,jdbcType=BIGINT},
+      </if>
+      <if test="begin != null" >
+        #{begin,jdbcType=DATE},
+      </if>
+      <if test="end != null" >
+        #{end,jdbcType=DATE},
+      </if>
+      <if test="majorName != null" >
+        #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="cv != null" >
+        #{cv,jdbcType=VARCHAR},
+      </if>
+      <if test="isUnified != null" >
+        #{isUnified,jdbcType=INTEGER},
+      </if>
+      <if test="schoolName != null" >
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

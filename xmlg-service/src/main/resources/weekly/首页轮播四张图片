@@ -1,0 +1,14 @@
+首页轮播四张图片
+http://localhost:6060/index/carouselPicture.do
+请求POST
+返回:
+{
+    "msg": "请求成功",
+    "data": [
+        "/images/index_1.jpeg",
+        "/images/index_2.jpeg",
+        "/images/index_3.jpeg",
+        "/images/index_4.jpeg"
+    ],
+    "code": "100"
+}

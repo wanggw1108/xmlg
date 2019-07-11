@@ -1,0 +1,78 @@
+字段解释：
+userId      用户ID                      
+amount      金额                        
+type        类型 1：收入 2：支出  
+createBy    创建者                     
+createTime  创建时间                  
+remark      备注 
+
+
+当前金额：
+http://localhost:6060//walletDetail/currAmount.do
+POST 请求
+token:a75b3498-a730-4769-a90c-0dc0af7c2005
+sign:2A8615B85A39D96B70307CE739C817A4
+timeStamp:1555337124342
+
+返回：
+{
+    "msg": "请求成功",
+    "data": 400.86,
+    "code": "100"
+}
+
+data返回的是金额
+
+钱包明细-列表 分页
+http://localhost:6060//walletDetail/list.do
+POST请求
+
+返回：
+{
+    "msg": "请求成功",
+    "data": {
+        "count": 2,
+        "list": [
+            {
+                "id": 1,
+                "userid": 1,
+                "amount": 200.43,
+                "type": 1,
+                "createby": "1",
+                "createtime": "2019-04-15 21:51:13",
+                "remark": "福田兼职服务员"
+            },
+            {
+                "id": 2,
+                "userid": 1,
+                "amount": 200.43,
+                "type": 1,
+                "createby": "1",
+                "createtime": "2019-04-15 21:56:31",
+                "remark": "福田兼职服务员"
+            }
+        ]
+    },
+    "code": "100"
+}
+
+添加明细
+http://localhost:6060//walletDetail/add.do
+POST请求
+token:a75b3498-a730-4769-a90c-0dc0af7c2005
+sign:2B449F481B6560C17EF4C5DFF860A2D9
+timeStamp:1555336574470
+amount:200.43
+type:1
+remark:福田兼职服务员
+
+返回：
+{
+    "msg": "请求成功",
+    "code": "100"
+}
+
+
+
+
+

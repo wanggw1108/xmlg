@@ -1,0 +1,27 @@
+
+http://localhost:6060/user/updateUser.do
+
+POST请求
+
+参数：
+token:55766b28-1db5-4b48-8768-1c98eb76331f
+timeStamp:1555332181501
+sign:CAFA29C02AFCF7B0208A5EE1543E6CAC
+chineseName:付国家
+sex:1
+city:100
+birthday:91/02/04
+height:170
+qq:4543678765
+wx:3675867654
+
+
+字段解释（全都是String）：
+chineseName  姓名                            
+sex          性别 1：男 2：女            
+city         所在城市                      
+birthday     出生年月日                   
+height       身高 cm                         
+qq           QQ号码                          
+wx           微信号码  
+

@@ -1,0 +1,33 @@
+http://localhost:6060/recruitment/add.do
+
+POST 方法
+
+token=0e101463-2a61-43c1-9d2c-b02144109c79
+sign=17DC56361FC3AE1B3D2E60301EA5D285
+timeStamp=1555289156014
+titleWork=兼职"苹果手机随时赚APP试玩秒结算"
+typeWork=调研
+number=30
+settlementMethod=1
+basePay=200
+type=1
+sex=0
+welfare=1
+workingStartTime=2019-04-14 11:56:11
+workingEndTime=2019-04-30 11:56:30
+workingTime=报名后通知
+workPlace=深圳万达广场
+longitude=111.65
+latitude=222.3
+detail=<div class="detail" id="job_detail">【招聘岗位】苹果APP试玩员（安卓勿入）<br>【工作薪资】30~300元/小时<br>【上班时间】时间不限<br>【工作地点】广东<a href="http://shenzhen.jianzhimao.com" target="_blank">深圳</a>罗湖<br>【工作内容】<br>1、使用苹果手机在下载指定App软件进行试用; <br>2、简单体验手机App 3分钟即可，任务完成即可删除;<br>3、可在家做，不限时间地点，一单一结，多劳多得。 <br>【任务步骤】<br> 进入公司账号后根据你的手机系统选择苹果专区，从平台第一个开始，点击进入，有的里面有视频教程讲解怎么操作的，花个几分钟就能学会，然后通过点击加入试玩开始在线任务。 <br>【工资支付】 任务完成后，薇信账号平台自动支付工资，满10元即可提现到微信或支付宝。 我们承诺:绝不收费，且全程无投入,纯收入，闲暇时间动动手指头即可 <br>【其他福利】另外有奖励红包<br>【加入方式】 报名后，直接添加客服微信领取任务，客服微信:17750522190</div>
+recruitmentStartTime=2019-03-24 11:59:41
+recruitmentEndTime=2019-05-24 11:59:41
+
+返回成功：
+{
+    "msg": "请求成功",
+    "code": "100"
+}
+
+字段说明参考职位详情列表接口
+

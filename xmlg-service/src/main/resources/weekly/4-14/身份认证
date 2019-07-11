@@ -1,0 +1,22 @@
+
+
+http://localhost:6060/idCard/add.do
+
+POST请求
+
+使用POSTMAN 请求  身份验证
+
+svn://47.107.103.97/repo/ls-service/src/main/resources/api/t.postman_collection.json
+
+
+
+
+返回：
+{
+    "msg": "请求成功",
+    "data": {
+        "file2": "\\businessLicense\\1\\file\\111.sql",
+        "file1": "\\businessLicense\\1\\file\\居住证.txt"
+    },
+    "code": "100"
+}

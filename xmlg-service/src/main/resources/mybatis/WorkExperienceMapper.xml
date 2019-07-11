@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.temporary.center.ls_service.dao.WorkExperienceMapper" >
+  <resultMap id="BaseResultMap" type="com.temporary.center.ls_service.domain.WorkExperience" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="begin" property="begin" jdbcType="DATE" />
+    <result column="end" property="end" jdbcType="VARCHAR" />
+    <result column="corporate_name" property="corporateName" jdbcType="VARCHAR" />
+    <result column="company_nature" property="companyNature" jdbcType="VARCHAR" />
+    <result column="company_size" property="companySize" jdbcType="VARCHAR" />
+    <result column="company_industry" property="companyIndustry" jdbcType="VARCHAR" />
+    <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="REAL" />
+    <result column="salary_unit" property="salaryUnit" jdbcType="VARCHAR" />
+    <result column="work_space" property="workSpace" jdbcType="VARCHAR" />
+    <result column="subordinates_number" property="subordinatesNumber" jdbcType="INTEGER" />
+    <result column="reporting_object" property="reportingObject" jdbcType="VARCHAR" />
+    <result column="duty_achievement" property="dutyAchievement" jdbcType="VARCHAR" />
+    <result column="createBy" property="createby" jdbcType="BIGINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateBy" property="updateby" jdbcType="BIGINT" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="curriculum_vitea_id" property="curriculumViteaId" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.temporary.center.ls_service.domain.WorkExperience" >
+    insert into work_experience (id, begin, end, corporate_name, 
+      company_nature, company_size, company_industry, 
+      job_title, salary, salary_unit, 
+      work_space, subordinates_number, reporting_object, 
+      duty_achievement, createBy, createTime, 
+      updateBy, updateTime, curriculum_vitea_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{begin,jdbcType=DATE}, #{end,jdbcType=VARCHAR}, #{corporateName,jdbcType=VARCHAR}, 
+      #{companyNature,jdbcType=VARCHAR}, #{companySize,jdbcType=VARCHAR}, #{companyIndustry,jdbcType=VARCHAR}, 
+      #{jobTitle,jdbcType=VARCHAR}, #{salary,jdbcType=REAL}, #{salaryUnit,jdbcType=VARCHAR}, 
+      #{workSpace,jdbcType=VARCHAR}, #{subordinatesNumber,jdbcType=INTEGER}, #{reportingObject,jdbcType=VARCHAR}, 
+      #{dutyAchievement,jdbcType=VARCHAR}, #{createby,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updateby,jdbcType=BIGINT}, #{updatetime,jdbcType=TIMESTAMP}, #{curriculumViteaId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.temporary.center.ls_service.domain.WorkExperience" >
+    insert into work_experience
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="begin != null" >
+        begin,
+      </if>
+      <if test="end != null" >
+        end,
+      </if>
+      <if test="corporateName != null" >
+        corporate_name,
+      </if>
+      <if test="companyNature != null" >
+        company_nature,
+      </if>
+      <if test="companySize != null" >
+        company_size,
+      </if>
+      <if test="companyIndustry != null" >
+        company_industry,
+      </if>
+      <if test="jobTitle != null" >
+        job_title,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="salaryUnit != null" >
+        salary_unit,
+      </if>
+      <if test="workSpace != null" >
+        work_space,
+      </if>
+      <if test="subordinatesNumber != null" >
+        subordinates_number,
+      </if>
+      <if test="reportingObject != null" >
+        reporting_object,
+      </if>
+      <if test="dutyAchievement != null" >
+        duty_achievement,
+      </if>
+      <if test="createby != null" >
+        createBy,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updateby != null" >
+        updateBy,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="curriculumViteaId != null" >
+        curriculum_vitea_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="begin != null" >
+        #{begin,jdbcType=DATE},
+      </if>
+      <if test="end != null" >
+        #{end,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateName != null" >
+        #{corporateName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyNature != null" >
+        #{companyNature,jdbcType=VARCHAR},
+      </if>
+      <if test="companySize != null" >
+        #{companySize,jdbcType=VARCHAR},
+      </if>
+      <if test="companyIndustry != null" >
+        #{companyIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=REAL},
+      </if>
+      <if test="salaryUnit != null" >
+        #{salaryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="workSpace != null" >
+        #{workSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="subordinatesNumber != null" >
+        #{subordinatesNumber,jdbcType=INTEGER},
+      </if>
+      <if test="reportingObject != null" >
+        #{reportingObject,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyAchievement != null" >
+        #{dutyAchievement,jdbcType=VARCHAR},
+      </if>
+      <if test="createby != null" >
+        #{createby,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="curriculumViteaId != null" >
+        #{curriculumViteaId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

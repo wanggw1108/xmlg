@@ -1,0 +1,24 @@
+
+1.文件上传
+请求POST  Header Content-Type:multipart/form-data
+
+http://localhost:6060/file/upload.do
+
+file=文件
+&token=9c8bf97d-4b61-44bf-b842-430cd717a535
+&sign=CF788050056812A6DC5DF8BA02C6C605
+$timeStamp=1553991807516
+
+
+使用postman 测试过  
+postman测试文件在svn://47.107.103.97/repo/ls-service/src/main/resources/weekly/临时.postman_collection.json
+
+返回：
+{
+    "msg": "请求成功",
+    "data": "file\\RoomPrice_ALL_20190307.zip",
+    "code": "100"
+}
+
+
+data中返回的是相对路径 域名+相对路径即可访问 如：http://localhost:6060//file//RoomPrice_ALL_20190307.zip

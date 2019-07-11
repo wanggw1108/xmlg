@@ -1,0 +1,33 @@
+
+http://localhost:6060/teamdata/add.do
+
+POST请求
+
+参数：
+token:09d8cad8-b3f2-41e2-9f08-c2a421fa98c8
+sign:A83C3213734959A1C13B03658494CFB2
+timeStamp:1555302967204
+name:fy工作
+industry:1
+scale:1
+introduce:很牛逼的团队
+address:深圳坂田街道
+longitude:11.5
+latitude:22.6
+type:1
+
+字段注释，全都是String类型：
+  `id`    '主键',
+  `type`  '团队类型 1：非公司 2：公司',
+  `name`   '团队名称',
+  `industry`   '所属行业',
+  `scale`      '人员规模',
+  `introduce`   '团队简介',
+  `address`     '工作地址',
+  `longitude`  '经度',
+  `latitude`   '维度',
+  `createBy`   '创建者',
+  `createTime`  '创建时间',
+  `updateBy`   '更新者',
+  `updateTime`  '更新时间',
+  `status`  '状态'

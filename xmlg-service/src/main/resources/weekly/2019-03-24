@@ -1,0 +1,115 @@
+
+1.修改密码
+请求POST
+http://localhost:6060/user/updatePassword.do?
+token=c22150c2-5305-4679-b8c8-dd117a0df0d8
+&password=2
+&timeStamp=1553936847683
+&sign=64073E9D099D003F3EA78B64A73B2928
+
+返回：
+{
+    "msg": "请求成功",
+    "code": "100"
+}
+
+2.城市列表
+请求POST
+http://localhost:6060/provinceCity/cityList.do
+返回: 返回的数据城市名称经过排序
+{
+    "msg": "请求成功",
+    "data": [
+        {
+            "city": "阿克苏市",
+            "cid": 8,
+            "pid": 31
+        },
+        {
+            "city": "阿勒泰市",
+            "cid": 22,
+            "pid": 31
+        },
+        {
+            "city": "阿图什市",
+            "cid": 12,
+            "pid": 31
+        },
+        {
+            "city": "阿坝藏族羌族自治州",
+            "cid": 19,
+            "pid": 22
+        }
+    ],
+    "code": "100"
+}
+
+3.首页轮播四张图片
+http://localhost:6060/index/carouselPicture.do
+请求POST
+返回:
+{
+    "msg": "请求成功",
+    "data": [
+        "/images/index_1.jpeg",
+        "/images/index_2.jpeg",
+        "/images/index_3.jpeg",
+        "/images/index_4.jpeg"
+    ],
+    "code": "100"
+}
+
+4.首页10个标签
+http://localhost:6060/index/tenTab.do
+请求POST
+返回:
+{
+    "msg": "请求成功",
+    "data": [
+        {
+            "name": "附近零工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "长招零工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "虚拟技能",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "周末零工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "简历库",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "跑腿",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "家政",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "企业直聘",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "个人用工",
+            "url": "/images/index_1.jpeg"
+        },
+        {
+            "name": "全部工作",
+            "url": "/images/index_1.jpeg"
+        }
+    ],
+    "code": "100"
+}
+
+
+
+

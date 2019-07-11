@@ -1,0 +1,30 @@
+城市列表
+请求POST
+http://localhost:6060/provinceCity/cityList.do
+返回: 返回的数据城市名称经过排序
+{
+    "msg": "请求成功",
+    "data": [
+        {
+            "city": "阿克苏市",
+            "cid": 8,
+            "pid": 31
+        },
+        {
+            "city": "阿勒泰市",
+            "cid": 22,
+            "pid": 31
+        },
+        {
+            "city": "阿图什市",
+            "cid": 12,
+            "pid": 31
+        },
+        {
+            "city": "阿坝藏族羌族自治州",
+            "cid": 19,
+            "pid": 22
+        }
+    ],
+    "code": "100"
+}

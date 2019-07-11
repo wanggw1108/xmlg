@@ -1,0 +1,115 @@
+
+1.职位详情列表
+请求GET
+http://localhost:6060/recruitment/listTop10.do
+返回最近最新的10条职位列表：
+{
+    "msg": "请求成功",
+    "data": [
+        {
+            "id": 1,
+            "title": "兼职\"苹果手机随时赚APP试玩秒结算\"",
+            "basePay": 30,
+            "workPlace": "广东深圳罗湖",
+            "type": 1,
+            "number": 999,
+            "workingStartTime": "2019-03-23 11:56:11",
+            "workingEndTime": "2019-03-30 11:56:30",
+            "workingTime": "报名后通知",
+            "settlementMethod": 1,
+            "detail": "<div class=\"detail\" id=\"job_detail\">【招聘岗位】苹果APP试玩员（安卓勿入）<br>【工作薪资】30~300元/小时<br>【上班时间】时间不限<br>【工作地点】广东<a href=\"http://shenzhen.jianzhimao.com\" target=\"_blank\">深圳</a>罗湖<br>【工作内容】<br>1、使用苹果手机在下载指定App软件进行试用; <br>2、简单体验手机App 3分钟即可，任务完成即可删除;<br>3、可在家做，不限时间地点，一单一结，多劳多得。 <br>【任务步骤】<br> 进入公司账号后根据你的手机系统选择苹果专区，从平台第一个开始，点击进入，有的里面有视频教程讲解怎么操作的，花个几分钟就能学会，然后通过点击加入试玩开始在线任务。 <br>【工资支付】 任务完成后，薇信账号平台自动支付工资，满10元即可提现到微信或支付宝。 我们承诺:绝不收费，且全程无投入,纯收入，闲暇时间动动手指头即可 <br>【其他福利】另外有奖励红包<br>【加入方式】 报名后，直接添加客服微信领取任务，客服微信:17750522190</div>",
+            "createby": "1",
+            "createtime": "2019-03-24 11:57:59",
+            "updateby": "1",
+            "updatetime": "2019-03-24 11:58:03",
+            "active": 0,
+            "recruitmentStartTime": "2019-03-24 11:59:41",
+            "recruitmentEndTime": "2019-03-31 11:59:44"
+        }
+    ],
+    "code": "100"
+}
+
+字段解释：
+
+msg:code字段解释信息
+
+code字段：在状态CODE文件中svn://47.107.103.97/repo/ls-service/src/main/resources/weekly/状态CODE
+
+
+data字段：
+id                      主键ID                                             
+recruitment_category    招聘类别 1:个人招聘 2：公司招聘  
+title                   招聘标题                                  
+basePay                基本工资                                  
+basePayUnit           基本工资计算单位                      
+workPlace              上班地点                                  
+sex                     性别限定 0：不限 1：男 2：女       
+type                    工作种类 1:短招 2:长招                
+typeWork               工作种类 1：调研                       
+longitude               经度                                        
+latitude                纬度                                        
+number                  招聘人数                                  
+workingStartTime      工作开始时间 如：2019-03-30           
+workingEndTime        工作结束时间 如：2019-04-20           
+workingTime            上班时段 如：9:00-18:00                 
+settlementMethod       结算方式 1:月结，2：日结            
+detail                  工作详情                                  
+createBy                创建人                                     
+createTime              创建时间                                  
+updateBy                修改人                                     
+updateTime              修改时间                                  
+active                  是否有效 0:有效 1:无效                
+recruitmentStartTime  招聘开始时间 如：2019-03-30 10:00:00  
+recruitmentEndTime    招聘结束时间 如：2019-04-03 18:00:00  
+welfare                 工作福利，以英文分隔符分开       
+attr                    扩展字段                                  
+attr2                   扩展字段2                                 
+attr3                   扩展字段3                                 
+attr4                   扩展字段4                                 
+attr5                   扩展字段5                                 
+attr6                   扩展字段6                                 
+joinMumber             报名人数 
+
+
+如果需要按条件查询 使用下面的请求地址：
+GET请求：
+http://localhost:6060/recruitment/listPage.do?curr=1&pageSize=10&basePay=2
+
+后面的参数可以带data字段里面的数据
+
+注意：curr和 pageSize 是必须传入的 
+curr：当前页
+pageSize ：一页所展示的条数
+返回数据：
+{
+    "msg": "请求成功",
+    "data": {
+        "list": [
+            {
+                "id": 1,
+                "title": "兼职\"苹果手机随时赚APP试玩秒结算\"",
+                "basePay": 30,
+                "workPlace": "广东深圳罗湖",
+                "type": 1,
+                "number": 999,
+                "workingStartTime": "2019-03-23 11:56:11",
+                "workingEndTime": "2019-03-30 11:56:30",
+                "workingTime": "报名后通知",
+                "settlementMethod": 1,
+                "detail": "<div class=\"detail\" id=\"job_detail\">【招聘岗位】苹果APP试玩员（安卓勿入）<br>【工作薪资】30~300元/小时<br>【上班时间】时间不限<br>【工作地点】广东<a href=\"http://shenzhen.jianzhimao.com\" target=\"_blank\">深圳</a>罗湖<br>【工作内容】<br>1、使用苹果手机在下载指定App软件进行试用; <br>2、简单体验手机App 3分钟即可，任务完成即可删除;<br>3、可在家做，不限时间地点，一单一结，多劳多得。 <br>【任务步骤】<br> 进入公司账号后根据你的手机系统选择苹果专区，从平台第一个开始，点击进入，有的里面有视频教程讲解怎么操作的，花个几分钟就能学会，然后通过点击加入试玩开始在线任务。 <br>【工资支付】 任务完成后，薇信账号平台自动支付工资，满10元即可提现到微信或支付宝。 我们承诺:绝不收费，且全程无投入,纯收入，闲暇时间动动手指头即可 <br>【其他福利】另外有奖励红包<br>【加入方式】 报名后，直接添加客服微信领取任务，客服微信:17750522190</div>",
+                "createby": "1",
+                "createtime": "2019-03-24 11:57:59",
+                "updateby": "1",
+                "updatetime": "2019-03-24 11:58:03",
+                "active": 0,
+                "recruitmentStartTime": "2019-03-24 11:59:41",
+                "recruitmentEndTime": "2019-03-31 11:59:44"
+            }
+        ],
+        "count": 1
+    },
+    "code": "100"
+}
+
+注意：count 是总条数  list 最多一页的数据   
