@@ -101,7 +101,7 @@ public class LoginController {
 			user.setPassword(md5Password);
 			user = logUserService.selectOne(user);
 			if(user==null){
-				logger.info("账号{}或密码{}错误：",username,password);
+				logger.info("账号或密码错误：",username+" "+password);
 				json.setSattusCode(StatusCode.USERNAME_PASS_ERROR);
 				return json;
 			}
