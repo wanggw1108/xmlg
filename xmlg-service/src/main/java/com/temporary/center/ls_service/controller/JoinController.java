@@ -11,6 +11,8 @@ import com.temporary.center.ls_service.result.SignUpEmployeeInfo;
 import com.temporary.center.ls_service.service.JoinService;
 import com.temporary.center.ls_service.service.LogUserService;
 import com.temporary.center.ls_service.service.RecruitmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +30,7 @@ import java.util.*;
 @RequestMapping(value = "/joinController")
 public class JoinController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(JoinController.class);
+	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
 
 	@Autowired
 	private JoinService joinService;
@@ -77,7 +79,7 @@ public class JoinController {
 				return json;
 			}
 			
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				logger.info("token过期");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 			}
@@ -185,8 +187,6 @@ public class JoinController {
 	/**
 	 * 立即报名
 	 * @param token
-	 * @param time 时间
-	 * @param sigin 签名
 	 * @param resumeId 简历ID
 	 * @param remark 备注
 	 * @param recruitmentInfoCreatebyId 职位创建者ID
@@ -239,9 +239,9 @@ public class JoinController {
 				return json;
 			}*/
 			
-			if(redisBean.exists(token)) {
+			if(redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				
-				String userId = redisBean.get(token);
+				String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 				User user=logUserService.getUserById(Long.parseLong(userId));
 				Join join=new Join();
 				join.setCreatetime(new Date());

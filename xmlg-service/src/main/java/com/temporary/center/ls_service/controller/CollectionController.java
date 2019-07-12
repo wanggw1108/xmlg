@@ -1,13 +1,14 @@
 package com.temporary.center.ls_service.controller;
 
-import com.temporary.center.ls_common.Constant;
-import com.temporary.center.ls_common.LogUtil;
-import com.temporary.center.ls_common.RedisBean;
+import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.common.TokenUtil;
 import com.temporary.center.ls_service.common.ValidateParam;
 import com.temporary.center.ls_service.domain.MyCollection;
 import com.temporary.center.ls_service.service.CollectionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ import java.util.*;
 @Controller
 @RequestMapping(value = "/employee")
 public class CollectionController {
-	
-	private static final LogUtil logger = LogUtil.getLogUtil(CollectionController.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(CollectionController.class);
 	
 	@Autowired
 	private RedisBean redisBean;
@@ -47,7 +48,7 @@ public class CollectionController {
 		try {
 			
 			//判断token
-			if(!redisBean.exists(token)) {
+			if(!TokenUtil.validateToken(token,redisBean)) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
@@ -57,7 +58,7 @@ public class CollectionController {
  			if(!json.getCode().equals(StatusCode.SUC.getCode())) {
  				return json;
  			}
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId || userId.equals("")) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -96,7 +97,7 @@ public class CollectionController {
 		try {
 			
 			//判断token
-			if(!redisBean.exists(token)) {
+			if(!TokenUtil.validateToken(token,redisBean)) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
@@ -120,7 +121,7 @@ public class CollectionController {
 			}
 			
 			
-			String createbystring = redisBean.get(token);
+			String createbystring = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==createbystring) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;

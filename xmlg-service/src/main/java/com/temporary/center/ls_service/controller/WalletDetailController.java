@@ -3,12 +3,15 @@ package com.temporary.center.ls_service.controller;
 import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
+import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
 import com.temporary.center.ls_service.domain.WalletDetail;
 import com.temporary.center.ls_service.service.LogUserService;
 import com.temporary.center.ls_service.service.WalletDetailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +31,7 @@ import java.util.*;
 @RequestMapping(value = "/walletDetail")
 public class WalletDetailController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(WalletDetailController.class);
+	private static final Logger logger = LoggerFactory.getLogger(WalletDetailController.class);
 
 	@Autowired
 	private WalletDetailService walletDetailService;
@@ -111,7 +114,7 @@ public class WalletDetailController {
 			
 			WalletDetail walletDetail=new WalletDetail();
 			
-			String userId = redisBean.get(token);
+			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -207,7 +210,7 @@ public class WalletDetailController {
 			
 			WalletDetail walletDetail=new WalletDetail();
 			
-			String userId = redisBean.get(token);
+			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -279,7 +282,7 @@ public class WalletDetailController {
 			teamData.setType(Integer.parseInt(type));
 			teamData.setRemark(remark);
 			
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;

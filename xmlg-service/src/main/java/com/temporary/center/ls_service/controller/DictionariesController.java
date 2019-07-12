@@ -6,6 +6,8 @@ import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.domain.Dictionaries;
 import com.temporary.center.ls_service.service.DictionariesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,7 @@ import java.util.UUID;
 @RequestMapping(value = "/dictionaries")
 public class DictionariesController {
 	
-	private static final LogUtil logger = LogUtil.getLogUtil(DictionariesController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DictionariesController.class);
 
 	@Autowired
 	private DictionariesService dictionariesService;

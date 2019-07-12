@@ -11,6 +11,8 @@ import com.temporary.center.ls_service.common.ValidateParam;
 import com.temporary.center.ls_service.domain.IdCard;
 import com.temporary.center.ls_service.service.IdCardService;
 import com.temporary.center.ls_service.service.LogUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,7 @@ import java.util.*;
 @RequestMapping(value = "/idCard")
 public class IdCardController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(IdCardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(IdCardController.class);
 
 	@Autowired
 	private IdCardService idCardService;
@@ -102,7 +104,7 @@ public class IdCardController {
 			
 			IdCard businessLicense=new IdCard(); 
  			
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;

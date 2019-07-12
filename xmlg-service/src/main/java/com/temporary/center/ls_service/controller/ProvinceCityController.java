@@ -7,6 +7,8 @@ import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.domain.City;
 import com.temporary.center.ls_service.service.CityService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,7 @@ import java.util.UUID;
 @RequestMapping(value = "/provinceCity")
 public class ProvinceCityController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(ProvinceCityController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProvinceCityController.class);
 
 	@Autowired
 	private RedisBean redisBean;
@@ -51,29 +53,11 @@ public class ProvinceCityController {
 		logger.info(title+",cityList"+Constant.METHOD_BEGIN);
 		
 		Json json=new Json();
-		try {
-			
-			if(redisBean.exists(RedisKey.CITY_LIST)) {
-				byte[] bs = redisBean.get(RedisKey.CITY_LIST.getBytes());
-				ByteArrayInputStream bis = new ByteArrayInputStream(bs);
-		        ObjectInputStream inputStream = new ObjectInputStream(bis);
-		        List<City> cityList = (List<City>) inputStream.readObject();
-		        json.setData(cityList);
-				json.setSuc();
-				inputStream.close();
-			    bis.close();
-			}else {
-				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		        ObjectOutputStream oos = new ObjectOutputStream(bos);
+		try {{
 				List<City> cityList=cityService.getCityALL();
 				Collections.sort(cityList, new City());
 				json.setData(cityList);
 				json.setSuc();
-				oos.writeObject(cityList);
-				byte[] byteArray = bos.toByteArray();
-				redisBean.set(RedisKey.CITY_LIST.getBytes(), byteArray); 
-				oos.close();
-				bos.close();
 			}
 		}catch (Exception e) {
 			 e.printStackTrace();

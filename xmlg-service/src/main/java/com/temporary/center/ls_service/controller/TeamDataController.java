@@ -3,6 +3,7 @@ package com.temporary.center.ls_service.controller;
 import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
+import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
@@ -11,6 +12,8 @@ import com.temporary.center.ls_service.domain.TeamData;
 import com.temporary.center.ls_service.service.CompanyInfoService;
 import com.temporary.center.ls_service.service.LogUserService;
 import com.temporary.center.ls_service.service.TeamDataService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +33,7 @@ import java.util.*;
 @RequestMapping(value = "/teamdata")
 public class TeamDataController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(TeamDataController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TeamDataController.class);
 
 	@Autowired
 	private TeamDataService teamDataService;
@@ -99,7 +102,7 @@ public class TeamDataController {
 				return json;
         	}
 			
-			String userId = redisBean.get(token);
+			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				logger.info("token不不存在，userId");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
@@ -153,15 +156,6 @@ public class TeamDataController {
 	 * @param token     
 	 * @param sign      签名
 	 * @param timeStamp 时间戳
-	 * @param name      团队名称
-	 * @param industry  所属行业
-	 * @param scale     人员规模
-	 * @param introduce 团队简介
-	 * @param address   地址
-	 * @param longitude 经度
-	 * @param latitude  纬度
-	 * @param cardId  身份验证表的ID
-	 * @param businessLicenseId  营业执照的ID
 	 * @return
 	 */
 	@RequestMapping(value = "/createAuthInfo.do", method = RequestMethod.POST)
@@ -218,7 +212,7 @@ public class TeamDataController {
 				teamData.setBusinessLicenseId(Long.parseLong(businessLicenseId));
 			}*/
 			
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;

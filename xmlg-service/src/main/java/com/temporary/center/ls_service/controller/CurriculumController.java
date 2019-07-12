@@ -3,6 +3,7 @@ package com.temporary.center.ls_service.controller;
 import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
+import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
@@ -14,6 +15,8 @@ import com.temporary.center.ls_service.params.CurriculumParam;
 import com.temporary.center.ls_service.service.CurriculumService;
 import com.temporary.center.ls_service.service.LogUserService;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +36,7 @@ import java.util.*;
 @RequestMapping(value = "/curriculum")
 public class CurriculumController {
 	
-	private static final LogUtil logger = LogUtil.getLogUtil(CurriculumController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CurriculumController.class);
 	
 	@Autowired
 	private CurriculumService curriculumService;
@@ -80,13 +83,6 @@ public class CurriculumController {
 	 * @param token     
 	 * @param sign      签名
 	 * @param timeStamp 时间戳
-	 * @param name      团队名称
-	 * @param industry  所属行业
-	 * @param scale     人员规模
-	 * @param introduce 团队简介
-	 * @param address   地址
-	 * @param longitude 经度
-	 * @param latitude  纬度
 	 * @return
 	 */
 	@RequestMapping(value = "/add.do", method = RequestMethod.POST)
@@ -146,7 +142,7 @@ public class CurriculumController {
 			teamData.setLatitude(latitude);
 			teamData.setType(type);*/
 			
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;

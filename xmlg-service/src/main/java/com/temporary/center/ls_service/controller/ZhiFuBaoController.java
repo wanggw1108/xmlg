@@ -1,6 +1,8 @@
 package com.temporary.center.ls_service.controller;
 
 import com.temporary.center.ls_common.LogUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +24,7 @@ import java.util.Set;
 @RequestMapping(value = "/zfb")
 public class ZhiFuBaoController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(ZhiFuBaoController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ZhiFuBaoController.class);
 	
 	//网关
 	@RequestMapping(value = "/gateway.do", method = RequestMethod.POST)

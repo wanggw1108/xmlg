@@ -1,16 +1,17 @@
 package com.temporary.center.ls_service.controller;
 
-import com.temporary.center.ls_common.Constant;
-import com.temporary.center.ls_common.LogUtil;
-import com.temporary.center.ls_common.RedisBean;
+import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.common.TokenUtil;
 import com.temporary.center.ls_service.common.ValidateParam;
 import com.temporary.center.ls_service.domain.CompanyInfo;
 import com.temporary.center.ls_service.domain.User;
 import com.temporary.center.ls_service.params.CompanyInfoParam;
 import com.temporary.center.ls_service.service.CompanyInfoService;
 import com.temporary.center.ls_service.service.LogUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ import java.util.UUID;
 @RequestMapping(value = "/companyInfo")
 public class CompanyInfoController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(ProvinceCityController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CompanyInfoController.class);
 
 	@Autowired
 	private RedisBean redisBean;
@@ -60,12 +61,12 @@ public class CompanyInfoController {
 				return json;
 			}
 			String userId=null;
-			if(!redisBean.exists(token)) {
+			if(!TokenUtil.validateToken(token,redisBean)) {
 				logger.info("token过期");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			userId=redisBean.get(token);
+			userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			
 			if(null==userId || userId.equals("")) {
 				logger.info("userId 为空redis");
@@ -129,7 +130,7 @@ public class CompanyInfoController {
 				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(companyId)");
 				return json;
 			}
-			if(!redisBean.exists(token)) {
+			if(!TokenUtil.validateToken(token,redisBean)) {
 				logger.info("token过期");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -171,12 +172,12 @@ public class CompanyInfoController {
 				return json;
 			}
 			String userId=null;
-			if(!redisBean.exists(token)) {
+			if(!TokenUtil.validateToken(token,redisBean)) {
 				logger.info("token过期");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			userId=redisBean.get(token);
+			userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			
 			if(null==userId || userId.equals("")) {
 				logger.info("userId 为空redis");
@@ -243,12 +244,12 @@ public class CompanyInfoController {
 				return json;
 			}
 			String userId=null;
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				logger.info("token过期");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			userId=redisBean.get(token);
+			userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			
 			if(null==userId || userId.equals("")) {
 				logger.info("userId 为空redis");

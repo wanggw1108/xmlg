@@ -10,6 +10,8 @@ import com.temporary.center.ls_service.domain.CarouselPicture;
 import com.temporary.center.ls_service.domain.Picture;
 import com.temporary.center.ls_service.service.CarouselPictureService;
 import com.temporary.center.ls_service.service.PictureService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ import java.util.*;
 @RequestMapping(value = "/index")
 public class IndexController {
 	
-	private static final LogUtil logger = LogUtil.getLogUtil(IndexController.class);
+	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
 	@Autowired
 	private RedisBean redisBean;
@@ -59,58 +61,9 @@ public class IndexController {
 		json.setFail();
 		
 		try {
-			
-			if(redisBean.exists(RedisKey.CAROUSEL_PICTURE)) {
-				List<String> carouselPictureList = redisBean.lRange(RedisKey.CAROUSEL_PICTURE, 0L, -1L);
-				logger.info("读取redis数据，key="+RedisKey.CAROUSEL_PICTURE+",value="+carouselPictureList);
-				List<Map<String,String>> urlList=new ArrayList<Map<String,String>>();
-				for(String picList:carouselPictureList) {
-					String[] picArr = picList.split("");	
-					if(null!=picArr && picArr.length==3) {
-						String img = picArr[0];
-						String pageUrl = picArr[1];
-						String bgImg = picArr[2];
-						Map<String, String> resultMap=new HashMap<String, String>();
-						resultMap.put("img", img);
-						resultMap.put("pageUrl", pageUrl);
-						resultMap.put("bgImg", bgImg);
-						urlList.add(resultMap);
-					}else {
-						logger.error("redis数据有误，key="+RedisKey.CAROUSEL_PICTURE);
-					}
-				}
-				
-				json.setData(carouselPictureList);
-				json.setSuc();
-			}else {
-				List<CarouselPicture> carouselPictureList=carouselPictureService.getALL();
-				if(null==carouselPictureList || carouselPictureList.size()==0) {
-					logger.info("数据库无数据，请添加轮播图片数据");
-					json.setMsg("数据库无数据，请添加轮播图片数据");
-					json.setSattusCode(StatusCode.NO_DATA);
-				}else {
-					List<Map<String,String>> urlList=new ArrayList<Map<String,String>>();
-					Map<String,String> urlMap=new HashMap<String,String>();
-					int redisIndex=0;
-					for(int i=carouselPictureList.size()-1;i>=0;i--) {
-						CarouselPicture carouselPicture=carouselPictureList.get(i);
-						String url = carouselPicture.getUrl();
-						String bgImg = carouselPicture.getBgImg();
-						String pageUrl = carouselPicture.getPageUrl();
-						
-						CarouselPicture carouselPicture_Redis=carouselPictureList.get(redisIndex);
-						redisBean.lpush(RedisKey.CAROUSEL_PICTURE, carouselPicture_Redis.getUrl()+"#"+carouselPicture_Redis.getPageUrl()+"#"+carouselPicture_Redis.getBgImg());
-						urlMap.put("img", url);
-						urlMap.put("pageUrl", pageUrl);
-						urlMap.put("bgImg", bgImg);
-						
-						urlList.add(urlMap);
-						redisIndex++;
-					}
-					json.setData(urlList);
-					json.setSuc();
-				}
-			}
+			List<CarouselPicture> pictures = carouselPictureService.getALL();
+			json.setData(pictures);
+			json.setSuc();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -134,27 +87,11 @@ public class IndexController {
 		logger.info(title+",tenTab"+Constant.METHOD_BEGIN);
 		Json json=new Json ();
 		try {
-			if(redisBean.exists(RedisKey.INDEX_TEN_TAB)) {
-				byte[] bs = redisBean.get(RedisKey.INDEX_TEN_TAB.getBytes());
-				ByteArrayInputStream bis = new ByteArrayInputStream(bs);
-		        ObjectInputStream inputStream = new ObjectInputStream(bis);
-		        List<Picture> pictureList = (List<Picture>) inputStream.readObject();
-		        json.setData(pictureList);
-				json.setSuc();
-				inputStream.close();
-			    bis.close();
-			}else {
 				List<Picture> pictureServiceList=pictureService.getTenTab(Constant.PICTURE_TYPE_TEN_TAB);
 				ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		        ObjectOutputStream oos = new ObjectOutputStream(bos);
 				json.setData(pictureServiceList);
 				json.setSuc();
-				oos.writeObject(pictureServiceList);
-				byte[] byteArray = bos.toByteArray();
-				redisBean.set(RedisKey.INDEX_TEN_TAB.getBytes(), byteArray); 
-				oos.close();
-				bos.close();
-			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			json.setMsg("操作失败,uuid="+uuid);

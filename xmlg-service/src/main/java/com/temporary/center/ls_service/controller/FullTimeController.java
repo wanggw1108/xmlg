@@ -3,11 +3,14 @@ package com.temporary.center.ls_service.controller;
 import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
+import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.*;
 import com.temporary.center.ls_service.domain.FullTime;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 import com.temporary.center.ls_service.service.FullTimeService;
 import com.temporary.center.ls_service.service.RecruitmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +32,7 @@ import java.util.Map.Entry;
 @RequestMapping(value = "/fullTime")
 public class FullTimeController {
 
-	private static final LogUtil logger = LogUtil.getLogUtil(FullTimeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(FullTimeController.class);
 
 	@Autowired
 	private RedisBean redisBean;
@@ -257,7 +260,7 @@ public class FullTimeController {
  			
  			String property = System.getProperty("tansungWeb.root");
  			
- 			String userid = redisBean.get(token);
+ 			String userid = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userid) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;
@@ -315,7 +318,7 @@ public class FullTimeController {
 				fullTime.setEnvironmentalPhotos(photos);
 				json.setData(photos);
 			}*/
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
@@ -456,7 +459,7 @@ public class FullTimeController {
  			
  			String property = System.getProperty("tansungWeb.root");
  			
- 			String userid = redisBean.get(token);
+ 			String userid = redisBean.get(RedisKey.USER_TOKEN+token);
  			if(null==userid) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;
@@ -511,7 +514,7 @@ public class FullTimeController {
 				fullTime.setEnvironmentalPhotos(photos);
 				json.setData(photos);
 			}
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.get(RedisKey.USER_TOKEN+token);
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;

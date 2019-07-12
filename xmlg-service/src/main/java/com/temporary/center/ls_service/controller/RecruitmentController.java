@@ -91,7 +91,7 @@ public class RecruitmentController {
 				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(pageSize)");
 				return json;
 			}
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				logger.info("token过期");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -102,7 +102,7 @@ public class RecruitmentController {
 			List<MyRecruitResult> myRecruitResultList=new ArrayList<>();
 			
 			RecruitmentInfo recruitmentInfo=new RecruitmentInfo();
-			recruitmentInfo.setCreateby(redisBean.get(token));
+			recruitmentInfo.setCreateby(redisBean.hget(RedisKey.USER_TOKEN+token,"user_id"));
 			List<RecruitmentInfo> list = recruitmentService.list(recruitmentInfo);
 			
 			Long countByParams = recruitmentService.countByParams(recruitmentInfo);
@@ -559,7 +559,7 @@ public class RecruitmentController {
 		
 		try {
 			
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;
@@ -689,7 +689,7 @@ public class RecruitmentController {
 				
 		try {	
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -754,7 +754,7 @@ public class RecruitmentController {
 				
 		try {	
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -821,7 +821,7 @@ public class RecruitmentController {
 				
 		try {	
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -891,12 +891,12 @@ public class RecruitmentController {
 				return json;
 			}
 			
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -965,12 +965,12 @@ public class RecruitmentController {
 				return json;
 			}
 			
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -1067,7 +1067,7 @@ public class RecruitmentController {
 			recruitmentInfo.setTel(tel);
 			recruitmentInfo.setEmail(email);
 			
- 			String userId = redisBean.get(token);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;

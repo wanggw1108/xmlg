@@ -258,7 +258,7 @@ public class LoginController {
 				return json;
 			}
 			
-			String userId = redisBean.get(token);
+			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
@@ -354,12 +354,12 @@ public class LoginController {
 			//判断token
 			String token = request.getParameter("token");
 			
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			
 	        String time = request.getParameter("timeStamp");
 	        String sign=request.getParameter("sign");
@@ -520,12 +520,12 @@ public class LoginController {
 		try {
 			
 			//判断token
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			
 			UserAddress userAddress=new UserAddress();
 			userAddress.setCreateby(Long.parseLong(userId));
@@ -569,12 +569,12 @@ public class LoginController {
 		Json json=new Json ();
 		try {
 			//判断token
-			if(!redisBean.exists(token)) {
+			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
 			
-			String userId=redisBean.get(token);
+			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			
 			//判断参数
 			json=ValidateParam.validateParamNotNull(userAddress);
