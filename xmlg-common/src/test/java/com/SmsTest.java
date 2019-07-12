@@ -27,7 +27,7 @@ public class SmsTest {
     public String smsParams="appkey=2baba04410948&zone=86&";
     @Test
     public void checkSms(){
-        System.out.println(checkSMS("18701497050","1234"));
+        System.out.println(checkSMS("17318035749","8252"));
     }
     public  int checkSMS(String phone,String code){
         StringBuilder builder = new StringBuilder(smsParams);

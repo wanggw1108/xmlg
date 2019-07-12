@@ -6,6 +6,8 @@ import cn.jsms.api.SendSMSResult;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -35,8 +37,8 @@ public class SMSUtil {
     private String smsUrl;
     @Value("${smsParams}")
     private String smsParams;
-    private static final LogUtil logger = LogUtil.getLogUtil(SMSUtil.class);
-
+//    private static final LogUtil logger = LogUtil.getLogUtil(SMSUtil.class);
+private static final Logger logger = LoggerFactory.getLogger(SMSUtil.class);
 
     /**
      * 发起https 请求

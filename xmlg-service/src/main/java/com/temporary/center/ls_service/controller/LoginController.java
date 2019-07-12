@@ -39,7 +39,7 @@ import java.util.Map.Entry;
 public class LoginController {
 
 
-    private static final LogUtil logger = LogUtil.getLogUtil(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	
 	@Autowired
@@ -188,7 +188,8 @@ public class LoginController {
 			User user = new User();
 			user.setEmployeeReputation(0);//默认雇员信誉0
 			user.setBossReputation(0);//默认雇主信誉
-			user.setPassword(MD5Utils.getMD5(user.getPassword()));
+
+			user.setPassword(MD5Utils.getMD5(password));
 			user.setEffective(Constant.EFFECTIVE);
 			user.setCreateBy("system");
 			user.setCreateTime(new Date());
