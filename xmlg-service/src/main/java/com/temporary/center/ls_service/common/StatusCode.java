@@ -26,6 +26,7 @@ public enum StatusCode {
 	PARAMS_NO_NULL("600","参数不为空"), 
 	TEL_REGISTERED("601","此号码已注册"),
 	USER_NAME_REGISTERED("602","此用户名已注册"),
+	USER_NULL_REGISTERED("603","此号码未注册"),
 
 	JG_NO_DATA("602","极光不存在此用户"), 
 	JG_HAVE_DATA("603","极光已存在此用户"), 

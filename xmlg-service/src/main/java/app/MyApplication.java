@@ -1,3 +1,5 @@
+package app;
+
 import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.SpringContextUtils;
 import org.mybatis.spring.annotation.MapperScan;
@@ -10,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -23,10 +22,10 @@ import java.util.Properties;
 @ComponentScan("com.temporary")
 @MapperScan("com.temporary.center.ls_service.dao")
 @SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
-public class Application {
+public class MyApplication {
 
    public static void main(String[] args){
-       ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+       ConfigurableApplicationContext context = SpringApplication.run(MyApplication.class, args);
        SpringContextUtils.setContext(context);
    }
     @Bean(name = "pageHelper")

@@ -188,7 +188,7 @@ public class LoginController {
 			User user = new User();
 			user.setEmployeeReputation(0);//默认雇员信誉0
 			user.setBossReputation(0);//默认雇主信誉
-
+            user.setUserName(phone);
 			user.setPassword(MD5Utils.getMD5(password));
 			user.setEffective(Constant.EFFECTIVE);
 			user.setCreateBy("system");
@@ -292,60 +292,40 @@ public class LoginController {
 	
 	/**
 	 * 修改密码
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/updatePassword.do", method = RequestMethod.POST)
     @ResponseBody
-    public Json updatePassword(HttpServletRequest request,
-            HttpServletResponse response) {
+    public Json updatePassword(String phoneNum,String verifyCode,String newPassword) {
 		Json json=new Json();
 		json.setSuc();
 		json.setData("");
 		try {
-			//判断token
-			String token = request.getParameter("token");
-			
-			if(!redisBean.exists(token)) {
-				json.setSattusCode(StatusCode.TOKEN_ERROR);
-				return json;
-			}
-			
-			String userId=redisBean.get(token);
-	        String inputPassWord = request.getParameter("password");
-	        String time = request.getParameter("timeStamp");
-	        String sign=request.getParameter("sign");
-	        
-	        Long timeStamp=Long.parseLong(time);
-	        
-	        Date currDate=new Date();
-	        long countTime=currDate.getTime()-timeStamp;
-	        if(countTime<0 || countTime>Constant.INTERFACE_TIME_OUT) {
-	    		json.setSattusCode(StatusCode.TIME_OUT_FIVE_MINUTE);
-	    		return json;
-	        }
-	        
-	        
-	        Map<String,String> params=new HashMap<String,String>();
-	        params.put("password", inputPassWord);
-	        params.put("time", time);
-	        params.put("token", token);
-	        
-	        String signGenerateByParams=createSign(params, false);
-	        
-	        
-	        if(sign.equals(signGenerateByParams)) {
-	        	Map<String,Object> param=new HashMap<String,Object>();
-	        	param.put("id", userId);
-	        	param.put("updateBy", userId);
-	        	param.put("updateTime", new Date());
-	        	param.put("password",MD5Utils.getMD5(inputPassWord));
-				logUserService.updatePassword(param);
-	        }else {
-	        	logger.info("sign error="+signGenerateByParams);
-	        	json.setSattusCode(StatusCode.SIG_ERROR);
-	        }
+            int code = smsService.checkSMS(phoneNum,verifyCode);
+            if( code!= 200){
+                switch (code){
+                    case 467:json.setSattusCode(StatusCode.SMS_TIMES_ERROR);break;
+                    case 468:json.setSattusCode(StatusCode.SMS_CODE_ERROR);break;
+                    default:json.setSattusCode(StatusCode.SMS_CHECK_ERROR);
+                }
+
+                return json;
+            }
+            Map<String,Object> queryUser = new HashedMap();
+            queryUser.put("phone",phoneNum);
+            List<User> userList = userService.queryUserByParams(queryUser);
+            if(userList ==null){
+                json.setSattusCode(StatusCode.USER_NULL_REGISTERED);
+                return json;
+            }
+
+            Map<String,Object> update = new HashedMap();
+            update.put("id",userList.get(0));
+            update.put("password",MD5Utils.getMD5(newPassword));
+            update.put("updateTime",new Date());
+            logUserService.updatePassword(update);
+            json.setSuc("密码重置成功");
+
 		}catch(Exception e) {
 			e.printStackTrace();
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
