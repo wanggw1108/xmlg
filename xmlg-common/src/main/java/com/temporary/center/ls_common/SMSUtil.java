@@ -54,15 +54,6 @@ public boolean createJiGuangUser(String phone){
 
     UserClient userClient = new UserClient(jgAppKey, jgMasterSecret);
     try {
-            UserInfoResult res = userClient.getUserInfo(phone);
-            logger.info("极光用户已存在");
-            return false;
-//        UserStateResult re = client.getUserState("123456abc");
-    } catch (APIConnectionException e) {
-    } catch (APIRequestException e) {
-
-    }
-    try {
         List<RegisterInfo> users = new ArrayList<RegisterInfo>();
         RegisterInfo user = RegisterInfo.newBuilder()
                 .setUsername(phone)
