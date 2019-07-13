@@ -124,36 +124,60 @@ public class LoginController {
 				json.setMsg("三方id为空");
 				return json;
 			}
+			Map<String,Object> params = new HashedMap();
+			params.put("phone",username);
+			List<User> listUser = userService.queryUserByParams(params);
+			if(listUser==null){
+				json.setSattusCode(StatusCode.USER_NULL_REGISTERED);
+				return json;
+			}
+			User user = listUser.get(0);
+
 			if("qq".equals(loginType)){
-				Map<String,Object> params = new HashedMap();
-				params.put("phone",username);
 				params.put("qqKey",third_id);
-				if(null == userService.queryUserByParams(params)){
+				if(user.getQqKey()!=null&& !user.getQqKey().equals(third_id)){
 					logger.info("三方ID错误：",username+" "+password);
 					json.setSattusCode(StatusCode.ThirdID_ERROR);
 					return json;
+				}
+				if(user.getQqKey()==null){
+					user.setQqKey(third_id);
+					Map<String,Object> updatekey = new HashedMap();
+					updatekey.put("id",user.getId());
+					updatekey.put("qqKey",third_id);
+					userService.updateUser(updatekey);
 				}
 
 
 
 			}else if("wechart".equals(loginType)){
-				Map<String,Object> params = new HashedMap();
-				params.put("phone",username);
 				params.put("wxKey",third_id);
-				if(null == userService.queryUserByParams(params)){
+				if(user.getWxKey()!=null && !user.getWxKey().equals(third_id)){
 					logger.info("三方ID错误：",username+" "+password);
 					json.setSattusCode(StatusCode.ThirdID_ERROR);
 					return json;
 				}
+				if(user.getWxKey()==null){
+					user.setWxKey(third_id);
+					Map<String,Object> updatekey = new HashedMap();
+					updatekey.put("id",user.getId());
+					updatekey.put("wxKey",third_id);
+					userService.updateUser(updatekey);
+				}
 
 			}else if("weibo".equals(loginType)){
-				Map<String,Object> params = new HashedMap();
-				params.put("phone",username);
 				params.put("wbKey",third_id);
-				if(null == userService.queryUserByParams(params)){
+				if(user.getWbKey()!=null && !user.getQqKey().equals(third_id)){
 					logger.info("三方ID错误：",username+" "+password);
 					json.setSattusCode(StatusCode.ThirdID_ERROR);
 					return json;
+				}
+				if(user.getWbKey()==null){
+					user.setWbKey(third_id);
+					Map<String,Object> updatekey = new HashedMap();
+					updatekey.put("id",user.getId());
+					updatekey.put("wbKey",third_id);
+					userService.updateUser(updatekey);
 				}
 			}else {
 				json.setSattusCode(StatusCode.LOGIN_TYPE_ERROR);

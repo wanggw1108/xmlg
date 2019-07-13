@@ -47,6 +47,7 @@ private static final Logger logger = LoggerFactory.getLogger(SMSUtil.class);
      * @return
      */
     public  int checkSMS(String phone,String code){
+
         StringBuilder builder = new StringBuilder(smsParams);
         builder.append("phone=")
                 .append(phone)

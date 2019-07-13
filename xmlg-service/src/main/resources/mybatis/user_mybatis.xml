@@ -81,6 +81,9 @@
 			<if test="height != null">height=#{height},</if>
 			<if test="qq != null">qq=#{qq},</if>
 			<if test="wx != null">wx=#{wx},</if>
+			<if test="qqKey != null">qqKey=#{qqKey},</if>
+			<if test="wxKey != null">wxKey=#{wxKey},</if>
+			<if test="wbKey != null">wbKey=#{wbKey},</if>
 		</set>
 		where id=#{id}	
 	</update>
