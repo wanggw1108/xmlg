@@ -89,7 +89,7 @@ public class LoginController {
 	//登陆接口
 	@RequestMapping(value = "/getToken.do", method = RequestMethod.POST)
     @ResponseBody
-    public Json getToken(String username,String password,String veriftyCode,String loginType) {
+    public Json getToken(String username,String password,String veriftyCode,String loginType,String third_id) {
 		Json  json=new Json();
 		json.setSuc("请求成功");
 		long currentTimeMillis = System.currentTimeMillis();
@@ -106,7 +106,7 @@ public class LoginController {
 				json.setSattusCode(StatusCode.USERNAME_PASS_ERROR);
 				return json;
 			}
-		}else {
+		}else if("2".equals(loginType)){
 			int code = smsService.checkSMS(username,veriftyCode);
 			if( code!= 200){
 				switch (code){
@@ -118,7 +118,51 @@ public class LoginController {
 				return json;
 			}
 
+		}else {
+			if(StringUtil.isEmpty(third_id)){
+				json.setSattusCode(StatusCode.TYPE_NULL);
+				json.setMsg("三方id为空");
+				return json;
+			}
+			if("qq".equals(loginType)){
+				Map<String,Object> params = new HashedMap();
+				params.put("phone",username);
+				params.put("qqKey",third_id);
+				if(null == userService.queryUserByParams(params)){
+					logger.info("三方ID错误：",username+" "+password);
+					json.setSattusCode(StatusCode.ThirdID_ERROR);
+					return json;
+				}
+
+
+
+			}else if("wechart".equals(loginType)){
+				Map<String,Object> params = new HashedMap();
+				params.put("phone",username);
+				params.put("wxKey",third_id);
+				if(null == userService.queryUserByParams(params)){
+					logger.info("三方ID错误：",username+" "+password);
+					json.setSattusCode(StatusCode.ThirdID_ERROR);
+					return json;
+				}
+
+			}else if("weibo".equals(loginType)){
+				Map<String,Object> params = new HashedMap();
+				params.put("phone",username);
+				params.put("wbKey",third_id);
+				if(null == userService.queryUserByParams(params)){
+					logger.info("三方ID错误：",username+" "+password);
+					json.setSattusCode(StatusCode.ThirdID_ERROR);
+					return json;
+				}
+			}else {
+				json.setSattusCode(StatusCode.LOGIN_TYPE_ERROR);
+				return json;
+			}
+
 		}
+
+
         Map<String,Object> params = new HashedMap();
         params.put("phone",username);
 		User user = userService.queryUserByParams(params).get(0);
@@ -144,7 +188,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/createUser.do", method = RequestMethod.POST)
     @ResponseBody
-	public Json createUser(String phone,String password,String verifyCode) {
+	public Json createUser(String phone,String password,String verifyCode,String third_id,String thirdType) {
 		logger.info("createUser"+Constant.METHOD_BEGIN);
 		
 		Json json=new Json ();
@@ -195,6 +239,21 @@ public class LoginController {
 			user.setCreateTime(new Date());
 			user.setPhone(phone);
 			user.setUserImageUrl(staticUrlPath+"/user/header/user_header_default.jpeg");//头像地址
+
+			//如果三方登录类别，三方登录id，都不为空，说明用户授权了三方登录。需要绑定关系，一起存下来
+			if(StringUtil.isNotEmpty(third_id)&&StringUtil.isNotEmpty(thirdType)){
+				switch (thirdType){
+					case "qq":{
+						user.setQqKey(third_id);break;
+					}
+					case "wechart":{
+						user.setWxKey(third_id);break;
+					}
+					case "weibo":{
+						user.setWbKey(third_id);break;
+					}
+				}
+			}
 			userService.insert(user);
 			Map<String,Object> params = new HashedMap();
 			params.put("phone",phone);

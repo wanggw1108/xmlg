@@ -29,17 +29,19 @@ public enum StatusCode {
 	USER_NULL_REGISTERED("603","此号码未注册"),
 
 	JG_NO_DATA("602","极光不存在此用户"), 
-	JG_HAVE_DATA("603","极光已存在此用户"), 
-	
+	JG_HAVE_DATA("603","极光已存在此用户"),
+	LOGIN_TYPE_ERROR("604","登录类型错误"),
+
 	AMOUNT_NULL("700","金额不为空"), 
 	TYPE_NULL("701","类型不为空"), 
 	REMARK_NULL("703","备注不为空"), 
 	
 	USERNAME_PASS_ERROR("800","用户名或密码有误"), 
 	DATA_ERROR("801","数据有误"), 
-	EXIST_DATA("802","数据已存在");
-	
-	
+	EXIST_DATA("802","数据已存在"),
+	ThirdID_ERROR("803","三方ID错误");
+
+
 	private String code;
 	private String message;
 	
