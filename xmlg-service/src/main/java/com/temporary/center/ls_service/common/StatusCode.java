@@ -31,6 +31,7 @@ public enum StatusCode {
 	JG_NO_DATA("602","极光不存在此用户"), 
 	JG_HAVE_DATA("603","极光已存在此用户"),
 	LOGIN_TYPE_ERROR("604","登录类型错误"),
+	JG_Regist_Error("605","极光用户注册失败"),
 
 	AMOUNT_NULL("700","金额不为空"), 
 	TYPE_NULL("701","类型不为空"), 

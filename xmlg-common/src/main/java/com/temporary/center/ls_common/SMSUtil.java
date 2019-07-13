@@ -2,6 +2,12 @@ package com.temporary.center.ls_common;
 
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
+import cn.jiguang.common.resp.ResponseWrapper;
+import cn.jmessage.api.common.model.RegisterInfo;
+import cn.jmessage.api.common.model.RegisterPayload;
+import cn.jmessage.api.user.UserClient;
+import cn.jmessage.api.user.UserInfoResult;
+import cn.jmessage.api.user.UserStateResult;
 import cn.jsms.api.SendSMSResult;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
@@ -19,6 +25,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wangguowei
@@ -39,6 +47,44 @@ public class SMSUtil {
     private String smsParams;
 //    private static final LogUtil logger = LogUtil.getLogUtil(SMSUtil.class);
 private static final Logger logger = LoggerFactory.getLogger(SMSUtil.class);
+
+
+
+public boolean createJiGuangUser(String phone){
+
+    UserClient userClient = new UserClient(jgAppKey, jgMasterSecret);
+    try {
+            UserInfoResult res = userClient.getUserInfo("xmlg_"+phone);
+            logger.info("极光用户已存在");
+            return false;
+//        UserStateResult re = client.getUserState("123456abc");
+    } catch (APIConnectionException e) {
+    } catch (APIRequestException e) {
+
+    }
+    try {
+        List<RegisterInfo> users = new ArrayList<RegisterInfo>();
+        RegisterInfo user = RegisterInfo.newBuilder()
+                .setUsername("junit_test_user12345")
+                .setPassword("junit_test_pass123")
+                .setNickname("Test user")
+                .build();
+        users.add(user);
+        RegisterInfo[] regUsers = new RegisterInfo[users.size()];
+        RegisterPayload payload = RegisterPayload.newBuilder()
+                .addUsers(users.toArray(regUsers)).build();
+        ResponseWrapper res = userClient.registerUsers(payload);
+        return true;
+    } catch (APIConnectionException e) {
+        return false;
+    } catch (APIRequestException e) {
+        return false;
+    }
+
+
+}
+
+
 
     /**
      * 发起https 请求

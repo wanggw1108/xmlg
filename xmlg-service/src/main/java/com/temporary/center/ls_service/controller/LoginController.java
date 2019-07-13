@@ -283,7 +283,11 @@ public class LoginController {
 			params.put("phone",phone);
 			User createdUser = userService.queryUserByParams(params).get(0);
 			//生成IM账号
-			//todo
+			if(!smsService.createJiGuangUser(phone)){
+				json.setSattusCode(StatusCode.JG_Regist_Error);
+				return json;
+			}
+
 
 
 			json.setSuc("注册成功");

@@ -8,12 +8,22 @@ import com.temporary.center.ls_service.domain.WorkExperience;
 import java.util.List;
 
 public class CurriculumParam extends CurriculumVitae{
+
+	private CurriculumVitae curriculum;
 	
 	private List<EducationExperience> educationList;
 	
 	private List<ProjectExperience>   projectList;
 	
 	private List<WorkExperience> 	  workList;
+
+	public CurriculumVitae getCurriculum() {
+		return curriculum;
+	}
+
+	public void setCurriculum(CurriculumVitae curriculum) {
+		this.curriculum = curriculum;
+	}
 
 	public List<EducationExperience> getEducationList() {
 		return educationList;
