@@ -16,12 +16,12 @@ public class FullTimeServiceImpl implements FullTimeService{
 	
 	@Override
 	public List<FullTime> list(FullTime recruitmentInfo) {
-		return fullTimeMapper.list(recruitmentInfo);
+		return fullTimeMapper.select(recruitmentInfo);
 	}
 
 	@Override
 	public Long countByParams(FullTime recruitmentInfo) {
-		return fullTimeMapper.countByParams(recruitmentInfo);
+		return Long.valueOf(fullTimeMapper.selectCount(recruitmentInfo));
 	}
 
 	@Override

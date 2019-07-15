@@ -71,6 +71,7 @@ public class IndexController {
 				JSONObject obj = new JSONObject();
 				obj.put("img",staticUrlPath+p.getUrl());
 				obj.put("pageUrl",p.getPageUrl());
+				obj.put("bgImg",staticUrlPath+p.getBgImg());
 				list.add(obj);
 
 			});

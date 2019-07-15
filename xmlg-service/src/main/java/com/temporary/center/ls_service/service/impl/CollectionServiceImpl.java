@@ -21,11 +21,11 @@ public class CollectionServiceImpl implements CollectionService {
 
 	@Override
 	public Long countByParam(MyCollection myCollection) {
-		return collectionMapper.countByParam(myCollection);
+		return Long.valueOf(collectionMapper.selectCount(myCollection));
 	}
 
 	@Override
 	public List<MyCollection> findByParam(MyCollection myCollection) {
-		return collectionMapper.findByParam(myCollection);
+		return collectionMapper.select(myCollection);
 	}
 }

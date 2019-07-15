@@ -120,45 +120,6 @@ public class CurriculumController {
 		logger.info(title+"耗时{0}", endTime-startTime);
 		return json;
 	}
-	
-	public static void main(String[] args) {
-		
-		CurriculumParam curriculumParam=new CurriculumParam();
-		curriculumParam.setAge(22);
-		
-		List<EducationExperience> educationList=new ArrayList<EducationExperience>();
-		EducationExperience educationExperience=new EducationExperience();
-		educationExperience.setSchoolName("SchoolName222");
-		educationList.add(educationExperience);
-		curriculumParam.setEducationList(educationList);
-		
-		List<ProjectExperience> projectList=new ArrayList<ProjectExperience>();
-		ProjectExperience projectExperience=new ProjectExperience();
-		projectExperience.setName("fdsafds");
-		projectList.add(projectExperience);
-		curriculumParam.setProjectList(projectList);
-		List<WorkExperience> workList=new ArrayList<WorkExperience>();
-		WorkExperience workExperience=new WorkExperience();
-		
-		workExperience.setCorporateName("fdsa");
-		workList.add(workExperience);
-		curriculumParam.setWorkList(workList);
-		
-		JSONObject fromObject = JSONObject.fromObject(curriculumParam);
-		
-		System.out.println(fromObject.toString());
-		
-		
-		String jsonStr="{\"additional\":\"\",\"age\":22,\"city\":\"\",\"createby\":0,\"createtime\":null,\"currentCompany\":\"\",\"currentPosition\":\"\",\"educationList\":[{\"begin\":null,\"createby\":0,\"createtime\":null,\"curriculumViteaId\":0,\"cv\":\"\",\"end\":null,\"id\":0,\"isUnified\":0,\"majorName\":\"\",\"schoolName\":\"SchoolName222\",\"updateby\":0,\"updatetime\":null}],\"email\":\"\",\"expectCity\":\"\",\"expectIndustry\":\"\",\"expectPosition\":\"\",\"expectSalary\":\"\",\"expectTime\":\"\",\"expectType\":\"\",\"fullTime\":\"\",\"height\":0,\"householdRegister\":\"\",\"id\":0,\"language\":\"\",\"name\":\"\",\"nationality\":\"\",\"okWorkTime\":\"\",\"projectList\":[{\"achievement\":\"\",\"begin\":null,\"createby\":0,\"createtime\":null,\"curriculumViteaId\":0,\"describe\":\"\",\"duty\":\"\",\"end\":null,\"id\":0,\"name\":\"fdsafds\",\"updateby\":0,\"updatetime\":null}],\"selfEvaluation\":\"\",\"status\":0,\"tel\":\"\",\"updateby\":0,\"updatetime\":null,\"workList\":[{\"begin\":null,\"companyIndustry\":\"\",\"companyNature\":\"\",\"companySize\":\"\",\"corporateName\":\"fdsa\",\"createby\":0,\"createtime\":null,\"curriculumViteaId\":0,\"dutyAchievement\":\"\",\"end\":\"\",\"id\":0,\"jobTitle\":\"\",\"reportingObject\":\"\",\"salary\":0,\"salaryUnit\":\"\",\"subordinatesNumber\":0,\"updateby\":0,\"updatetime\":null,\"workSpace\":\"\"}],\"workingLife\":\"\"}\r\n";
-		
-		JSONObject fromObject2 = JSONObject.fromObject(jsonStr);
-		CurriculumParam curriculumParam2=(CurriculumParam)JSONObject.toBean(fromObject2, CurriculumParam.class);
 
-		Integer age = curriculumParam2.getAge();
-		System.out.println(age);
-		
-		
-		
-	}
 	
 }

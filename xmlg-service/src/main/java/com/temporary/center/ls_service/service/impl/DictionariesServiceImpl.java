@@ -16,7 +16,7 @@ public class DictionariesServiceImpl implements DictionariesService {
 	
 	@Override
 	public List<Dictionaries> list(Dictionaries dictionaries) {
-		return dictionariesMapper.list(dictionaries);
+		return dictionariesMapper.select(dictionaries);
 	}
 	
 	

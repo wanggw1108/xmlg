@@ -63,8 +63,8 @@ public class CollectionController {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
  			}
- 			myCollection.setCreateby(Long.parseLong(userId));
- 			myCollection.setCreatetime(new Date());
+ 			myCollection.setCreate_by(Long.parseLong(userId));
+ 			myCollection.setCreate_time(new Date());
  			
 			collectionService.add(myCollection);
 			
@@ -127,7 +127,7 @@ public class CollectionController {
 				return json;
 			}
 			
-			myCollection.setCreateby(Long.parseLong(createbystring));
+			myCollection.setCreate_by(Long.parseLong(createbystring));
 			
 			Long count=collectionService.countByParam(myCollection);
 			
