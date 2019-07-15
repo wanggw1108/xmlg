@@ -1,5 +1,6 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 public class CurriculumVitae {
@@ -7,6 +8,7 @@ public class CurriculumVitae {
 
     private String name;
 
+    @Column(name="currentCompany")
     private String currentCompany;
 
     private String currentPosition;

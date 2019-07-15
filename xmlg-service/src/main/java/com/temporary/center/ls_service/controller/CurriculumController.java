@@ -5,8 +5,10 @@ import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
+import com.temporary.center.ls_service.common.RequestParams;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
+import com.temporary.center.ls_service.dao.ProjectExperienceMapper;
 import com.temporary.center.ls_service.domain.CurriculumVitae;
 import com.temporary.center.ls_service.domain.EducationExperience;
 import com.temporary.center.ls_service.domain.ProjectExperience;
@@ -19,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -78,17 +81,11 @@ public class CurriculumController {
 	
 	/**
 	 * 提交简历信息
-	 * @param request
-	 * @param response
-	 * @param token     
-	 * @param sign      签名
-	 * @param timeStamp 时间戳
 	 * @return
 	 */
-	@RequestMapping(value = "/add.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/add.do",produces = "application/json; charset=UTF-8" ,method = RequestMethod.POST)
     @ResponseBody
-	public Json add(HttpServletRequest request, HttpServletResponse response,
-                    String token, String sign, String timeStamp, String jsonStr) {
+	public Json add(@RequestBody RequestParams<CurriculumParam> param ) {
 		long startTime = System.currentTimeMillis();
 		String uuid=UUID.randomUUID().toString();
 		String title="提交团队资料,"+uuid;
@@ -98,80 +95,20 @@ public class CurriculumController {
 		Json json=new Json ();
 		
 		//token验证 
-		boolean validateToken = TokenUtil.validateToken(token, redisBean);
+		boolean validateToken = TokenUtil.validateToken(param.getToken(), redisBean);
 		if(!validateToken) {
 			json.setSattusCode(StatusCode.TOKEN_ERROR);
 			return json;
 		}
-		
 		try {
-			
-			JSONObject fromObject2 = JSONObject.fromObject(jsonStr);
-			
-			CurriculumParam curriculumParam2=(CurriculumParam)JSONObject.toBean(fromObject2, CurriculumParam.class);
-			
-			List<ProjectExperience> projectList = curriculumParam2.getProjectList();
-			List<WorkExperience> workList = curriculumParam2.getWorkList();
-			List<EducationExperience> educationList = curriculumParam2.getEducationList();
-			
-			
-			
-			Map<String,String> allParamsMap=new HashMap<String,String>();
-			allParamsMap.put("token", token);
-			allParamsMap.put("timeStamp", timeStamp);
-			
-			
-			
-			
-			/*allParamsMap.put("name", name);
-			allParamsMap.put("industry", industry);
-			allParamsMap.put("scale", scale);
-			allParamsMap.put("introduce", introduce);
-			allParamsMap.put("address", address);
-			allParamsMap.put("longitude", longitude);
-			allParamsMap.put("latitude", latitude);
-			allParamsMap.put("type", type);*/
-			CurriculumVitae curriculumVitae=new CurriculumVitae(); 
-			
-			/*teamData.setName(name);
-			teamData.setIndustry(industry);
-			teamData.setScale(scale);
-			teamData.setIndustry(industry);
-			teamData.setAddress(address);
-			teamData.setLongitude(longitude);
-			teamData.setLatitude(latitude);
-			teamData.setType(type);*/
-			
- 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
+			CurriculumParam curriculumParam=param.getParams();
+			curriculumService.add(curriculumParam);
+ 			String userId = redisBean.hget(RedisKey.USER_TOKEN+param.getToken(),"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
  				return json;
  			}
- 			
- 			/*teamData.setCreateby(userId);
- 			teamData.setCreatetime(new Date());*/
-			
- 			String createSign = LoginController.createSign(allParamsMap, false);
-			
-			if(!createSign.equals(sign)) {
-				json.setSattusCode(StatusCode.SIGN_ERROR);
-				return json;
-			}
-			/*teamData.setStatus(Constant.IN_AUDIT);*/
-			
-			/*BeanUtils.copyProperties(curriculumParam, curriculumVitae);
-			
-			List<EducationExperience> educationList = curriculumParam.getEducationList();
-			
-			List<ProjectExperience> projectList = curriculumParam.getProjectList();
-			
-			List<WorkExperience> workList = curriculumParam.getWorkList();*/
-			
-			
-			
-			curriculumService.add(curriculumVitae);
-			
-			
+
 			json.setSuc();
 		}catch(Exception e) {
 			e.printStackTrace();

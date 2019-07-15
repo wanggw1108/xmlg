@@ -10,9 +10,11 @@ import com.temporary.center.ls_service.domain.CarouselPicture;
 import com.temporary.center.ls_service.domain.Picture;
 import com.temporary.center.ls_service.service.CarouselPictureService;
 import com.temporary.center.ls_service.service.PictureService;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +45,8 @@ public class IndexController {
 	
 	@Autowired
 	private PictureService pictureService;
+	@Value("${staticUrlPath}")
+	private String staticUrlPath;
 	
 	
 	/**
@@ -62,7 +66,15 @@ public class IndexController {
 		
 		try {
 			List<CarouselPicture> pictures = carouselPictureService.getALL();
-			json.setData(pictures);
+			List<JSONObject> list = new ArrayList<>();
+			pictures.forEach(p->{
+				JSONObject obj = new JSONObject();
+				obj.put("img",staticUrlPath+p.getUrl());
+				obj.put("pageUrl",p.getPageUrl());
+				list.add(obj);
+
+			});
+			json.setData(list);
 			json.setSuc();
 			
 		}catch(Exception e) {
