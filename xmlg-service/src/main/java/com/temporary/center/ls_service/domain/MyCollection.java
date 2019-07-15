@@ -4,13 +4,21 @@ package com.temporary.center.ls_service.domain;
 import com.temporary.center.ls_service.common.NotNullEmpty;
 import com.temporary.center.ls_service.common.Page;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Table(name="collection")
 public class MyCollection extends Page {
-    private Long id;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
 
     @NotNullEmpty
-    private Long recruitmentid;
+    private Long recruitment_id;
 
     @NotNullEmpty
     private String title;
@@ -19,29 +27,29 @@ public class MyCollection extends Page {
     private String district;
 
     @NotNullEmpty
-    private Float basepay;
+    private Float base_pay;
 
     @NotNullEmpty
-    private String basepayunit;
+    private String base_pay_unit;
 
-    private Long createby;
+    private Long create_by;
 
-    private Date createtime;
+    private Date create_time;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getRecruitmentid() {
-        return recruitmentid;
+    public Long getRecruitment_id() {
+        return recruitment_id;
     }
 
-    public void setRecruitmentid(Long recruitmentid) {
-        this.recruitmentid = recruitmentid;
+    public void setRecruitment_id(Long recruitment_id) {
+        this.recruitment_id = recruitment_id;
     }
 
     public String getTitle() {
@@ -49,7 +57,7 @@ public class MyCollection extends Page {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
     public String getDistrict() {
@@ -57,38 +65,38 @@ public class MyCollection extends Page {
     }
 
     public void setDistrict(String district) {
-        this.district = district == null ? null : district.trim();
+        this.district = district;
     }
 
-    public Float getBasepay() {
-        return basepay;
+    public Float getBase_pay() {
+        return base_pay;
     }
 
-    public void setBasepay(Float basepay) {
-        this.basepay = basepay;
+    public void setBase_pay(Float base_pay) {
+        this.base_pay = base_pay;
     }
 
-    public String getBasepayunit() {
-        return basepayunit;
+    public String getBase_pay_unit() {
+        return base_pay_unit;
     }
 
-    public void setBasepayunit(String basepayunit) {
-        this.basepayunit = basepayunit == null ? null : basepayunit.trim();
+    public void setBase_pay_unit(String base_pay_unit) {
+        this.base_pay_unit = base_pay_unit;
     }
 
-    public Long getCreateby() {
-        return createby;
+    public Long getCreate_by() {
+        return create_by;
     }
 
-    public void setCreateby(Long createby) {
-        this.createby = createby;
+    public void setCreate_by(Long create_by) {
+        this.create_by = create_by;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 }

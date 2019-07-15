@@ -32,7 +32,7 @@ public class CurriculumServiceImpl  implements CurriculumService{
 
 		try{
 			CurriculumVitae vitae = curriculumParam.getCurriculum();
-			vitae.setCreateby(Long.valueOf(user_id));
+			vitae.setCreate_by(user_id);
 			curriculumDao.insert(vitae);
 
 
@@ -50,7 +50,7 @@ public class CurriculumServiceImpl  implements CurriculumService{
 
 	@Override
 	public List<CurriculumVitae> list(CurriculumVitae curriculumVitae) {
-		return curriculumDao.list(curriculumVitae);
+		return curriculumDao.selectAll();
 	}
 
 	@Override

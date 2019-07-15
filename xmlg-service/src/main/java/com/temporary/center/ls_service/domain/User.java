@@ -13,6 +13,8 @@ public class User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6981955025974588141L;
+
+
 	private int id; //        bigint(20)     主键
 	@Column(name = "userName")
 	private String userName;//    varchar(50)    用户名                         

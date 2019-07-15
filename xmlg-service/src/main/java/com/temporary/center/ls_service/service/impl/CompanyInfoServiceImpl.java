@@ -16,7 +16,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 
 	@Override
 	public List<CompanyInfo> findByParam(CompanyInfo companyInfo) {
-		return companyInfoMapper.findByParamCompany(companyInfo);
+		return companyInfoMapper.select(companyInfo);
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 
 	@Override
 	public CompanyInfo qualifications(CompanyInfo param) {
-		return companyInfoMapper.qualifications(param);
+		return companyInfoMapper.selectOne(param);
 	}
 	
 	

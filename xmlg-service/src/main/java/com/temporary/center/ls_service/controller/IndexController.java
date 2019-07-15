@@ -6,9 +6,9 @@ import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.dao.CarouselPictureMapper;
 import com.temporary.center.ls_service.domain.CarouselPicture;
 import com.temporary.center.ls_service.domain.Picture;
-import com.temporary.center.ls_service.service.CarouselPictureService;
 import com.temporary.center.ls_service.service.PictureService;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class IndexController {
 	private RedisBean redisBean;
 	
 	@Autowired
-	private CarouselPictureService carouselPictureService;
+	private CarouselPictureMapper carouselPictureService;
 	
 	@Autowired
 	private PictureService pictureService;
@@ -65,7 +65,7 @@ public class IndexController {
 		json.setFail();
 		
 		try {
-			List<CarouselPicture> pictures = carouselPictureService.getALL();
+			List<CarouselPicture> pictures = carouselPictureService.selectAll();
 			List<JSONObject> list = new ArrayList<>();
 			pictures.forEach(p->{
 				JSONObject obj = new JSONObject();

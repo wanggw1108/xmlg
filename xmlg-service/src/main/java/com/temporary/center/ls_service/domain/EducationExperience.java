@@ -1,31 +1,30 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="education_experience")
 public class EducationExperience {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private Long curriculumViteaId;
+    private Long curriculum_vitea_id;
 
     private Date begin;
 
     private Date end;
-
-    private String majorName;
+    private String major_name;
 
     private String cv;
+    private Integer is_unified;
+    private String school_name;
+    private Long create_by;
 
-    private Integer isUnified;
+    private Date create_time;
 
-    private String schoolName;
+    private Long update_by;
 
-    private Long createby;
-
-    private Date createtime;
-
-    private Long updateby;
-
-    private Date updatetime;
+    private Date update_time;
 
     public Long getId() {
         return id;
@@ -35,12 +34,12 @@ public class EducationExperience {
         this.id = id;
     }
 
-    public Long getCurriculumViteaId() {
-        return curriculumViteaId;
+    public Long getCurriculum_vitea_id() {
+        return curriculum_vitea_id;
     }
 
-    public void setCurriculumViteaId(Long curriculumViteaId) {
-        this.curriculumViteaId = curriculumViteaId;
+    public void setCurriculum_vitea_id(Long curriculum_vitea_id) {
+        this.curriculum_vitea_id = curriculum_vitea_id;
     }
 
     public Date getBegin() {
@@ -59,12 +58,12 @@ public class EducationExperience {
         this.end = end;
     }
 
-    public String getMajorName() {
-        return majorName;
+    public String getMajor_name() {
+        return major_name;
     }
 
-    public void setMajorName(String majorName) {
-        this.majorName = majorName == null ? null : majorName.trim();
+    public void setMajor_name(String major_name) {
+        this.major_name = major_name;
     }
 
     public String getCv() {
@@ -72,54 +71,54 @@ public class EducationExperience {
     }
 
     public void setCv(String cv) {
-        this.cv = cv == null ? null : cv.trim();
+        this.cv = cv;
     }
 
-    public Integer getIsUnified() {
-        return isUnified;
+    public Integer getIs_unified() {
+        return is_unified;
     }
 
-    public void setIsUnified(Integer isUnified) {
-        this.isUnified = isUnified;
+    public void setIs_unified(Integer is_unified) {
+        this.is_unified = is_unified;
     }
 
-    public String getSchoolName() {
-        return schoolName;
+    public String getSchool_name() {
+        return school_name;
     }
 
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName == null ? null : schoolName.trim();
+    public void setSchool_name(String school_name) {
+        this.school_name = school_name;
     }
 
-    public Long getCreateby() {
-        return createby;
+    public Long getCreate_by() {
+        return create_by;
     }
 
-    public void setCreateby(Long createby) {
-        this.createby = createby;
+    public void setCreate_by(Long create_by) {
+        this.create_by = create_by;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
-    public Long getUpdateby() {
-        return updateby;
+    public Long getUpdate_by() {
+        return update_by;
     }
 
-    public void setUpdateby(Long updateby) {
-        this.updateby = updateby;
+    public void setUpdate_by(Long update_by) {
+        this.update_by = update_by;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdate_time() {
+        return update_time;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }

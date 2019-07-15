@@ -2,35 +2,39 @@ package com.temporary.center.ls_service.domain;
 
 import com.temporary.center.ls_service.common.Page;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="full_time")
 public class FullTime extends Page{
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="one_type")
     private String oneType;
-
+    @Column(name="two_type")
     private String twoType;
 
     private String position;
 
     private Integer number;
-
+    @Column(name="salary_begin")
     private Float salaryBegin;
-
+    @Column(name="salary_end")
     private Float salaryEnd;
-
+    @Column(name="salary_unit")
     private String salaryUnit;
-
+    @Column(name="age_begin")
     private Integer ageBegin;
-
+    @Column(name="age_end")
     private Integer ageEnd;
-
+    @Column(name="academic_requirements")
     private String academicRequirements;
 
     private String welfare;
 
     private String describe;
-
+    @Column(name="environmental_photos")
     private String environmentalPhotos;
 
     private String tel;
@@ -38,25 +42,23 @@ public class FullTime extends Page{
     private String wx;
 
     private String email;
-
+    @Column(name="create_by")
     private Long createby;
-
+    @Column(name="create_time")
     private Date createtime;
-
+    @Column(name="update_by")
     private Long updateby;
-
+    @Column(name="update_time")
     private Date updatetime;
-
+    @Column(name="start_time")
     private Date starttime;
-
+    @Column(name="end_time")
     private Date endtime;
-
+    @Column(name="work_space")
     private String workSpace;
-
     private Integer sex;
-
     private Integer active;
-
+    @Column(name="working_time")
     private String workingTime;
 
     private String longitude;

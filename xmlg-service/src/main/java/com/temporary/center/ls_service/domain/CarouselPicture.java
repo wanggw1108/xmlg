@@ -1,51 +1,31 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="carouselpicture")
 public class CarouselPicture {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
 
     private String url;
 
-    private String createby;
-
-    private Date createtime;
-
+    @Column(name="createBy")
+    private String createBy;
+    @Column(name="createTime")
+    private Date createTime;
+    @Column(name="updateBy")
     private String updateby;
-
-    private Date updatetime;
+    @Column(name="updateTime")
+    private Date updateTime;
 
     private Integer sort;
-    
+    @Column(name="bgImg")
     private String bgImg;
-    
+    @Column(name="pageUrl")
     private String pageUrl;
-    
-    public String getBgImg() {
-		return bgImg;
-	}
 
-	public void setBgImg(String bgImg) {
-		this.bgImg = bgImg;
-	}
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-	}
-
-	public Integer getSort() {
-		return sort;
-	}
-
-	public void setSort(Integer sort) {
-		this.sort = sort;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -58,23 +38,23 @@ public class CarouselPicture {
     }
 
     public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+        this.url = url;
     }
 
-    public String getCreateby() {
-        return createby;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setCreateby(String createby) {
-        this.createby = createby == null ? null : createby.trim();
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public String getUpdateby() {
@@ -82,14 +62,38 @@ public class CarouselPicture {
     }
 
     public void setUpdateby(String updateby) {
-        this.updateby = updateby == null ? null : updateby.trim();
+        this.updateby = updateby;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getBgImg() {
+        return bgImg;
+    }
+
+    public void setBgImg(String bgImg) {
+        this.bgImg = bgImg;
+    }
+
+    public String getPageUrl() {
+        return pageUrl;
+    }
+
+    public void setPageUrl(String pageUrl) {
+        this.pageUrl = pageUrl;
     }
 }

@@ -6,24 +6,24 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 import java.util.Map;
 
-public interface UserDao extends Mapper<User> {
+public  interface UserDao extends Mapper<User> {
 
 
-	List<User> queryUserByParams(Map<String, Object> params);
+	public abstract List<User> queryUserByParams(Map<String, Object> params);
 
 
-	Long updatePassword(Map<String, Object> params);
+	public abstract Long updatePassword(Map<String, Object> params);
 
 
-	User getUserById(long parseLong);
+	public abstract User getUserById(long parseLong);
 
 
-	void createUser(User user);
+	public abstract void createUser(User user);
 
 
-	Long countDataByParams(User userParam);
+	public abstract Long countDataByParams(User userParam);
 
 
-	void updateUser(Map<String, Object> param);
+	public abstract void updateUser(Map<String, Object> param);
 	
 }

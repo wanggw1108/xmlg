@@ -1,21 +1,28 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Table(name="dictionaries")
 public class Dictionaries {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     private Integer type;
 
     private String name;
 
-    private String createby;
+    private String create_by;
 
-    private Date createtime;
+    private Date create_time;
 
-    private String updateby;
+    private String update_by;
 
-    private Date updatetime;
+    private Date update_time;
 
     public Long getId() {
         return id;
@@ -41,35 +48,35 @@ public class Dictionaries {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getCreateby() {
-        return createby;
+    public String getCreate_by() {
+        return create_by;
     }
 
-    public void setCreateby(String createby) {
-        this.createby = createby == null ? null : createby.trim();
+    public void setCreate_by(String create_by) {
+        this.create_by = create_by;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
-    public String getUpdateby() {
-        return updateby;
+    public String getUpdate_by() {
+        return update_by;
     }
 
-    public void setUpdateby(String updateby) {
-        this.updateby = updateby == null ? null : updateby.trim();
+    public void setUpdate_by(String update_by) {
+        this.update_by = update_by;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdate_time() {
+        return update_time;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BusinessLicenseService {
 
-	List<Dictionaries> list(BusinessLicense businessLicense);
+	List<BusinessLicenseService> list(BusinessLicense businessLicense);
 
 	void add(BusinessLicense businessLicense);
 

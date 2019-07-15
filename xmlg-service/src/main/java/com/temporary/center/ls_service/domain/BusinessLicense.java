@@ -1,11 +1,19 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Table(name="business_license")
 public class BusinessLicense {
-    private Long id;
 
-    private Long teamId;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+
+    private Integer team_id;
 
     private String url;
 
@@ -13,30 +21,30 @@ public class BusinessLicense {
 
     private String code;
 
-    private String createby;
+    private String create_by;
 
-    private Date createtime;
+    private Date create_time;
 
-    private String updateby;
+    private String update_by;
 
-    private Date updatetime;
+    private Date update_time;
 
     private Integer status;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getTeamId() {
-        return teamId;
+    public Integer getTeam_id() {
+        return team_id;
     }
 
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
+    public void setTeam_id(Integer team_id) {
+        this.team_id = team_id;
     }
 
     public String getUrl() {
@@ -44,7 +52,7 @@ public class BusinessLicense {
     }
 
     public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+        this.url = url;
     }
 
     public String getName() {
@@ -52,7 +60,7 @@ public class BusinessLicense {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public String getCode() {
@@ -60,39 +68,39 @@ public class BusinessLicense {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code;
     }
 
-    public String getCreateby() {
-        return createby;
+    public String getCreate_by() {
+        return create_by;
     }
 
-    public void setCreateby(String createby) {
-        this.createby = createby == null ? null : createby.trim();
+    public void setCreate_by(String create_by) {
+        this.create_by = create_by;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
-    public String getUpdateby() {
-        return updateby;
+    public String getUpdate_by() {
+        return update_by;
     }
 
-    public void setUpdateby(String updateby) {
-        this.updateby = updateby == null ? null : updateby.trim();
+    public void setUpdate_by(String update_by) {
+        this.update_by = update_by;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdate_time() {
+        return update_time;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 
     public Integer getStatus() {

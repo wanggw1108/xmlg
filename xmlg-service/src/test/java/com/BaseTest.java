@@ -1,16 +1,22 @@
 package com;
 
 import app.MyApplication;
+import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.MD5Utils;
+import com.temporary.center.ls_service.dao.CarouselPictureMapper;
 import com.temporary.center.ls_service.dao.UserDao;
+import com.temporary.center.ls_service.domain.CarouselPicture;
+import com.temporary.center.ls_service.domain.User;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,15 +29,23 @@ import java.util.Map;
 public class BaseTest {
 
     @Autowired
-    UserDao dao;
+    CarouselPictureMapper dao;
     @Test
     public void dbTest(){
 
-        Map<String,Object> update = new HashedMap();
-        update.put("id",1);
-        update.put("password", MD5Utils.getMD5("123QWE123"));
-        update.put("updateTime",new Date());
-        dao.updatePassword(update);
+        CarouselPicture user = new CarouselPicture();
+        user.setSort(5);
+        dao.insert(user);
+        System.out.println(user.getId());
+        PageHelper.startPage(4,1);//分页
+        Example example = new Example(CarouselPicture.class); //定义对象CarouselPicture
+        String by="sort";
+        example.setOrderByClause(by);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("createBy",1);
+        List<CarouselPicture> pictureList = dao.selectByExample(example);
+
+        System.out.println(pictureList.size());
 
     }
 

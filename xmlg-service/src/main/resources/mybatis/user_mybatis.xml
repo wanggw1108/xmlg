@@ -4,9 +4,9 @@
 <mapper namespace="com.temporary.center.ls_service.dao.UserDao">
 
     <sql id="table_name">w_user</sql>
-	
+
     <resultMap id="user" type="com.temporary.center.ls_service.domain.User"/>
-    
+
     <select id="queryUserByParams" resultMap="user" parameterType="java.util.Map">
         SELECT * FROM
         <include refid="table_name"/>
@@ -85,7 +85,7 @@
 			<if test="wxKey != null">wxKey=#{wxKey},</if>
 			<if test="wbKey != null">wbKey=#{wbKey},</if>
 		</set>
-		where id=#{id}	
+		where id=#{id}
 	</update>
 
 	<insert id="createUser" parameterType="com.temporary.center.ls_service.domain.User">
