@@ -59,7 +59,7 @@ public class LogUserServiceImpl implements LogUserService {
 
 	@Override
 	public List<UserAddress> addressList(UserAddress userAddress) {
-		return userAddressMapper.list(userAddress);
+		return null;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class LogUserServiceImpl implements LogUserService {
 
 	@Override
 	public void updateIsdefault(UserAddress updateUserAddress) {
-		userAddressMapper.updateIsdefault(updateUserAddress);
+
 	}
 
 }

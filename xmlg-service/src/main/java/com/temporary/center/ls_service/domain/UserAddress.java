@@ -3,10 +3,13 @@ package com.temporary.center.ls_service.domain;
 import com.temporary.center.ls_service.common.NotNullEmpty;
 import com.temporary.center.ls_service.common.Page;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="user_address")
 public class UserAddress extends Page{
-    private Long id;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
 
     @NotNullEmpty
     private String address;
@@ -22,16 +25,17 @@ public class UserAddress extends Page{
 
     @NotNullEmpty
     private Float latitude;
-
-    private Long createby;
-
+    @Column(name="create_by")
+    private Integer createby;
+    @Column(name="create_time")
     private Date createtime;
-
-    private Long updateby;
-
+    @Column(name="update_by")
+    private Integer updateby;
+    @Column(name="update_time")
     private Date updatetime;
 
     @NotNullEmpty
+    @Column(name="contacts_name")
     private String contactsname;
 
     @NotNullEmpty
@@ -49,28 +53,12 @@ public class UserAddress extends Page{
 
     @NotNullEmpty
     private String district;
-    
-    public String getTel() {
-		return tel;
-	}
 
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
-	public String getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(String district) {
-		this.district = district;
-	}
-
-	public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -79,7 +67,7 @@ public class UserAddress extends Page{
     }
 
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = address;
     }
 
     public String getCountry() {
@@ -87,7 +75,7 @@ public class UserAddress extends Page{
     }
 
     public void setCountry(String country) {
-        this.country = country == null ? null : country.trim();
+        this.country = country;
     }
 
     public String getProvince() {
@@ -95,7 +83,7 @@ public class UserAddress extends Page{
     }
 
     public void setProvince(String province) {
-        this.province = province == null ? null : province.trim();
+        this.province = province;
     }
 
     public String getCity() {
@@ -103,7 +91,7 @@ public class UserAddress extends Page{
     }
 
     public void setCity(String city) {
-        this.city = city == null ? null : city.trim();
+        this.city = city;
     }
 
     public Float getLongitude() {
@@ -122,11 +110,11 @@ public class UserAddress extends Page{
         this.latitude = latitude;
     }
 
-    public Long getCreateby() {
+    public Integer getCreateby() {
         return createby;
     }
 
-    public void setCreateby(Long createby) {
+    public void setCreateby(Integer createby) {
         this.createby = createby;
     }
 
@@ -138,11 +126,11 @@ public class UserAddress extends Page{
         this.createtime = createtime;
     }
 
-    public Long getUpdateby() {
+    public Integer getUpdateby() {
         return updateby;
     }
 
-    public void setUpdateby(Long updateby) {
+    public void setUpdateby(Integer updateby) {
         this.updateby = updateby;
     }
 
@@ -159,7 +147,15 @@ public class UserAddress extends Page{
     }
 
     public void setContactsname(String contactsname) {
-        this.contactsname = contactsname == null ? null : contactsname.trim();
+        this.contactsname = contactsname;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public Integer getSex() {
@@ -175,7 +171,7 @@ public class UserAddress extends Page{
     }
 
     public void setLabel(String label) {
-        this.label = label == null ? null : label.trim();
+        this.label = label;
     }
 
     public Integer getActive() {
@@ -192,5 +188,13 @@ public class UserAddress extends Page{
 
     public void setIsdefault(Integer isdefault) {
         this.isdefault = isdefault;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 }

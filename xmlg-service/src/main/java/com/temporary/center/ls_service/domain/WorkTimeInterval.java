@@ -1,33 +1,38 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
+
+@Table(name="work_time_interval")
 public class WorkTimeInterval {
-    private Long id;
-
-    private Long recruitmentInfoId;
-
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name="recruitment_info_id")
+    private Integer recruitmentInfoId;
+    @Column(name="start_hour")
     private Integer startHour;
-
+    @Column(name="start_minute")
     private Integer startMinute;
-
+    @Column(name="end_hour")
     private Integer endHour;
-
+    @Column(name="end_minute")
     private Integer endMinute;
 
     private Integer sort;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getRecruitmentInfoId() {
+    public Integer getRecruitmentInfoId() {
         return recruitmentInfoId;
     }
 
-    public void setRecruitmentInfoId(Long recruitmentInfoId) {
+    public void setRecruitmentInfoId(Integer recruitmentInfoId) {
         this.recruitmentInfoId = recruitmentInfoId;
     }
 

@@ -1,31 +1,34 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="work_time")
 public class WorkTime {
-    private Long id;
-
-    private Long recruitmentInfoId;
-
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name="recruitment_info_id")
+    private Integer recruitmentInfoId;
+    @Column(name="start_time")
     private Date startTime;
-
+    @Column(name="end_time")
     private Date endTime;
 
     private Integer sort;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getRecruitmentInfoId() {
+    public Integer getRecruitmentInfoId() {
         return recruitmentInfoId;
     }
 
-    public void setRecruitmentInfoId(Long recruitmentInfoId) {
+    public void setRecruitmentInfoId(Integer recruitmentInfoId) {
         this.recruitmentInfoId = recruitmentInfoId;
     }
 

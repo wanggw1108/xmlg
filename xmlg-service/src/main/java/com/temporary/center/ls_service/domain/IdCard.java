@@ -1,35 +1,40 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="id_card")
 public class IdCard {
-    private Long id;
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name="team_id")
     private Long teamId;
-    
+    @Column(name="positive_url")
     private String positiveUrl;
-
+    @Column(name="aspect_url")
     private String aspectUrl;
-
+    @Column(name="manager_name")
     private String managerName;
-
+    @Column(name="manager_id")
     private String managerId;
-
+    @Column(name="create_by")
     private String createby;
-
+    @Column(name="create_time")
     private Date createtime;
-
+    @Column(name="update_by")
     private String updateby;
-
+    @Column(name="update_time")
     private Date updatetime;
 
     private Integer status;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

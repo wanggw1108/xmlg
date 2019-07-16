@@ -136,8 +136,8 @@ public class CollectionController {
 			
 			/*for(MyCollection collection2:list) {
 				String basepayunit = collection2.getBasepayunit();
-				if(null!=basepayunit && null!=PartTimeJobData.wagesUnit.get(Integer.parseInt(basepayunit))) {
-					collection2.setBasepayunit(PartTimeJobData.wagesUnit.get(Integer.parseInt(basepayunit)));
+				if(null!=basepayunit && null!=Dictionary.wagesUnit.get(Integer.parseInt(basepayunit))) {
+					collection2.setBasepayunit(Dictionary.wagesUnit.get(Integer.parseInt(basepayunit)));
 				}
 			}*/
 			

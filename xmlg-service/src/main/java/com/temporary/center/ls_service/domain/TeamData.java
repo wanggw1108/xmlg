@@ -1,9 +1,12 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="team_data")
 public class TeamData {
-    private Long id;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
 
     private String type;
 
@@ -20,20 +23,20 @@ public class TeamData {
     private String longitude;
 
     private String latitude;
-
+    @Column(name="create_by")
     private String createBy;
-
+    @Column(name="create_time")
     private Date createtime;
-
+    @Column(name="update_by")
     private String updateby;
-
+    @Column(name="update_time")
     private Date updatetime;
 
     private Integer status;
-
-    private Long idcardId;
-    
-    private Long businessLicenseId;
+    @Column(name="id_card_id")
+    private Integer idcardId;
+    @Column(name="business_license_id")
+    private Integer businessLicenseId;
     
     /**
      * 不通过原因
@@ -48,28 +51,28 @@ public class TeamData {
 		this.reason = reason;
 	}
 
-	public Long getIdcardId() {
-		return idcardId;
-	}
-
-	public void setIdcardId(Long idcardId) {
-		this.idcardId = idcardId;
-	}
-
-	public Long getBusinessLicenseId() {
-		return businessLicenseId;
-	}
-
-	public void setBusinessLicenseId(Long businessLicenseId) {
-		this.businessLicenseId = businessLicenseId;
-	}
-
-	public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIdcardId() {
+        return idcardId;
+    }
+
+    public void setIdcardId(Integer idcardId) {
+        this.idcardId = idcardId;
+    }
+
+    public Integer getBusinessLicenseId() {
+        return businessLicenseId;
+    }
+
+    public void setBusinessLicenseId(Integer businessLicenseId) {
+        this.businessLicenseId = businessLicenseId;
     }
 
     public String getType() {

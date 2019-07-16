@@ -1,12 +1,10 @@
 package com.temporary.center.ls_service.controller;
 
 import com.temporary.center.ls_common.Constant;
-import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
-import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
+import com.temporary.center.ls_service.dao.CityMapper;
 import com.temporary.center.ls_service.domain.City;
-import com.temporary.center.ls_service.service.CityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -40,7 +33,7 @@ public class ProvinceCityController {
 	private RedisBean redisBean;
 	
 	@Autowired
-	private CityService cityService;
+	private CityMapper cityService;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/cityList.do", method = RequestMethod.POST)
@@ -54,7 +47,7 @@ public class ProvinceCityController {
 		
 		Json json=new Json();
 		try {{
-				List<City> cityList=cityService.getCityALL();
+				List<City> cityList=cityService.selectAll();
 				Collections.sort(cityList, new City());
 				json.setData(cityList);
 				json.setSuc();

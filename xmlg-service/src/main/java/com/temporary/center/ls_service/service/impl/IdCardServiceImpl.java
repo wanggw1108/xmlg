@@ -16,7 +16,7 @@ public class IdCardServiceImpl implements IdCardService {
 	
 	@Override
 	public List<IdCard> list(IdCard businessLicense) {
-		return idCardMapper.list(businessLicense);
+		return null;
 	}
 
 	@Override

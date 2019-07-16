@@ -1,15 +1,10 @@
 package com.temporary.center.ls_service.dao;
 
 import com.temporary.center.ls_service.domain.TeamData;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface TeamDataMapper {
-    int insert(TeamData record);
+public interface TeamDataMapper extends Mapper<TeamData> {
 
-    int insertSelective(TeamData record);
-
-	List<TeamData> list(TeamData businessLicense);
-
-	TeamData findDataById(Long id);
 }

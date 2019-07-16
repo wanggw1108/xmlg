@@ -1,17 +1,8 @@
 package com.temporary.center.ls_service.dao;
 
 import com.temporary.center.ls_service.domain.WorkTimeInterval;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface WorkTimeIntervalMapper {
-    int deleteByPrimaryKey(Long id);
+public interface WorkTimeIntervalMapper extends Mapper<WorkTimeInterval> {
 
-    int insert(WorkTimeInterval record);
-
-    int insertSelective(WorkTimeInterval record);
-
-    WorkTimeInterval selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(WorkTimeInterval record);
-
-    int updateByPrimaryKey(WorkTimeInterval record);
 }

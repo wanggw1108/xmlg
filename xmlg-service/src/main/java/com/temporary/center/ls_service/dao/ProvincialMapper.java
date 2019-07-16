@@ -1,17 +1,8 @@
 package com.temporary.center.ls_service.dao;
 
 import com.temporary.center.ls_service.domain.Provincial;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface ProvincialMapper {
-    int deleteByPrimaryKey(Integer pid);
+public interface ProvincialMapper extends Mapper<Provincial> {
 
-    int insert(Provincial record);
-
-    int insertSelective(Provincial record);
-
-    Provincial selectByPrimaryKey(Integer pid);
-
-    int updateByPrimaryKeySelective(Provincial record);
-
-    int updateByPrimaryKey(Provincial record);
 }

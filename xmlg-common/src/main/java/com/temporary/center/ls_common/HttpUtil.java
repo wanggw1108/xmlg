@@ -3,6 +3,7 @@ package com.temporary.center.ls_common;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +16,23 @@ public class HttpUtil {
      */
     public static String send(String method, String url, String postStr, Map<String, String> headers) throws IOException {
         return send(method, url, postStr, headers, "utf-8");
+    }
+    public static String send(String url) throws IOException {
+        return send("GET", url, null, null, "utf-8");
+    }
+    public static String send(String method, String url, Map<String,Object> params, Map<String, String> headers) throws IOException {
+        return send(method, url, buildPostStr(params), headers, "utf-8");
+    }
+    public static String buildPostStr(Map<String,Object> params){
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<String, Object> e : params.entrySet()) {
+            try {
+                builder.append(e.getKey()).append("=").append(URLEncoder.encode(String.valueOf(e.getValue()), "utf-8")).append("&");
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return builder.substring(0, builder.length() - 3);
     }
 
     public static String send(String method, String url, String postStr, Map<String, String> headers, String charset) throws IOException {

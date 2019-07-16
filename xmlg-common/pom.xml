@@ -134,6 +134,7 @@
             <artifactId>itextpdf</artifactId>
             <version>5.5.8</version>
         </dependency>
+
         <dependency>
             <groupId>com.itextpdf.tool</groupId>
             <artifactId>xmlworker</artifactId>
@@ -144,7 +145,12 @@
             <artifactId>itext</artifactId>
             <version>2.0.7</version>
         </dependency>
-
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.46</version>
+        </dependency>
         <!-- zhouxuan -->
         <dependency>
             <groupId>org.swinglabs</groupId>

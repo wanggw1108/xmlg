@@ -1,21 +1,10 @@
 package com.temporary.center.ls_service.dao;
 
 import com.temporary.center.ls_service.domain.City;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface CityMapper {
-    int deleteByPrimaryKey(String city);
+public interface CityMapper extends Mapper<City> {
 
-    int insert(City record);
-
-    int insertSelective(City record);
-
-    City selectByPrimaryKey(String city);
-
-    int updateByPrimaryKeySelective(City record);
-
-    int updateByPrimaryKey(City record);
-
-	List<City> getCityALL();
 }

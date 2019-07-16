@@ -1,26 +1,28 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-
+@Table(name="picture")
 public class Picture implements Serializable{
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 
     private String name;
 
     private String url;
-
+    @Column(name="create_by")
     private String createby;
-
+    @Column(name="create_time")
     private Date createtime;
-
+    @Column(name="update_by")
     private String updateby;
-
+    @Column(name="update_time")
     private Date updatetime;
 
     private Integer sort;

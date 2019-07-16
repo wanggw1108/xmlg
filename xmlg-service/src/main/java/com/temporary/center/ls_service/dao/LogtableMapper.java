@@ -1,17 +1,9 @@
 package com.temporary.center.ls_service.dao;
 
+
 import com.temporary.center.ls_service.domain.Logtable;
+import tk.mybatis.mapper.common.Mapper;
 
-public interface LogtableMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface LogtableMapper extends Mapper<Logtable> {
 
-    int insert(Logtable record);
-
-    int insertSelective(Logtable record);
-
-    Logtable selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Logtable record);
-
-    int updateByPrimaryKey(Logtable record);
 }

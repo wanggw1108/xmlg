@@ -1,11 +1,14 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="project_experience")
 public class ProjectExperience {
-    private Long id;
-
-    private Long curriculumViteaId;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name="curriculum_vitea_id")
+    private Integer curriculumViteaId;
 
     private String name;
 
@@ -18,28 +21,28 @@ public class ProjectExperience {
     private Date begin;
 
     private Date end;
-
-    private Long createby;
-
+    @Column(name="create_by")
+    private Integer createby;
+    @Column(name="create_time")
     private Date createtime;
-
-    private Long updateby;
-
+    @Column(name="update_by")
+    private Integer updateby;
+    @Column(name="update_time")
     private Date updatetime;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getCurriculumViteaId() {
+    public Integer getCurriculumViteaId() {
         return curriculumViteaId;
     }
 
-    public void setCurriculumViteaId(Long curriculumViteaId) {
+    public void setCurriculumViteaId(Integer curriculumViteaId) {
         this.curriculumViteaId = curriculumViteaId;
     }
 
@@ -48,7 +51,7 @@ public class ProjectExperience {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public String getDescribe() {
@@ -56,7 +59,7 @@ public class ProjectExperience {
     }
 
     public void setDescribe(String describe) {
-        this.describe = describe == null ? null : describe.trim();
+        this.describe = describe;
     }
 
     public String getDuty() {
@@ -64,7 +67,7 @@ public class ProjectExperience {
     }
 
     public void setDuty(String duty) {
-        this.duty = duty == null ? null : duty.trim();
+        this.duty = duty;
     }
 
     public String getAchievement() {
@@ -72,7 +75,7 @@ public class ProjectExperience {
     }
 
     public void setAchievement(String achievement) {
-        this.achievement = achievement == null ? null : achievement.trim();
+        this.achievement = achievement;
     }
 
     public Date getBegin() {
@@ -91,11 +94,11 @@ public class ProjectExperience {
         this.end = end;
     }
 
-    public Long getCreateby() {
+    public Integer getCreateby() {
         return createby;
     }
 
-    public void setCreateby(Long createby) {
+    public void setCreateby(Integer createby) {
         this.createby = createby;
     }
 
@@ -107,11 +110,11 @@ public class ProjectExperience {
         this.createtime = createtime;
     }
 
-    public Long getUpdateby() {
+    public Integer getUpdateby() {
         return updateby;
     }
 
-    public void setUpdateby(Long updateby) {
+    public void setUpdateby(Integer updateby) {
         this.updateby = updateby;
     }
 

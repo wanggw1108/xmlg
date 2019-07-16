@@ -21,12 +21,12 @@ public class JoinServiceImpl implements JoinService {
 
 	@Override
 	public Long countByParam(Join join) {
-		return joinMapper.countByParam(join);
+		return null;
 	}
 
 	@Override
 	public List<Join> findDataByParam(Join joinParam) {
-		return joinMapper.findDataByParam(joinParam);
+		return null;
 	}
 	
 	

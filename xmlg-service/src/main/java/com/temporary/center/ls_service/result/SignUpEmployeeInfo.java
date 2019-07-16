@@ -6,7 +6,7 @@ package com.temporary.center.ls_service.result;
  */
 public class SignUpEmployeeInfo {
 	
-	private Long employeeId;
+	private Integer employeeId;
 	
 	private Integer employeeSex;
 	
@@ -21,14 +21,13 @@ public class SignUpEmployeeInfo {
 	private String employeeServiceDistrict;
 	
 	private String employeeJobExperience;
-	
-	 
 
-	public Long getEmployeeId() {
+
+	public Integer getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(Long employeeId) {
+	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
 

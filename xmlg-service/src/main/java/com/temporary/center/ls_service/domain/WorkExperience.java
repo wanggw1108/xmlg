@@ -1,51 +1,51 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="work_experience")
 public class WorkExperience {
-    private Long id;
-
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
     private Date begin;
-
     private String end;
-
+    @Column(name="corporate_name")
     private String corporateName;
-
+    @Column(name="company_nature")
     private String companyNature;
-
+    @Column(name="company_size")
     private String companySize;
-
+    @Column(name="company_industry")
     private String companyIndustry;
-
+    @Column(name="job_title")
     private String jobTitle;
-
     private Float salary;
-
+    @Column(name="salary_unit")
     private String salaryUnit;
-
+    @Column(name="work_space")
     private String workSpace;
-
+    @Column(name="subordinates_number")
     private Integer subordinatesNumber;
-
+    @Column(name="reporting_object")
     private String reportingObject;
-
+    @Column(name="duty_achievement")
     private String dutyAchievement;
-
+    @Column(name="create_by")
     private Long createby;
-
+    @Column(name="create_time")
     private Date createtime;
-
+    @Column(name="update_by")
     private Long updateby;
-
+    @Column(name="update_time")
     private Date updatetime;
-
+    @Column(name="curriculum_vitea_id")
     private Long curriculumViteaId;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,7 +62,7 @@ public class WorkExperience {
     }
 
     public void setEnd(String end) {
-        this.end = end == null ? null : end.trim();
+        this.end = end;
     }
 
     public String getCorporateName() {
@@ -70,7 +70,7 @@ public class WorkExperience {
     }
 
     public void setCorporateName(String corporateName) {
-        this.corporateName = corporateName == null ? null : corporateName.trim();
+        this.corporateName = corporateName;
     }
 
     public String getCompanyNature() {
@@ -78,7 +78,7 @@ public class WorkExperience {
     }
 
     public void setCompanyNature(String companyNature) {
-        this.companyNature = companyNature == null ? null : companyNature.trim();
+        this.companyNature = companyNature;
     }
 
     public String getCompanySize() {
@@ -86,7 +86,7 @@ public class WorkExperience {
     }
 
     public void setCompanySize(String companySize) {
-        this.companySize = companySize == null ? null : companySize.trim();
+        this.companySize = companySize;
     }
 
     public String getCompanyIndustry() {
@@ -94,7 +94,7 @@ public class WorkExperience {
     }
 
     public void setCompanyIndustry(String companyIndustry) {
-        this.companyIndustry = companyIndustry == null ? null : companyIndustry.trim();
+        this.companyIndustry = companyIndustry;
     }
 
     public String getJobTitle() {
@@ -102,7 +102,7 @@ public class WorkExperience {
     }
 
     public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle == null ? null : jobTitle.trim();
+        this.jobTitle = jobTitle;
     }
 
     public Float getSalary() {
@@ -118,7 +118,7 @@ public class WorkExperience {
     }
 
     public void setSalaryUnit(String salaryUnit) {
-        this.salaryUnit = salaryUnit == null ? null : salaryUnit.trim();
+        this.salaryUnit = salaryUnit;
     }
 
     public String getWorkSpace() {
@@ -126,7 +126,7 @@ public class WorkExperience {
     }
 
     public void setWorkSpace(String workSpace) {
-        this.workSpace = workSpace == null ? null : workSpace.trim();
+        this.workSpace = workSpace;
     }
 
     public Integer getSubordinatesNumber() {
@@ -142,7 +142,7 @@ public class WorkExperience {
     }
 
     public void setReportingObject(String reportingObject) {
-        this.reportingObject = reportingObject == null ? null : reportingObject.trim();
+        this.reportingObject = reportingObject;
     }
 
     public String getDutyAchievement() {
@@ -150,7 +150,7 @@ public class WorkExperience {
     }
 
     public void setDutyAchievement(String dutyAchievement) {
-        this.dutyAchievement = dutyAchievement == null ? null : dutyAchievement.trim();
+        this.dutyAchievement = dutyAchievement;
     }
 
     public Long getCreateby() {

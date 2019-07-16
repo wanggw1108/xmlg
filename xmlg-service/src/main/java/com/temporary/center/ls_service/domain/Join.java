@@ -2,50 +2,47 @@ package com.temporary.center.ls_service.domain;
 
 import com.temporary.center.ls_service.common.Page;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="w_join")
 public class Join extends Page{
-    private Long id;
 
-    private Long resumeId;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
 
+    @Column(name="resume_id")
+    private Integer resumeId;
+    @Column(name="user_name")
     private String userName;
-
+    @Column(name="user_id")
     private Integer userId;
-
-    private Long recruitmentInfoId;
-
+    @Column(name="recruitment_info_id")
+    private Integer recruitmentInfoId;
+    @Column(name="recruitment_info_createBy")
     private String recruitmentInfoCreateby;
-
+    @Column(name="recruitment_info_createBy_name")
     private String recruitmentInfoCreatebyName;
-
+    @Column(name="create_time")
     private Date createtime;
 
     private String remark;
 
     private Integer state;
 
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
-	}
-
-	public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getResumeId() {
+    public Integer getResumeId() {
         return resumeId;
     }
 
-    public void setResumeId(Long resumeId) {
+    public void setResumeId(Integer resumeId) {
         this.resumeId = resumeId;
     }
 
@@ -54,7 +51,7 @@ public class Join extends Page{
     }
 
     public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+        this.userName = userName;
     }
 
     public Integer getUserId() {
@@ -65,11 +62,11 @@ public class Join extends Page{
         this.userId = userId;
     }
 
-    public Long getRecruitmentInfoId() {
+    public Integer getRecruitmentInfoId() {
         return recruitmentInfoId;
     }
 
-    public void setRecruitmentInfoId(Long recruitmentInfoId) {
+    public void setRecruitmentInfoId(Integer recruitmentInfoId) {
         this.recruitmentInfoId = recruitmentInfoId;
     }
 
@@ -78,7 +75,7 @@ public class Join extends Page{
     }
 
     public void setRecruitmentInfoCreateby(String recruitmentInfoCreateby) {
-        this.recruitmentInfoCreateby = recruitmentInfoCreateby == null ? null : recruitmentInfoCreateby.trim();
+        this.recruitmentInfoCreateby = recruitmentInfoCreateby;
     }
 
     public String getRecruitmentInfoCreatebyName() {
@@ -86,7 +83,7 @@ public class Join extends Page{
     }
 
     public void setRecruitmentInfoCreatebyName(String recruitmentInfoCreatebyName) {
-        this.recruitmentInfoCreatebyName = recruitmentInfoCreatebyName == null ? null : recruitmentInfoCreatebyName.trim();
+        this.recruitmentInfoCreatebyName = recruitmentInfoCreatebyName;
     }
 
     public Date getCreatetime() {
@@ -102,6 +99,14 @@ public class Join extends Page{
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+        this.remark = remark;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

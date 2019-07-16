@@ -16,7 +16,7 @@ public class CityServiceImpl implements CityService {
 	
 	@Override
 	public List<City> getCityALL() {
-		return cityMapper.getCityALL();
+		return cityMapper.selectAll();
 	}
 
 }

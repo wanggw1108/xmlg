@@ -4,7 +4,9 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.ValidateParam;
+import com.temporary.center.ls_service.dao.UserAddressMapper;
 import com.temporary.center.ls_service.dao.UserDao;
+import com.temporary.center.ls_service.domain.CarouselPicture;
 import com.temporary.center.ls_service.domain.User;
 import com.temporary.center.ls_service.domain.UserAddress;
 import com.temporary.center.ls_service.service.LogUserService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +50,9 @@ public class LoginController {
 	
 	@Autowired
 	private LogUserService logUserService;
+
+	@Autowired
+	private UserAddressMapper addressService;
 
 	@Autowired
 	private UserDao userService;
@@ -615,11 +621,15 @@ public class LoginController {
 			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			
 			UserAddress userAddress=new UserAddress();
-			userAddress.setCreateby(Long.parseLong(userId));
+			userAddress.setCreateby(Integer.valueOf(userId));
 			userAddress.setPageSize(20);
 			userAddress.setCurr(1);
 			userAddress.setActive(Integer.parseInt(Constant.EFFECTIVE));
-			List<UserAddress> list= logUserService.addressList(userAddress);
+			addressService.insert(userAddress);
+			Example example = new Example(UserAddress.class);
+			Example.Criteria criteria = example.createCriteria();
+			criteria.andEqualTo("create_by",Integer.valueOf(userId));
+			List<UserAddress> list = addressService.selectByExample(example);
 			for(UserAddress ua:list) {
 				ua.setCity("");
 			}
@@ -669,14 +679,14 @@ public class LoginController {
  				return json;
  			}
 			 
-			userAddress.setCreateby(Long.parseLong(userId));
+			userAddress.setCreateby(Integer.valueOf(userId));
 			userAddress.setCreatetime(new Date());
 			userAddress.setActive(Integer.parseInt(Constant.EFFECTIVE) );
 			
 			Integer isdefault = userAddress.getIsdefault();
 			if(null!=isdefault && isdefault.equals(0)) {//是否默认 0：默认 1：非默认
 				UserAddress updateUserAddress=new UserAddress();
-				updateUserAddress.setCreateby(Long.parseLong(userId));
+				updateUserAddress.setCreateby(Integer.valueOf(userId));
 				updateUserAddress.setIsdefault(1);
 				logUserService.updateIsdefault(updateUserAddress);
 			}

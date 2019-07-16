@@ -2,38 +2,42 @@ package com.temporary.center.ls_service.domain;
 
 import com.temporary.center.ls_service.common.Page;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="wallet_detail")
 public class WalletDetail extends Page{
-    private Long id;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
 
-    private Long userid;
+    @Column(name="user_id")
+    private Integer userid;
 
     private Double amount;
 
     private Integer type;
-
+    @Column(name="create_by")
     private String createby;
-
+    @Column(name="create_time")
     private Date createtime;
 
     private String remark;
 
     private String url;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getUserid() {
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(Long userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 

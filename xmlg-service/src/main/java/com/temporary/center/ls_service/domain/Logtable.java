@@ -1,18 +1,19 @@
 package com.temporary.center.ls_service.domain;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Table(name="logtable")
 public class Logtable {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-
     private String method;
-
     private String operateor;
-
+    @Column(name="operate_type")
     private String operatetype;
-
+    @Column(name="operate_date")
     private Date operatedate;
-
+    @Column(name="operate_result")
     private String operateresult;
 
     private String remark;

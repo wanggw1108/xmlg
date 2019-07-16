@@ -16,7 +16,7 @@ public class WalletDetailServiceImpl implements WalletDetailService {
 	
 	@Override
 	public List<WalletDetail> list(WalletDetail businessLicense) {
-		return dao.list(businessLicense);
+		return null;
 	}
 
 	@Override
@@ -26,12 +26,12 @@ public class WalletDetailServiceImpl implements WalletDetailService {
 
 	@Override
 	public Long count(WalletDetail walletDetail) {
-		return dao.count(walletDetail);
+		return null;
 	}
 
 	@Override
 	public Double currAmount(WalletDetail walletDetail) {
-		return dao.currAmount(walletDetail);
+		return null;
 	}
 	
 	

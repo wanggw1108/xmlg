@@ -16,7 +16,7 @@ public class TeamDataServiceImpl implements TeamDataService {
 	
 	@Override
 	public List<TeamData> list(TeamData businessLicense) {
-		return dao.list(businessLicense);
+		return null;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class TeamDataServiceImpl implements TeamDataService {
 
 	@Override
 	public TeamData findDataById(Long id) {
-		return dao.findDataById(id);
+		return null;
 	}
 	
 	

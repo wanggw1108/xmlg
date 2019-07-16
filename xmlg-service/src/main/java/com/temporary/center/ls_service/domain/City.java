@@ -2,9 +2,10 @@ package com.temporary.center.ls_service.domain;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Comparator;
-
+@Table(name="city")
 public class City implements Serializable ,Comparator<City> {
     /**
 	 * 

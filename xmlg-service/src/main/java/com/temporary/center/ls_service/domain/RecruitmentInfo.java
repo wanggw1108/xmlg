@@ -3,11 +3,18 @@ package com.temporary.center.ls_service.domain;
 import com.temporary.center.ls_service.common.NotNullEmpty;
 import com.temporary.center.ls_service.common.Page;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 
+@Table(name="recruitment_info")
 public class RecruitmentInfo extends Page{
-    private Long id;
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
 
     @NotNullEmpty
     private Integer recruitmentCategory;
@@ -124,7 +131,7 @@ public class RecruitmentInfo extends Page{
 	/**
 	 * 距离
 	 */
-	private Float distance;
+	private int distance;
 	
 	/**
 	 * 时薪
@@ -166,11 +173,11 @@ public class RecruitmentInfo extends Page{
 		this.hourlyWage = hourlyWage;
 	}
 
-	public Float getDistance() {
+	public int getDistance() {
 		return distance;
 	}
 
-	public void setDistance(Float distance) {
+	public void setDistance(int distance) {
 		this.distance = distance;
 	}
 
@@ -350,15 +357,15 @@ public class RecruitmentInfo extends Page{
 		this.bossReputation = bossReputation;
 	}
 
-	public Long getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getRecruitmentCategory() {
+	public Integer getRecruitmentCategory() {
         return recruitmentCategory;
     }
 

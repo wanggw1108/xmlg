@@ -97,7 +97,7 @@ public class JoinController {
 			
 			joinResult.setBasePay(recruitmentInfo.getBasePay().intValue());//工资
 			
-			/*String basePayUnitStr = PartTimeJobData.wagesUnit.get(Integer.parseInt(recruitmentInfo.getBasePayUnit()));
+			/*String basePayUnitStr = Dictionary.wagesUnit.get(Integer.parseInt(recruitmentInfo.getBasePayUnit()));
 			if(null!=basePayUnitStr) {
 				joinResult.setBasePayUnit(basePayUnitStr);//工资单位
 			}else {
@@ -196,7 +196,7 @@ public class JoinController {
 	@RequestMapping(value = "/join.do", method = RequestMethod.POST)
     @ResponseBody
 //	public Json join(String token,String sigin,String time,String resumeId,String remark) {
-	public Json join(String token,String sign,String timeStamp,String resumeId,String remark,
+	public Json join(String token,String sign,String timeStamp,Integer resumeId,String remark,
 			String recruitmentInfoCreatebyId,String recruitmentInfoId) {
 	
 		long startTime = System.currentTimeMillis();
@@ -206,39 +206,7 @@ public class JoinController {
 		
 		Json json=new Json ();
 		try {
-			//检测token 
-			if(null==token || token.equals("")) {
-				json.setSattusCode(StatusCode.TOKEN_ERROR);
-				return json;
-			}
-			//检测参数
-			if(null==resumeId || resumeId.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(json.getMsg()+"(resumeId)");
-				return json;
-			}
-			if(null==sign || sign.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(json.getMsg()+"(sign)");
-				return json;
-			}
-			if(null==timeStamp || timeStamp.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(json.getMsg()+"(timeStamp)");
-				return json;
-			}
-			
-			/*if(null==recruitmentInfoCreatebyId || recruitmentInfoCreatebyId.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(json.getMsg()+"(recruitmentInfoCreatebyId)");
-				return json;		
-			}*/
-			/*if(null==recruitmentInfoId || recruitmentInfoId.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(json.getMsg()+"(recruitmentInfoId)");
-				return json;
-			}*/
-			
+
 			if(redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				
 				String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
@@ -246,7 +214,7 @@ public class JoinController {
 				Join join=new Join();
 				join.setCreatetime(new Date());
 				join.setUserId(Integer.parseInt(userId));
-				join.setResumeId(Long.parseLong(resumeId));//简历ID
+				join.setResumeId(resumeId);//简历ID
 				join.setRemark(remark);
 				join.setRecruitmentInfoCreateby(recruitmentInfoCreatebyId);//职位的创建者ID
 				

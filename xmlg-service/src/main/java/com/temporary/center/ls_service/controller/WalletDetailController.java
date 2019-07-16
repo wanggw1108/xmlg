@@ -120,7 +120,7 @@ public class WalletDetailController {
 				return json;
 			}
 			
-			walletDetail.setUserid(Long.parseLong(userId) );
+			walletDetail.setUserid(Integer.valueOf(userId) );
 			walletDetail.setPageSize(Integer.parseInt(pageSize) );
 			walletDetail.setCurr(Integer.parseInt(page));
 			
@@ -216,7 +216,7 @@ public class WalletDetailController {
 				return json;
 			}
 			
-			walletDetail.setUserid(Long.parseLong(userId) );
+			walletDetail.setUserid(Integer.valueOf(userId) );
 			
 			Double currAmount=walletDetailService.currAmount(walletDetail);
 			 
@@ -297,7 +297,7 @@ public class WalletDetailController {
 	    		return json;
 	        }
  			
-	        teamData.setUserid(Long.parseLong(userId) );
+	        teamData.setUserid(Integer.valueOf(userId) );
  			teamData.setCreateby(userId);
  			teamData.setCreatetime(new Date());
 			

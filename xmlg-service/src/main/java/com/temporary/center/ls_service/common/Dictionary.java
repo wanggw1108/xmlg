@@ -2,21 +2,23 @@ package com.temporary.center.ls_service.common;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
 
-public class PartTimeJobData {
+public class Dictionary {
 
-//    public  static Map<Integer,String> jobPosition = new HashMap<Integer,String>();//岗位类型
-//    public  static Map<Integer,String> settlementCycle = new HashMap<Integer,String>();//结算周期
-//    public  static Map<Integer,String> wagesUnit = new HashMap<Integer,String>();//工资单位
-//    public  static Map<Integer,String> workType = new HashMap<Integer,String>();//工作种类
-//    public  static Map<Integer,String> SEX = new HashMap<Integer,String>();//性别
-//    public  static Map<Integer,String> welfare = new HashMap<Integer,String>();//福利
+    public  static Map<Integer,String> jobPosition = new HashMap<Integer,String>();//岗位类型
+    public  static Map<Integer,String> settlementCycle = new HashMap<Integer,String>();//结算周期
+    public  static Map<Integer,String> wagesUnit = new HashMap<Integer,String>();//工资单位
+    public  static Map<Integer,String> workType = new HashMap<Integer,String>();//工作种类
+    public  static Map<Integer,String> SEX = new HashMap<Integer,String>();//性别
+    public  static Map<Integer,String> welfare = new HashMap<Integer,String>();//福利
 
     /**
      * 工作工种
      * @return
      */
-    static{/*
+    static{
         jobPosition.put(5,"其他");
         jobPosition.put(6,"校园活动");
         jobPosition.put(7,"临时工");
@@ -40,31 +42,31 @@ public class PartTimeJobData {
         jobPosition.put(25,"家教");
         jobPosition.put(26,"模特");
         jobPosition.put(27,"快递");
-        jobPosition.put(28,"家政");*/
+        jobPosition.put(28,"家政");
     }
 
     /**
      * 结算方式
      * @return
      */
-    static{/*
+    static{
         settlementCycle.put(100,"完工结");
         settlementCycle.put(101,"日结");
         settlementCycle.put(102,"周结");
-        settlementCycle.put(103,"月结");*/
+        settlementCycle.put(103,"月结");
     }
 
     /**
      * 工资单位
      * @return
      */
-    /*static{
+    static{
         wagesUnit.put(200,"元/小时");
         wagesUnit.put(201,"元/天");
         wagesUnit.put(202,"元/月");
         wagesUnit.put(203,"元/次");
         wagesUnit.put(204,"元/单");
-    }*/
+    }
 
     
     
@@ -115,30 +117,30 @@ public class PartTimeJobData {
      * 工作类型
      * @return
      */
-//    static{
-//        workType.put(300,"周末");
-//        workType.put(301,"校园");
-//        workType.put(302,"直聘");
-//        workType.put(303,"临工");
-//    };
+    static{
+        workType.put(300,"周末");
+        workType.put(301,"校园");
+        workType.put(302,"直聘");
+        workType.put(303,"临工");
+    };
 
     /**
      * 性别
      * @return
      */
     static{
-//        SEX.put(500,"不限");
-//        SEX.put(501,"男");
-//        SEX.put(502,"女");
+        SEX.put(500,"不限");
+        SEX.put(501,"男");
+        SEX.put(502,"女");
     }
 
     static{
-//        welfare.put(600,"保险");
-//        welfare.put(601,"包吃");
-//        welfare.put(602,"包住");
-//        welfare.put(603,"交通补贴");
-//        welfare.put(604,"提成");
-//        welfare.put(605,"免费培训");
+        welfare.put(600,"保险");
+        welfare.put(601,"包吃");
+        welfare.put(602,"包住");
+        welfare.put(603,"交通补贴");
+        welfare.put(604,"提成");
+        welfare.put(605,"免费培训");
     }
 	
 }

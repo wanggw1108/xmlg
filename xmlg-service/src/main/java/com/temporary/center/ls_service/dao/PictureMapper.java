@@ -1,22 +1,11 @@
 package com.temporary.center.ls_service.dao;
 
 import com.temporary.center.ls_service.domain.Picture;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface PictureMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface PictureMapper extends Mapper<Picture> {
 
-    int insert(Picture record);
-
-    int insertSelective(Picture record);
-
-    Picture selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Picture record);
-
-    int updateByPrimaryKey(Picture record);
-
-	List<Picture> getTenTab(String pictureTypeTenTab);
 	
 }
