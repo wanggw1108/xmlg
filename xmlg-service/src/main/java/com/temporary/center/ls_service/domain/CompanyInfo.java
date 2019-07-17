@@ -92,11 +92,11 @@ public class CompanyInfo {
      * 不通过原因
      */
     private String reason;
-    
+
     /**
      * 雇主信誉
      */
-    @Column(name="employer_reputation")
+    @Transient
     private String employerReputation;
     
     public String getFileName() {

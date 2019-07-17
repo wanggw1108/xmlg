@@ -78,7 +78,7 @@ public class FileController {
 		logger.info(title+",upload"+Constant.METHOD_END);
 		return json;
 	}
-	public String getFileBasePath(String user_id,String fileType){
+	public  String getFileBasePath(String user_id,String fileType){
 		String path;
 		String abspath;
 		switch (fileType){

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.*;
 import com.temporary.center.ls_service.common.Dictionary;
+import com.temporary.center.ls_service.dao.CompanyInfoMapper;
 import com.temporary.center.ls_service.dao.JoinMapper;
 import com.temporary.center.ls_service.dao.WorkTimeIntervalMapper;
 import com.temporary.center.ls_service.dao.WorkTimeMapper;
@@ -37,9 +38,10 @@ import java.util.*;
 public class RecruitmentController {
 
 	private static final LogUtil logger = LogUtil.getLogUtil(RecruitmentController.class);
-
-	@Value("${staticUrlPath}")
-	String staticUrlPath;
+	@Autowired
+	private CompanyInfoMapper companyService;
+	@Autowired
+	ImageUtil imageUtil;
 	static Map<Integer,String> stateMap=new HashMap<>();
 	static {
 		stateMap.put(1, "进行中");
@@ -315,16 +317,13 @@ public class RecruitmentController {
 			recruitmentInfo.setActive(0);//
 			
 			List<RecruitmentInfo> list =recruitmentService.listIndex(recruitmentInfo);
-			
+			List<RecruitmentListView> viewList = new ArrayList<>();
 			//设置雇员信誉和雇主信誉
 			if(null!=list && list.size()>0) {
 				for(RecruitmentInfo rInfo:list) {
 					logger.info(uuid+"返回的记录:"+ClassUtil.printlnFieldValue(rInfo));
-
-
 					String welfare = rInfo.getWelfare();
 					StringBuffer welfareSb=new StringBuffer();
-
 					if(null!=welfare && !"".equals(welfare)) {
 						//福利翻译
 						String[] welfareArr = welfare.split(",");
@@ -332,12 +331,9 @@ public class RecruitmentController {
 							welfareSb.append(Dictionary.welfare.get(Integer.parseInt(wel))+",");
 						}
 					}
-
 					if(welfareSb.length()>0) {
 						rInfo.setWelfare(welfareSb.substring(0, welfareSb.length()-1));
 					}
-					rInfo.getWelfare();
-					
 					//获取浏览次数
 					String key =RedisKey.RECRUITMENTINFO_COUNT+ rInfo.getId();
 					Long browseTime=0L;
@@ -346,22 +342,30 @@ public class RecruitmentController {
 					}
 					rInfo.setBrowseTime(browseTime);
 					String createby = rInfo.getCreateby();
-					User user = new User();
-					user.setId(Integer.valueOf(createby));
-					user = logUserService.selectOne(user);
-					if(null==createby || createby.equals("")) {
-						logger.warn("createby 为空");
-					}else {
-						rInfo.setCreateSex(user.getSex()+"");//招聘人的性别 1是男；2是女
-						rInfo.setUserImageUrl(staticUrlPath+user.getUserImageUrl());//用户头像
-						rInfo.setEmployeeReputation(user.getEmployeeReputation());
-						rInfo.setBossReputation(user.getBossReputation());
+					CompanyInfo companyInfo = new CompanyInfo();
+					companyInfo.setCreateBy(Long.valueOf(createby));
+					companyInfo = companyService.selectOne(companyInfo);
+					String companyImg=null;
+					if(companyInfo!=null){
+						companyImg = companyInfo.getBusinessLicenseUrl();
 					}
+					User user = new User();
+					user.setId(Integer.valueOf(rInfo.getCreateby()));
+					user = logUserService.selectOne(user);
+					rInfo.setCreateSex(user.getSex()+"");//招聘人的性别 1是男；2是女
+					//设置头像
+					companyImg = (companyImg==null?imageUtil.getFileUrl(null,"4"):imageUtil.getFileUrl(rInfo.getCreateby()+"","4"));
+					rInfo.setUserImageUrl(companyImg);//用户头像
+					rInfo.setEmployeeReputation(user.getEmployeeReputation());
+					rInfo.setBossReputation(user.getBossReputation());
+					RecruitmentListView view  = JSONObject.parseObject(JSONObject.toJSONString(rInfo),RecruitmentListView.class);
+					viewList.add(view);
+
 				}
 			}
 			
 			
-			PageData pageData=new PageData(list,count,curr,pageSize,Integer.valueOf(pageCount+""));
+			PageData pageData=new PageData(viewList,count,curr,pageSize,Integer.valueOf(pageCount+""));
 			json.setData(pageData);
 			json.setSuc();
 			
@@ -400,10 +404,10 @@ public class RecruitmentController {
 		}
 		RecruitmentInfo info = recruitmentService.findById(Long.valueOf(id));
 		int userid = Integer.valueOf(info.getCreateby());
-		User user = new User();
-		user.setId(userid);
-		user = logUserService.selectOne(user);
-		info.setUserImageUrl(staticUrlPath+user.getUserImageUrl());
+		CompanyInfo companyInfo = new CompanyInfo();
+		companyInfo.setCreateBy(Long.valueOf(userid));
+		companyInfo = companyService.selectOne(companyInfo);
+		info.setUserImageUrl(companyInfo.getBusinessLicenseUrl()==null?imageUtil.getFileUrl(null,"4"):companyInfo.getBusinessLicenseUrl());
 		json.setData(info);
 		json.setSuc();
 		return json;

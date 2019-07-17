@@ -19,6 +19,7 @@ public enum StatusCode {
 	SMS_CODE_ERROR("405","验证码错误"),
 	SMS_TIMES_ERROR("406","请求验证码频繁，五分钟最多三次"),
 	SMS_CHECK_ERROR("407","验证失败"),//请求验证异常
+	AUTH_CHECK_ERROR("408","身份认证失败，请确保身份证清晰"),//请求验证异常
 
 	TIME_OUT_FIVE_MINUTE("502","操作失败-时间过期3分钟之内才有效"), 
 	SIG_ERROR("503","签名失败"), 

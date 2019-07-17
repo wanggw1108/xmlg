@@ -30,7 +30,7 @@ public class RecruitmentInfo extends Page{
 
     private String workPlace;
 
-    private Integer sex;
+    private Integer sex=0;
 
     private Integer type;
 
@@ -41,7 +41,7 @@ public class RecruitmentInfo extends Page{
     private String latitude;
 
     @NotNullEmpty
-    private Integer number;
+    private Integer number=0;
 
     private String workingStartTime;
 
@@ -82,11 +82,11 @@ public class RecruitmentInfo extends Page{
 
     private Float salaryEnd;
 
-    private Integer joinMumber;
+    private Integer joinMumber=0;
 
-    private Integer employeeReputation;
+    private Integer employeeReputation=0;
 	
-	private Integer bossReputation;
+	private Integer bossReputation=0;
     
 	private String salaryUnit;
 	
@@ -126,7 +126,7 @@ public class RecruitmentInfo extends Page{
 	/**
 	 * 已经招聘人数
 	 */
-	private Integer recruitment;
+	private Integer recruitment=0;
 	
 	/**
 	 * 距离

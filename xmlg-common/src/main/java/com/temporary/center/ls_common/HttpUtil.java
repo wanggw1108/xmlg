@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,13 +66,19 @@ public class HttpUtil {
             }
             //读取响应
             InputStream in = conn.getInputStream();
-            byte[] bytes = new byte[0];
-            bytes = new byte[in.available()];
-            in.read(bytes);
             if (charset == null) {
                 charset = "utf-8";
             }
-            response = new String(bytes, charset);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+            StringBuffer temp = new StringBuffer();
+
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                temp.append(line).append("\r\n");
+            }
+
+            bufferedReader.close();
+            response = temp.toString();
             in.close();
             // 断开连接
             conn.disconnect();
