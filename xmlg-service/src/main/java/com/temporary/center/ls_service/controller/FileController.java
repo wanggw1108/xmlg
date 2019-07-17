@@ -1,12 +1,10 @@
 package com.temporary.center.ls_service.controller;
 
-import com.temporary.center.ls_common.Constant;
-import com.temporary.center.ls_common.LogUtil;
-import com.temporary.center.ls_common.RedisBean;
-import com.temporary.center.ls_common.RedisKey;
+import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.SignUtil;
 import com.temporary.center.ls_service.common.StatusCode;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +31,10 @@ import java.util.*;
 public class FileController {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileController.class);
-	@Value("${fileBasePath}")
-	String fileBasePath;
-	@Value("${staticUrlPath}")
-	String staticUrlPath;
+	@Autowired
+	ImageUtil imageUtil;
+	@Autowired
+	AipOcrUtil ocrUtil;
 
 	@Autowired
 	private RedisBean redisBean;
@@ -61,15 +59,33 @@ public class FileController {
 	        }
 	        MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 	        String user_id = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
-			String path = getFileBasePath(user_id,type);
-	        Iterator<String> iter = multiRequest.getFileNames();
-	        if(iter.hasNext()){
-				MultipartFile multipartFile = multiRequest.getFile(iter.next());
-				logger.info("-------create----"+path+"------------");
-				File file = new File(path);
-				multipartFile.transferTo(file);
+			String path = imageUtil.getFileBasePath(user_id,type);
+			MultipartFile multipartFile =  multiRequest.getFile("file");
+			File file = new File(path);
+			multipartFile.transferTo(file);
+			JSONObject result = new JSONObject();
+			result.put("imgUrl",imageUtil.getFileUrl(user_id,type));
+			String name = null;
+			String card = null;
+			if(type.equals("4")){
+				JSONObject obj = ocrUtil.businessLicense(path);
+				card = obj.getJSONObject("words_result").getJSONObject("社会信用代码").getString("words");
+				name = obj.getJSONObject("words_result").getJSONObject("单位名称").getString("words");
+				obj.put("card",card);
+				obj.put("name",name);
+
 			}
-	        json.setData(path.replace(fileBasePath,staticUrlPath));
+			if(type.equals("2")){
+				JSONObject obj = ocrUtil.icardOCR(path);
+				card = obj.getJSONObject("words_result").getJSONObject("公民身份号码").getString("words");
+				name = obj.getJSONObject("words_result").getJSONObject("姓名").getString("words");
+				obj.put("card",card);
+				obj.put("name",name);
+
+			}
+			result.put("card",card);
+			result.put("name",name);
+			json.setData(result);
 	        json.setSuc("上传成功");
 		}catch(Exception e) {
 			logger.error("upload error",e);
@@ -77,37 +93,6 @@ public class FileController {
 		}
 		logger.info(title+",upload"+Constant.METHOD_END);
 		return json;
-	}
-	public  String getFileBasePath(String user_id,String fileType){
-		String path;
-		String abspath;
-		switch (fileType){
-			case "1": {
-				path =  fileBasePath+"/user/"+user_id+"/header";
-				abspath = path+"/header_default.png";
-			}
-			case "2":{
-				path = fileBasePath+"/user/"+user_id+"/icard";
-				abspath = path+"/1.png";
-			}
-			case "3":{
-				path = fileBasePath+"/user/"+user_id+"/icard";
-				abspath = path+"/2.png";
-			}
-			case "4":{
-				path = fileBasePath+"/user/"+user_id+"/business";
-				abspath = path+"/header_company.png";
-			}
-			default:{
-				path =  fileBasePath+"/user/"+user_id+"/header";
-				abspath = path+"/header_default.png";
-			}
-		}
-		File f = new File(path);
-		if(!f.exists()){
-			f.mkdirs();
-		}
-		return abspath;
 	}
 	 
 }

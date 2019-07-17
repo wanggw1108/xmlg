@@ -5,11 +5,14 @@ import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
 import com.temporary.center.ls_service.common.ValidateParam;
+import com.temporary.center.ls_service.dao.CompanyInfoMapper;
 import com.temporary.center.ls_service.domain.CompanyInfo;
 import com.temporary.center.ls_service.domain.User;
 import com.temporary.center.ls_service.params.CompanyInfoParam;
 import com.temporary.center.ls_service.service.CompanyInfoService;
 import com.temporary.center.ls_service.service.LogUserService;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,10 +39,14 @@ public class CompanyInfoController {
 	private RedisBean redisBean;
 	
 	@Autowired
-	private CompanyInfoService companyInfoService;
+	private CompanyInfoMapper companyInfoService;
 	
 	@Autowired
 	private LogUserService logUserService;
+	@Autowired
+	ImageUtil imageUtil;
+	@Autowired
+	AipOcrUtil ocrUtil;
 	
 	/**
 	 * 查询公司简介
@@ -75,7 +83,10 @@ public class CompanyInfoController {
 			}
 			
 			companyInfo.setCreateBy(Long.parseLong(userId));
-			List<CompanyInfo> companyInfoList=companyInfoService.findByParam(companyInfo);
+			Example example = new Example(CompanyInfo.class);
+			Example.Criteria c = example.createCriteria();
+			c.andEqualTo("createBy",userId);
+			List<CompanyInfo> companyInfoList=companyInfoService.selectByExample(example);
 			
 			if(null!=companyInfoList && companyInfoList.size()==1) {
 				CompanyInfo companyInfo2 = companyInfoList.get(0);
@@ -90,7 +101,6 @@ public class CompanyInfoController {
 				if(null==companyInfo2.getCompanyIsAuth()) {
 					companyInfo2.setCompanyIsAuth(1);//公司是否做过企业认证 0:已认证；1：未认证
 				}
-				
 				json.setData(companyInfo2);
 				json.setSuc();
 			}else if(null==companyInfoList || companyInfoList.size()==0){
@@ -114,34 +124,21 @@ public class CompanyInfoController {
 	@RequestMapping(value = "/qualifications.do", method = RequestMethod.GET)
     @ResponseBody
     public Json qualifications(HttpServletRequest request,
-                               HttpServletResponse response, String token, String companyId) {
+                               HttpServletResponse response, String token, Long companyId) {
 		String title="查询公司资质，主要是营业执照，其他。,"+UUID.randomUUID().toString();
 		logger.info(title+",qualifications"+Constant.METHOD_BEGIN);
 		Json json=new Json();
 		try {
-			//检测token 
-			if(null==token || token.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(token)");
-				return json;
-			}
-			if(null==companyId || companyId.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(companyId)");
-				return json;
-			}
 			if(!TokenUtil.validateToken(token,redisBean)) {
 				logger.info("token过期");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			
 			CompanyInfo  param=new CompanyInfo();
-			param.setCompanyId(Long.parseLong(companyId));
-			CompanyInfo companyInfo=companyInfoService.qualifications(param);
+			param.setCompanyId(companyId);
+			CompanyInfo companyInfo=companyInfoService.selectOne(param);
 			json.setData(companyInfo);
 			json.setSuc();
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
@@ -165,12 +162,6 @@ public class CompanyInfoController {
 		logger.info(title+",alterCompanyInfo"+Constant.METHOD_BEGIN);
 		Json json=new Json();
 		try {
-			//检测token 
-			if(null==token || token.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(token)");
-				return json;
-			}
 			String userId=null;
 			if(!TokenUtil.validateToken(token,redisBean)) {
 				logger.info("token过期");
@@ -178,7 +169,6 @@ public class CompanyInfoController {
 				return json;
 			}
 			userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
-			
 			if(null==userId || userId.equals("")) {
 				logger.info("userId 为空redis");
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
@@ -218,7 +208,7 @@ public class CompanyInfoController {
 		Json json=new Json();
 		json.setSuc();
 		json.setData("编辑成功");
-		companyInfoService.update(companyInfo);
+		companyInfoService.updateByPrimaryKey(companyInfo);
 		return json;
 	}
 
@@ -237,12 +227,6 @@ public class CompanyInfoController {
 		logger.info(title+",createAuthInfo"+Constant.METHOD_BEGIN);
 		Json json=new Json();
 		try {
-			//检测token 
-			if(null==token || token.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(token)");
-				return json;
-			}
 			String userId=null;
 			if(!redisBean.exists(RedisKey.USER_TOKEN+token)) {
 				logger.info("token过期");
@@ -261,11 +245,7 @@ public class CompanyInfoController {
 			if(!json.getCode().equals(StatusCode.SUC.getCode())) {
 				return json;
 			}
-			//1：参数添加一个字段 authType(认证类型，1：公司，2：个人团队)
-			//公司类型 0：公司；1：团队
-			//2：如果authType=2时，营业执照、社会信用代码为非必传。
 			if(companyInfo.getCompanyType().equals("0")) {
-				//1：公司 验证 营业执照 社会信用代码
 				if(null==companyInfo.getFileName() || "".equals(companyInfo.getFileName())) {
 					json.setSattusCode(StatusCode.PARAMS_NO_NULL);
 					json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(fileName)");
@@ -281,17 +261,16 @@ public class CompanyInfoController {
 			//新增
 			companyInfo.setCreateBy(Long.parseLong(userId));
 			companyInfo.setCreateTime(new Date());
-			
 			CompanyInfo companyInfoadd=new CompanyInfo();
-			
 			BeanUtils.copyProperties(companyInfo, companyInfoadd);
-			companyInfoadd.setCompanyIsAuth(2);//
+			companyInfoadd.setCompanyIsAuth(3);//
 			//用户的认证状态 1：未认证；2：审核中；3：已认证；4：审核不通过
 			
 			//查询自己是否创建过公司信息
-			CompanyInfo isCreateParam=new CompanyInfo();
-			isCreateParam.setCreateBy(Long.parseLong(userId));
-			List<CompanyInfo> findByParam = companyInfoService.findByParam(isCreateParam);
+			Example example = new Example(CompanyInfo.class);
+			Example.Criteria c = example.createCriteria();
+			c.andEqualTo("createBy",userId);
+			List<CompanyInfo> findByParam = companyInfoService.selectByExample(example);
 			if(null!=findByParam && findByParam.size()>0) {
 				json.setSattusCode(StatusCode.EXIST_DATA);
 				json.setData("已存在公司信息");
@@ -317,7 +296,7 @@ public class CompanyInfoController {
 		Json json=new Json();
 		json.setSuc();
 		json.setData("新增成功");
-		companyInfoService.add(companyInfo);
+		companyInfoService.insert(companyInfo);
 		return json;
 	}
 	

@@ -110,22 +110,6 @@ public class IdCardController {
  			}
  			businessLicense.setCreateby(userId);
  			businessLicense.setCreatetime(new Date());
- 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-			MultipartFile card1 = multiRequest.getFile("fileName1");
-			File f1 = new File(imageUtil.getFileBasePath(userId+"","2"));
-			card1.transferTo(f1);
-
-			JSONObject ocrResult = ocrUtil.icardOCR(imageUtil.getFileBasePath(userId+"","2"));
-			JSONObject cardMessage = ocrResult.getJSONObject("words_result");
-			String card = cardMessage.getJSONObject("公民身份号码").getString("words");
-			String name = cardMessage.getJSONObject("姓名").getString("words");
-			if(!managerId.equals(card)||!managerName.equals(name)){
-				json.setSattusCode(StatusCode.AUTH_CHECK_ERROR);
-				return json;
-			}
-			MultipartFile card2 = multiRequest.getFile("fileName2");
-			File f2 = new File(imageUtil.getFileBasePath(userId+"","3"));
-			card2.transferTo(f2);
 			businessLicense.setAspectUrl(imageUtil.getFileUrl(userId+"","2"));
 			businessLicense.setPositiveUrl(imageUtil.getFileUrl(userId+"","3"));
 			businessLicense.setStatus(Constant.IN_AUDIT);
