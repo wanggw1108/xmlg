@@ -4,6 +4,7 @@ import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.dao.DictionariesMapper;
 import com.temporary.center.ls_service.domain.Dictionaries;
 import com.temporary.center.ls_service.service.DictionariesService;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +31,7 @@ public class DictionariesController {
 	private static final Logger logger = LoggerFactory.getLogger(DictionariesController.class);
 
 	@Autowired
-	private DictionariesService dictionariesService;
+	private DictionariesMapper dictionariesService;
 	
 	/**
 	 * 
@@ -48,8 +50,12 @@ public class DictionariesController {
 		try {
 			Dictionaries dictionaries=new Dictionaries();
 			dictionaries.setType(Integer.parseInt(type));
+			Example example = new Example(Dictionaries.class);
+			Example.Criteria c = example.createCriteria();
+			c.andEqualTo("type",type);
+			example.setOrderByClause("sort asc");
 			
-			List<Dictionaries> list= dictionariesService.list(dictionaries);
+			List<Dictionaries> list= dictionariesService.selectByExample(example);
 			json.setData(list);
 			json.setSuc();
 		}catch(Exception e) {

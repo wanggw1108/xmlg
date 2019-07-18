@@ -30,11 +30,11 @@ public class API_RecruitementTest{
         params.put("token",token);
         params.put("timeStamp",System.currentTimeMillis());
         params.put("loginType",1);
-        params.put("title","KTV高价招聘兼职");
-        params.put("typeWork",18);
+        params.put("title","超市招聘兼职");
+        params.put("typeWork",17);
         params.put("number",20);
         params.put("settlementMethod",1);
-        params.put("basePay",200);
+        params.put("basePay",400);
         params.put("basePayUnit",201);
         params.put("type",1);
         params.put("sex",2);
@@ -53,7 +53,7 @@ public class API_RecruitementTest{
         params.put("contactsName","王阳明");
         params.put("tel","17111111111");
         params.put("email","121@qq.com");
-        params.put("district","朝阳区");
+        params.put("district","北京市");
         params.put("recruitmentCategory","2");
 
 
@@ -88,14 +88,15 @@ public class API_RecruitementTest{
     public void list(){
         String url = "http://localhost:8081/recruitment/list.do?";
         Map<String,Object> params = new HashMap<>();
-        params.put("workType","0");
+        params.put("district","北京市");
+        params.put("search_text","兼职");
         params.put("longitude","116.492806");
         params.put("latitude","39.931535");
         params.put("latitude","39.931535");
         params.put("curr","1");
-        params.put("pageSize","20");
-        params.put("sort","2");
-        params.put("sortRule","asc");
+        params.put("pageSize","16");
+        params.put("sort","1");
+//        params.put("sortRule","asc");
         String str = HttpUtil.buildPostStr(params);
         try {
             String res = HttpUtil.send(url+str);
@@ -103,6 +104,36 @@ public class API_RecruitementTest{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    @Description("公司认证,调用此接口前，先调用文件上传接口，将图片上传")
+    public void companyAuthTest(){
+        String url = "http://localhost:8081/companyInfo/createAuthInfo.do";
+        Map<String,Object> params = new HashMap<>();
+        params.put("token",token);
+        params.put("fileName","http://47.107.103.97/images/user/14/business/header_company.png");
+        params.put("timeStamp",System.currentTimeMillis());
+        params.put("companyName","测试公司14");
+        params.put("companyCode","测试code1234");
+        params.put("companyName","测试公司14");
+        params.put("companyIndustry","28");//公司行业，见字典表
+        params.put("companyScale","79");//公司规模，见字典表
+        params.put("companyAddress","北京市朝阳区孟婆桥");
+        params.put("companyNumber","010-99199191");
+        params.put("companyIntroduction","职业咨询，家政咨询");
+        params.put("companyType","0");//公司类型，0公司，1团队
+        params.put("qualificationsOneUrl","http://47.107.103.97/images/user/14/business/qualification1.png");
+        params.put("longitude","116.510053");
+        params.put("latitude","39.943485");
+        String str = HttpUtil.buildPostStr(params);
+        try {
+            String res = HttpUtil.post(url,str,header);
+            System.out.println(res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

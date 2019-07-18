@@ -18,6 +18,9 @@ public class HttpUtil {
     public static String send(String method, String url, String postStr, Map<String, String> headers) throws IOException {
         return send(method, url, postStr, headers, "utf-8");
     }
+    public static String post( String url, String postStr, Map<String, String> headers) throws IOException {
+        return send("POST", url, postStr, headers, "utf-8");
+    }
     public static String send(String url) throws IOException {
         return send("GET", url, null, null, "utf-8");
     }

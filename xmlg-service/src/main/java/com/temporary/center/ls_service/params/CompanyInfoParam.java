@@ -88,6 +88,7 @@ public class CompanyInfoParam {
      */
     private String employerReputation;
 
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -173,7 +174,7 @@ public class CompanyInfoParam {
     }
 
     public void setCompanyIndustry(String companyIndustry) {
-        this.companyIndustry = companyIndustry == null ? null : companyIndustry.trim();
+        this.companyIndustry = companyIndustry == null ? null : companyIndustry;
     }
 
     public String getCompanyScale() {

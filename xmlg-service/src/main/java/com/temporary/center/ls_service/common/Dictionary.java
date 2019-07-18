@@ -42,7 +42,9 @@ public class Dictionary {
         jobPosition.put(25,"家教");
         jobPosition.put(26,"模特");
         jobPosition.put(27,"快递");
-        jobPosition.put(28,"家政");
+        jobPosition.put(87,"家政");
+        jobPosition.put(86,"跑腿");
+        jobPosition.put(88,"虚拟技能");
     }
 
     /**

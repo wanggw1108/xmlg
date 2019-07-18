@@ -221,8 +221,7 @@ public class CompanyInfoController {
 	 */
 	@RequestMapping(value = "/createAuthInfo.do", method = RequestMethod.POST)
     @ResponseBody
-    public Json createAuthInfo(HttpServletRequest request,
-                               HttpServletResponse response, CompanyInfoParam companyInfo, String token) {
+    public Json createAuthInfo(CompanyInfoParam companyInfo, String token) {
 		String title="填写认证信息,"+UUID.randomUUID().toString();
 		logger.info(title+",createAuthInfo"+Constant.METHOD_BEGIN);
 		Json json=new Json();

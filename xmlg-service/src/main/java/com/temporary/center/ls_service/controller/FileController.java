@@ -4,6 +4,7 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.SignUtil;
 import com.temporary.center.ls_service.common.StatusCode;
+import org.apache.solr.common.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,18 +53,13 @@ public class FileController {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			long startTime = Long.valueOf(timeStamp);
-	        if((System.currentTimeMillis() - startTime)>Constant.INTERFACE_TIME_OUT) {
-	    		json.setSattusCode(StatusCode.TIME_OUT_FIVE_MINUTE);
-	    		return json;
-	        }
 	        MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
 	        String user_id = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			String path = imageUtil.getFileBasePath(user_id,type);
 			MultipartFile multipartFile =  multiRequest.getFile("file");
 			File file = new File(path);
 			multipartFile.transferTo(file);
-			JSONObject result = new JSONObject();
+			Map<String,String> result = new HashMap<>();
 			result.put("imgUrl",imageUtil.getFileUrl(user_id,type));
 			String name = null;
 			String card = null;
@@ -73,6 +69,10 @@ public class FileController {
 				name = obj.getJSONObject("words_result").getJSONObject("单位名称").getString("words");
 				obj.put("card",card);
 				obj.put("name",name);
+				if(StringUtils.isEmpty(card)|| StringUtils.isEmpty(name)){
+					json.setSattusCode(StatusCode.AUTH_Company_ERROR);
+					return json;
+				}
 
 			}
 			if(type.equals("2")){
@@ -81,7 +81,10 @@ public class FileController {
 				name = obj.getJSONObject("words_result").getJSONObject("姓名").getString("words");
 				obj.put("card",card);
 				obj.put("name",name);
-
+				if(StringUtils.isEmpty(card)|| StringUtils.isEmpty(name)){
+					json.setSattusCode(StatusCode.AUTH_CHECK_ERROR);
+					return json;
+				}
 			}
 			result.put("card",card);
 			result.put("name",name);

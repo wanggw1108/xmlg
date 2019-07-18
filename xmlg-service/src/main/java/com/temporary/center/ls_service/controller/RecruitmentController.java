@@ -221,22 +221,16 @@ public class RecruitmentController {
 	 */
 	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
     @ResponseBody
-	public Json list(RecruitmentInfo recruitmentInfo,BindingResult bindingResult) {
+	public Json list(RecruitmentInfo recruitmentInfo,String workType) {
 		long startTime = System.currentTimeMillis();
 		String uuid=UUID.randomUUID().toString();
 		Json json=new Json ();
+		recruitmentInfo.setTypeWork(workType);
 		String title="";
 		try {
 			title="获取招聘列表,"+uuid;
 			logger.info(title+",recruitmentList"+Constant.METHOD_BEGIN);
 			logger.info(title+",入参："+ClassUtil.printlnFieldValue(recruitmentInfo));
-			
-			if(bindingResult.hasErrors()){
-	            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-	                logger.info(fieldError.getDefaultMessage());
-	            }
-	            return json;
-	        }
 			
 			//检测方法参数
 			Integer curr = recruitmentInfo.getCurr();
@@ -297,7 +291,9 @@ public class RecruitmentController {
 			
 			recruitmentInfo.setLatitude(latitude);
 			recruitmentInfo.setLongitude(longitude);
-			
+			if(StringUtils.isEmpty(recruitmentInfo.getSortRule())){
+				recruitmentInfo.setSortRule("desc");
+			}
 			
 			if(null!=recruitmentInfo.getSort() && !"".equals(recruitmentInfo.getSort())) {
 				//按时间，距离、工资
@@ -305,15 +301,14 @@ public class RecruitmentController {
 					recruitmentInfo.setSort("createTime");
 				}else if("2".equals(recruitmentInfo.getSort())) {
 					recruitmentInfo.setSort("distance");
+					recruitmentInfo.setSortRule("asc");
 				}else if("3".equals(recruitmentInfo.getSort())) {
 					recruitmentInfo.setSort("hourly_wage");
 				}
 			}else {//默认按时间排序
 				recruitmentInfo.setSort("createTime");
 			}
-			if(StringUtils.isEmpty(recruitmentInfo.getSortRule())){
-				recruitmentInfo.setSortRule("desc");
-			}
+
 			recruitmentInfo.setActive(0);//
 			
 			List<RecruitmentInfo> list =recruitmentService.listIndex(recruitmentInfo);
@@ -467,6 +462,12 @@ public class RecruitmentController {
 			
 			recruitmentInfo.setState(Constant.RECRUITMENTINFO_RUNNING);
 			recruitmentInfo.setActive(0);
+			StringBuilder builder = new StringBuilder();
+			builder.append(recruitmentInfo.getTitle())
+					.append(recruitmentInfo.getWorkPlace())
+					.append(Dictionary.jobPosition.get(Integer.valueOf(recruitmentInfo.getTypeWork())));
+			recruitmentInfo.setSearch_text(builder.toString());
+
 			recruitmentService.add(recruitmentInfo);
 			
 			Integer id = recruitmentInfo.getId();
@@ -914,6 +915,11 @@ public class RecruitmentController {
 			
 			recruitmentInfo.setUpdateby(userId);
 			recruitmentInfo.setUpdatetime(new Date());
+			StringBuilder builder = new StringBuilder();
+			builder.append(recruitmentInfo.getTitle())
+					.append(recruitmentInfo.getWorkPlace())
+					.append(Dictionary.jobPosition.get(Integer.valueOf(recruitmentInfo.getTypeWork())));
+			recruitmentInfo.setSearch_text(builder.toString());
 			recruitmentService.update(recruitmentInfo);
 			json.setSuc();
 			json.setData("修改成功");

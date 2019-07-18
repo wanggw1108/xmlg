@@ -1,10 +1,12 @@
 package com.temporary.center.ls_service.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.*;
+import com.temporary.center.ls_service.dao.FullTimeMapper;
 import com.temporary.center.ls_service.domain.FullTime;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 import com.temporary.center.ls_service.service.FullTimeService;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +41,7 @@ public class FullTimeController {
 	private RedisBean redisBean;
 	
 	@Autowired
-	private FullTimeService fullTimeService;
+	private FullTimeMapper fullTimeService;
 	
 	@Autowired
 	private RecruitmentService recruitmentService;
@@ -64,8 +67,10 @@ public class FullTimeController {
 			fullTime.setPageSize(10);
 			fullTime.setSort("createTime");
 			fullTime.setSortRule(Constant.DESC);
-			
-			List<FullTime> list = fullTimeService.list(fullTime);
+			PageHelper.startPage(1,10);
+			Example example = new Example(FullTime.class);
+			example.setOrderByClause("createTime desc");
+			List<FullTime> list = fullTimeService.selectByExample(example);
 			json.setData(list);
 			json.setSuc();
 			
@@ -115,28 +120,28 @@ public class FullTimeController {
 			fullTime.setSort("createTime");
 			fullTime.setSortRule(Constant.DESC);
 			
-			Long count=fullTimeService.countByParams(fullTime);
+			int count=fullTimeService.selectCount(fullTime);
 			
-			if(null==count || count.equals(0L)) {
+			if(count==0) {
 				json.setSattusCode(StatusCode.NO_DATA);
 				return json;
 			}
 			
-			Long pageCount=0L;
+			int pageCount=0;
 			if(count%pageSize==0) {
 				pageCount=count/pageSize;
 			}else {
 				pageCount=(count/pageSize)+1;
 			}
 			if(curr>pageCount) {
-				curr=pageCount.intValue();
+				curr=pageCount;
 			}
 			
 			fullTime.setPageSize(pageSize);
 			fullTime.setCurr(curr);
 			
 			
-			List<FullTime> list = fullTimeService.list(fullTime);
+			List<FullTime> list = fullTimeService.select(fullTime);
 			//设置雇员信誉和雇主信誉
 			if(null!=list && list.size()>0) {
 				for(FullTime rInfo:list) {

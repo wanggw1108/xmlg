@@ -1,9 +1,9 @@
 package com.temporary.center.ls_service.dao;
 
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 public interface RecruitmentInfoMapper {
     int deleteByPrimaryKey(Long id);
 

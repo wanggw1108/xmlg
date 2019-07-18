@@ -30,7 +30,7 @@ public class RecruitmentInfo extends Page{
 
     private String workPlace;
 
-    private Integer sex=0;
+    private Integer sex;
 
     private Integer type;
 
@@ -41,7 +41,7 @@ public class RecruitmentInfo extends Page{
     private String latitude;
 
     @NotNullEmpty
-    private Integer number=0;
+    private Integer number;
 
     private String workingStartTime;
 
@@ -82,11 +82,11 @@ public class RecruitmentInfo extends Page{
 
     private Float salaryEnd;
 
-    private Integer joinMumber=0;
+    private Integer joinMumber;
 
-    private Integer employeeReputation=0;
+    private Integer employeeReputation;
 	
-	private Integer bossReputation=0;
+	private Integer bossReputation;
     
 	private String salaryUnit;
 	
@@ -126,7 +126,7 @@ public class RecruitmentInfo extends Page{
 	/**
 	 * 已经招聘人数
 	 */
-	private Integer recruitment=0;
+	private Integer recruitment;
 	
 	/**
 	 * 距离
@@ -143,11 +143,15 @@ public class RecruitmentInfo extends Page{
 	 */
 	@NotNullEmpty
 	private String district;
+
+
 	
 	/**
 	 * 招聘信息的状态 0：全部；1：进行中；2：下架；3：完结
 	 */
 	private Integer state;
+
+	private String search_text;
 	
 	public Integer getState() {
 		return state;
@@ -564,5 +568,12 @@ public class RecruitmentInfo extends Page{
 	public void setRecruitmentEndTime(String recruitmentEndTime) {
 		this.recruitmentEndTime = recruitmentEndTime;
 	}
-    
+
+	public String getSearch_text() {
+		return search_text;
+	}
+
+	public void setSearch_text(String search_text) {
+		this.search_text = search_text;
+	}
 }
