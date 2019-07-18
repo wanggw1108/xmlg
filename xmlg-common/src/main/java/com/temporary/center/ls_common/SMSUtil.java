@@ -67,9 +67,11 @@ public boolean createJiGuangUser(String phone){
         ResponseWrapper res = userClient.registerUsers(payload);
         return true;
     } catch (APIConnectionException e) {
-        return false;
+        logger.info(e.getMessage());
+        return true;
     } catch (APIRequestException e) {
-        return false;
+        logger.info(e.getMessage());
+        return true;
     }
 
 

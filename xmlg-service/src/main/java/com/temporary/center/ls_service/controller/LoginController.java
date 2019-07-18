@@ -289,13 +289,7 @@ public class LoginController {
 			params.put("phone",phone);
 			User createdUser = userService.queryUserByParams(params).get(0);
 			//生成IM账号
-			if(!smsService.createJiGuangUser(phone)){
-				json.setSattusCode(StatusCode.JG_Regist_Error);
-				return json;
-			}
-
-
-
+			smsService.createJiGuangUser(phone);
 			json.setSuc("注册成功");
 			Map<String,String> jgResultMap=new HashMap<String,String>();
 			jgResultMap.put("imAccount", phone);
