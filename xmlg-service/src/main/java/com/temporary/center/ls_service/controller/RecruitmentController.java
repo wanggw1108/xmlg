@@ -215,7 +215,6 @@ public class RecruitmentController {
 	/**
 	 * 职位列表
 	 * @param recruitmentInfo
-	 * @param bindingResult
 	 * @param recruitmentInfo
 	 * @return
 	 */
@@ -317,18 +316,6 @@ public class RecruitmentController {
 			if(null!=list && list.size()>0) {
 				for(RecruitmentInfo rInfo:list) {
 					logger.info(uuid+"返回的记录:"+ClassUtil.printlnFieldValue(rInfo));
-					String welfare = rInfo.getWelfare();
-					StringBuffer welfareSb=new StringBuffer();
-					if(null!=welfare && !"".equals(welfare)) {
-						//福利翻译
-						String[] welfareArr = welfare.split(",");
-						for(String wel:welfareArr) {
-							welfareSb.append(Dictionary.welfare.get(Integer.parseInt(wel))+",");
-						}
-					}
-					if(welfareSb.length()>0) {
-						rInfo.setWelfare(welfareSb.substring(0, welfareSb.length()-1));
-					}
 					//获取浏览次数
 					String key =RedisKey.RECRUITMENTINFO_COUNT+ rInfo.getId();
 					Long browseTime=0L;
@@ -451,7 +438,7 @@ public class RecruitmentController {
  				return json;
  			}
  			//计算时薪
- 			Float hourlyWage = Dictionary.switchUnit(Dictionary.wagesUnit.get(Integer.valueOf(recruitmentInfo.getBasePayUnit())), recruitmentInfo.getBasePay());
+ 			Float hourlyWage = Dictionary.switchUnit(recruitmentInfo.getBasePayUnit(), recruitmentInfo.getBasePay());
  			recruitmentInfo.setHourlyWage(hourlyWage);
 			recruitmentInfo.setActive(Integer.parseInt(Constant.EFFECTIVE) );
 			recruitmentInfo.setRecruitment(0);//已经招聘人数 默认为0
@@ -465,7 +452,7 @@ public class RecruitmentController {
 			StringBuilder builder = new StringBuilder();
 			builder.append(recruitmentInfo.getTitle())
 					.append(recruitmentInfo.getWorkPlace())
-					.append(Dictionary.jobPosition.get(Integer.valueOf(recruitmentInfo.getTypeWork())));
+					.append(recruitmentInfo.getTypeWork());
 			recruitmentInfo.setSearch_text(builder.toString());
 
 			recruitmentService.add(recruitmentInfo);
@@ -918,7 +905,7 @@ public class RecruitmentController {
 			StringBuilder builder = new StringBuilder();
 			builder.append(recruitmentInfo.getTitle())
 					.append(recruitmentInfo.getWorkPlace())
-					.append(Dictionary.jobPosition.get(Integer.valueOf(recruitmentInfo.getTypeWork())));
+					.append(recruitmentInfo.getTypeWork());
 			recruitmentInfo.setSearch_text(builder.toString());
 			recruitmentService.update(recruitmentInfo);
 			json.setSuc();

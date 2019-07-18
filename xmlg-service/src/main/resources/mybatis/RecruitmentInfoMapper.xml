@@ -8,8 +8,8 @@
         <result column="base_pay" property="basePay" jdbcType="REAL" />
         <result column="base_pay_unit" property="basePayUnit" jdbcType="VARCHAR" />
         <result column="work_place" property="workPlace" jdbcType="VARCHAR" />
-        <result column="sex" property="sex" jdbcType="INTEGER" />
-        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
         <result column="type_work" property="typeWork" jdbcType="VARCHAR" />
         <result column="longitude" property="longitude" jdbcType="VARCHAR" />
         <result column="latitude" property="latitude" jdbcType="VARCHAR" />
@@ -17,8 +17,8 @@
         <result column="working_start_time" property="workingStartTime" jdbcType="VARCHAR" />
         <result column="working_end_time" property="workingEndTime" jdbcType="VARCHAR" />
         <result column="working_time" property="workingTime" jdbcType="VARCHAR" />
-        <result column="settlement_method" property="settlementMethod" jdbcType="INTEGER" />
-        <result column="detail" property="detail" jdbcType="INTEGER" />
+        <result column="settlement_method" property="settlementMethod" jdbcType="VARCHAR" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
         <result column="createBy" property="createby" jdbcType="VARCHAR" />
         <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
         <result column="updateBy" property="updateby" jdbcType="VARCHAR" />
@@ -28,7 +28,7 @@
         <result column="recruitment_end_time" property="recruitmentEndTime" jdbcType="VARCHAR" />
         <result column="welfare" property="welfare" jdbcType="VARCHAR" />
         <result column="join_mumber" property="joinMumber" jdbcType="INTEGER" />
-        <result column="is_full_time" property="isFullTime" jdbcType="INTEGER"/>
+        <result column="is_full_time" property="isFullTime" jdbcType="VARCHAR"/>
         <result column="one_type" property="oneType" jdbcType="VARCHAR"/>
         <result column="two_type" property="twoType" jdbcType="VARCHAR"/>
         <result column="position" property="position" jdbcType="VARCHAR"/>

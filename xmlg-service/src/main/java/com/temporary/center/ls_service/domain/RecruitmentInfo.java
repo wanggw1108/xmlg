@@ -17,7 +17,7 @@ public class RecruitmentInfo extends Page{
     private Integer id;
 
     @NotNullEmpty
-    private Integer recruitmentCategory;
+    private String recruitmentCategory;
 
     @NotNullEmpty
     private String title;
@@ -30,9 +30,9 @@ public class RecruitmentInfo extends Page{
 
     private String workPlace;
 
-    private Integer sex;
+    private String sex;
 
-    private Integer type;
+    private String type;
 
     private String typeWork;
 
@@ -49,7 +49,7 @@ public class RecruitmentInfo extends Page{
 
     private String workingTime;
 
-    private Integer settlementMethod;
+    private String settlementMethod;
 
     private String detail;
 
@@ -70,7 +70,7 @@ public class RecruitmentInfo extends Page{
     @NotNullEmpty
     private String welfare;
 
-    private Integer isFullTime;
+    private String isFullTime;
 
     private String oneType;
 
@@ -225,13 +225,6 @@ public class RecruitmentInfo extends Page{
 		this.contactsName = contactsName;
 	}
 
-	public Integer getIsFullTime() {
-		return isFullTime;
-	}
-
-	public void setIsFullTime(Integer isFullTime) {
-		this.isFullTime = isFullTime;
-	}
 
 	public String getOneType() {
 		return oneType;
@@ -369,13 +362,6 @@ public class RecruitmentInfo extends Page{
 		this.id = id;
 	}
 
-	public Integer getRecruitmentCategory() {
-        return recruitmentCategory;
-    }
-
-    public void setRecruitmentCategory(Integer recruitmentCategory) {
-        this.recruitmentCategory = recruitmentCategory;
-    }
 
     public String getTitle() {
         return title;
@@ -409,23 +395,43 @@ public class RecruitmentInfo extends Page{
         this.workPlace = workPlace == null ? null : workPlace.trim();
     }
 
-    public Integer getSex() {
-        return sex;
-    }
+	public String getRecruitmentCategory() {
+		return recruitmentCategory;
+	}
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
+	public void setRecruitmentCategory(String recruitmentCategory) {
+		this.recruitmentCategory = recruitmentCategory;
+	}
 
-    public Integer getType() {
-        return type;
-    }
+	public String getSex() {
+		return sex;
+	}
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 
-    public String getTypeWork() {
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setSettlementMethod(String settlementMethod) {
+		this.settlementMethod = settlementMethod;
+	}
+
+	public String getIsFullTime() {
+		return isFullTime;
+	}
+
+	public void setIsFullTime(String isFullTime) {
+		this.isFullTime = isFullTime;
+	}
+
+	public String getTypeWork() {
         return typeWork;
     }
 
@@ -481,15 +487,11 @@ public class RecruitmentInfo extends Page{
         this.workingTime = workingTime == null ? null : workingTime.trim();
     }
 
-    public Integer getSettlementMethod() {
-        return settlementMethod;
-    }
+	public String getSettlementMethod() {
+		return settlementMethod;
+	}
 
-    public void setSettlementMethod(Integer settlementMethod) {
-        this.settlementMethod = settlementMethod;
-    }
-
-    public String getDetail() {
+	public String getDetail() {
         return detail;
     }
 

@@ -73,12 +73,12 @@ public class Constant {
 	/**
 	 * 是否全职  0：是 1：否
 	 */
-	public static final Integer IS_FULL_TIME = 0;
+	public static final String IS_FULL_TIME = "0";
 	
 	/**
 	 * 是否全职  0：是 1：否
 	 */
-	public static final Integer NOT_FULL_TIME = 1;
+	public static final String NOT_FULL_TIME = "1";
 
 	/**
 	 * 3分钟
