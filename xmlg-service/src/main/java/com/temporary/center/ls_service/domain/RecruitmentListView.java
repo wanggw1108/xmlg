@@ -9,8 +9,10 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class RecruitmentListView {
 
-    private int id;
+    private Integer id;
     private int recruitmentCategory;
+    private String title;
+
     private String createSex;
     @JSONField(name = "userImageUrl")
     private String publisherPortraitUrl;
@@ -28,12 +30,16 @@ public class RecruitmentListView {
     private String basePayUnit;
     private String welfare;
 
-    public int getId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getRecruitmentCategory() {
