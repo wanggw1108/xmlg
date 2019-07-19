@@ -36,7 +36,7 @@ public class HttpUtil {
                 e1.printStackTrace();
             }
         }
-        return builder.substring(0, builder.length() - 3);
+        return builder.substring(0, builder.length() - 1);
     }
 
     public static String send(String method, String url, String postStr, Map<String, String> headers, String charset) throws IOException {

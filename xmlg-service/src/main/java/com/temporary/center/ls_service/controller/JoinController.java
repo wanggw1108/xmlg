@@ -1,8 +1,10 @@
 package com.temporary.center.ls_service.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.dao.JoinMapper;
 import com.temporary.center.ls_service.domain.Join;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 import com.temporary.center.ls_service.domain.User;
@@ -11,6 +13,7 @@ import com.temporary.center.ls_service.result.SignUpEmployeeInfo;
 import com.temporary.center.ls_service.service.JoinService;
 import com.temporary.center.ls_service.service.LogUserService;
 import com.temporary.center.ls_service.service.RecruitmentService;
+import com.temporary.center.ls_service.service.impl.JoinServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +36,7 @@ public class JoinController {
 	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
 
 	@Autowired
-	private JoinService joinService;
+	private JoinMapper joinService;
 	 
 	@Autowired
 	private RedisBean  redisBean;
@@ -56,13 +59,6 @@ public class JoinController {
 		
 		Json json=new Json ();
 		try {
-			
-			//检测token 
-			if(null==token || token.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(token)");
-				return json;
-			}
 			if(null==recruitId || recruitId.equals("")) {
 				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
 				json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(recruitId)");
@@ -114,7 +110,7 @@ public class JoinController {
 			
 			Join join=new Join();
 			join.setResumeId(recruitmentInfo.getId());
-			Long countSignUpName=joinService.countByParam(join);
+			Integer countSignUpName=joinService.selectCount(join);
 			joinResult.setSignUpNumber(countSignUpName.toString());//报名人数
 			
 			joinResult.setTitle(recruitmentInfo.getTitle());//招聘信息的标题
@@ -127,12 +123,12 @@ public class JoinController {
 				joinResult.setPortraitUrl(userImageUrl);
 			}
 			//查询报名的雇员信息
-			
+			PageHelper.startPage(curr,pagesize);
 			Join joinParam=new Join();
 			joinParam.setResumeId(recruitmentInfo.getId());
 			joinParam.setPageSize(pagesize);
 			joinParam.setCurr(curr);
-			List<Join> joinList=joinService.findDataByParam(joinParam);
+			List<Join> joinList=joinService.select(joinParam);
 			Map<String, Object> resultMap=new HashMap<>();
 			
 			//装换
@@ -187,17 +183,12 @@ public class JoinController {
 	/**
 	 * 立即报名
 	 * @param token
-	 * @param resumeId 简历ID
-	 * @param remark 备注
-	 * @param recruitmentInfoCreatebyId 职位创建者ID
-	 * @param recruitmentInfoId 职位ID
 	 * @return
 	 */
 	@RequestMapping(value = "/join.do", method = RequestMethod.POST)
     @ResponseBody
 //	public Json join(String token,String sigin,String time,String resumeId,String remark) {
-	public Json join(String token,String sign,String timeStamp,Integer resumeId,String remark,
-			String recruitmentInfoCreatebyId,String recruitmentInfoId) {
+	public Json join(String token,Join join) {
 	
 		long startTime = System.currentTimeMillis();
 		String uuid=UUID.randomUUID().toString();
@@ -211,22 +202,10 @@ public class JoinController {
 				
 				String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 				User user=logUserService.getUserById(Long.parseLong(userId));
-				Join join=new Join();
 				join.setCreatetime(new Date());
 				join.setUserId(Integer.parseInt(userId));
-				join.setResumeId(resumeId);//简历ID
-				join.setRemark(remark);
-				join.setRecruitmentInfoCreateby(recruitmentInfoCreatebyId);//职位的创建者ID
-				
-				/*User recruitmentInfoCreateUser = logUserService.getUserById(Long.parseLong(recruitmentInfoCreatebyId));
-				if(null!=recruitmentInfoCreateUser) {
-					join.setRecruitmentInfoCreatebyName(recruitmentInfoCreateUser.getUserName());//职位的创建者名称
-				} 
-				join.setRecruitmentInfoId(Long.parseLong(recruitmentInfoId));//职位ID
-*/				
-				
 				join.setUserName(user.getUserName());
-				joinService.join(join);
+				joinService.insert(join);
 				json.setSuc();
 				
 			}else {

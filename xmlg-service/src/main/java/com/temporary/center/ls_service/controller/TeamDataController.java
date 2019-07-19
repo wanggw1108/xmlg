@@ -7,6 +7,8 @@ import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
+import com.temporary.center.ls_service.dao.CompanyInfoMapper;
+import com.temporary.center.ls_service.dao.TeamDataMapper;
 import com.temporary.center.ls_service.domain.CompanyInfo;
 import com.temporary.center.ls_service.domain.TeamData;
 import com.temporary.center.ls_service.service.CompanyInfoService;
@@ -36,7 +38,7 @@ public class TeamDataController {
 	private static final Logger logger = LoggerFactory.getLogger(TeamDataController.class);
 
 	@Autowired
-	private TeamDataService teamDataService;
+	private TeamDataMapper teamDataService;
 	
 	@Autowired
 	private RedisBean redisBean;
@@ -45,7 +47,7 @@ public class TeamDataController {
 	private LogUserService logUserService;
 	
 	@Autowired
-	private CompanyInfoService companyInfoService;
+	private CompanyInfoMapper companyInfoService;
 	
 	
 	@RequestMapping(value = "/list.do", method = RequestMethod.POST)
@@ -61,7 +63,7 @@ public class TeamDataController {
 			TeamData businessLicense=new TeamData();
 //			dictionaries.setType(Constant.PART_TIME_TYPE);
 			
-			List<TeamData> list= teamDataService.list(businessLicense);
+			List<TeamData> list= teamDataService.select(businessLicense);
 			json.setData(list);
 			
 		}catch(Exception e) {
@@ -95,13 +97,6 @@ public class TeamDataController {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			
-			long timeStamp2=Long.parseLong(timeStamp);
-        	if (System.currentTimeMillis() - timeStamp2 >Constant.INTERFACE_TIME_OUT) {//超过时间
-        		json.setSattusCode(StatusCode.TIME_OUT_FIVE_MINUTE);
-				return json;
-        	}
-			
 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				logger.info("token不不存在，userId");
@@ -116,10 +111,10 @@ public class TeamDataController {
 			
 			CompanyInfo companyInfo=new CompanyInfo();
 			companyInfo.setCreateBy(Long.parseLong(userId));
-			List<CompanyInfo> list = companyInfoService.findByParam(companyInfo);
+			CompanyInfo company = companyInfoService.selectOne(companyInfo);
 			
 			Map<String, Object> result=new HashMap<String, Object>();
-			if(null==list || list.size()==0) { 
+			if(null==company) {
 				logger.info("没有数据，未认证");
 				result.put("status", "1");
 				result.put("reason", "");
@@ -128,16 +123,12 @@ public class TeamDataController {
 				return json;
 			}
 			
-			CompanyInfo teamData = list.get(0); 
-			Integer status = teamData.getCompanyIsAuth();
-			String reason = teamData.getReason();
-			
+			Integer status = company.getCompanyIsAuth();
+			String reason = company.getReason();
 			if(null==status) {
 				status=1;
 			}
-			
 			result.put("status", status);
-			
 			if(null!=reason) {
 				result.put("reason", reason);
 			}
@@ -166,7 +157,6 @@ public class TeamDataController {
 		String uuid=UUID.randomUUID().toString();
 		String title="提交团队资料,"+uuid;
 		logger.info(title+",list"+Constant.METHOD_BEGIN);
-		
 		Json json=new Json ();
 		
 		//token验证 
@@ -177,41 +167,6 @@ public class TeamDataController {
 		}
 		
 		try {
-			
-			/*Map<String,String> allParamsMap=new HashMap<String,String>();
-			allParamsMap.put("token", token);
-			allParamsMap.put("timeStamp", timeStamp);
-			allParamsMap.put("name", name);
-			allParamsMap.put("industry", industry);
-			allParamsMap.put("scale", scale);
-			allParamsMap.put("introduce", introduce);
-			allParamsMap.put("address", address);
-			allParamsMap.put("longitude", longitude);
-			allParamsMap.put("latitude", latitude);
-			allParamsMap.put("type", type);
-			if(null!=cardId && !cardId.equals("")) {
-				allParamsMap.put("cardId", cardId);
-			}
-			if(null!=businessLicenseId && !businessLicenseId.equals("")) {
-				allParamsMap.put("businessLicenseId", businessLicenseId);
-			}*/
-			/*TeamData teamData=new TeamData(); 
-			teamData.setName(name);
-			teamData.setIndustry(industry);
-			teamData.setScale(scale);
-			teamData.setIndustry(industry);
-			teamData.setAddress(address);
-			teamData.setLongitude(longitude);
-			teamData.setLatitude(latitude);
-			teamData.setType(type);*/
-			
-			/*if(null!=cardId && !cardId.equals("")) {
-				teamData.setIdcardId(Long.parseLong(cardId));
-			}
-			if(null!=businessLicenseId && !businessLicenseId.equals("")) {
-				teamData.setBusinessLicenseId(Long.parseLong(businessLicenseId));
-			}*/
-			
  			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
  			if(null==userId) {
  				json.setSattusCode(StatusCode.TOKEN_ERROR);
@@ -219,17 +174,8 @@ public class TeamDataController {
  			}
  			teamData.setCreateBy(userId);
  			teamData.setCreatetime(new Date());
-			
- 			/*String createSign = LoginController.createSign(allParamsMap, false);
-			
-			if(!createSign.equals(sign)) {
-				logger.debug("签名="+createSign);
-				json.setSattusCode(StatusCode.SIGN_ERROR);
-				return json;
-			}*/
-			
 			teamData.setStatus(Constant.IN_AUDIT);
-			teamDataService.add(teamData);
+			teamDataService.insert(teamData);
 			json.setSuc();
 		}catch(Exception e) {
 			e.printStackTrace();

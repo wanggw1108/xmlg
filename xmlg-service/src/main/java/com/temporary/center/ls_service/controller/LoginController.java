@@ -4,9 +4,11 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.ValidateParam;
+import com.temporary.center.ls_service.dao.IntensionMapper;
 import com.temporary.center.ls_service.dao.UserAddressMapper;
 import com.temporary.center.ls_service.dao.UserDao;
 import com.temporary.center.ls_service.domain.CarouselPicture;
+import com.temporary.center.ls_service.domain.Intension;
 import com.temporary.center.ls_service.domain.User;
 import com.temporary.center.ls_service.domain.UserAddress;
 import com.temporary.center.ls_service.service.LogUserService;
@@ -64,6 +66,8 @@ public class LoginController {
 	String fileBasePath;
 	@Value("${staticUrlPath}")
 	String staticUrlPath;
+	@Autowired
+	IntensionMapper intensionService;
 	/**
 	 * 发送验证码
 	 * @return
@@ -295,6 +299,11 @@ public class LoginController {
 			jgResultMap.put("imAccount", phone);
 			//TODO  生成用户存储空间
 			createUserSpace(createdUser.getId());
+			//创建求职意向
+			Intension intension = new Intension();
+			intension.setCreate_time(new Date());
+			intension.setUser_id(createdUser.getId());
+			intensionService.insert(intension);
 			json.setData(jgResultMap);
 		}catch(Exception e) {
 			e.printStackTrace();

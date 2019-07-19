@@ -29,6 +29,16 @@ public class Join extends Page{
     private String remark;
 
     private Integer state;
+    @Column(name="start_date")
+    private String startDate;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
 
     public Integer getId() {
         return id;
