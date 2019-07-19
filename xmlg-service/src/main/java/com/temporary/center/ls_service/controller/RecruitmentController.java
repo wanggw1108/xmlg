@@ -239,15 +239,15 @@ public class RecruitmentController {
 			//纬度不能为空
 			String latitude = recruitmentInfo.getLatitude();
 			if(null==latitude || latitude.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				return json;
+				recruitmentInfo.setSort("1");
+				latitude = "0.0";
 			}
 			
 			//经度不能为空
 			String longitude = recruitmentInfo.getLongitude();
 			if(null==longitude || longitude.equals("")) {
-				json.setSattusCode(StatusCode.PARAMS_NO_NULL);
-				return json;
+				recruitmentInfo.setSort("1");
+				longitude = "0.0";
 			}
 			 
 			String sort = recruitmentInfo.getSort();

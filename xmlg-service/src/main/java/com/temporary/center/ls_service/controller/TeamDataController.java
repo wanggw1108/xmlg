@@ -119,7 +119,7 @@ public class TeamDataController {
 				result.put("status", "1");
 				result.put("reason", "");
 				json.setData(result);//
-				json.setSattusCode(StatusCode.SUC);
+				json.setSuc();
 				return json;
 			}
 			
@@ -133,6 +133,7 @@ public class TeamDataController {
 				result.put("reason", reason);
 			}
 			json.setData(result);
+			json.setSuc();
 		} catch (Exception e) {
 			e.printStackTrace();
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
