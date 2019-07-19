@@ -23,7 +23,7 @@ public class IntensionTest {
     @Test
     @Description("查询求职意向")
     public void query(){
-        String url = "http://localhost:8081/intension/query.do";
+        String url = "http://47.107.103.97:8081/intension/query.do";
         StringBuilder builder = new StringBuilder("?token=");
         builder.append(token);
         try {
@@ -37,7 +37,7 @@ public class IntensionTest {
     @Test
     @Description("更新求职意向")
     public void update(){
-        String url = "http://localhost:8081/intension/update.do";
+        String url = "http://47.107.103.97:8081/intension/update.do";
         Map<String,Object> params = new HashMap<>();
         params.put("token",token);
         params.put("id",5);

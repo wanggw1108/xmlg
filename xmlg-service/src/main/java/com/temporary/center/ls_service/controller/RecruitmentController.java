@@ -133,20 +133,13 @@ public class RecruitmentController {
 				Join join1=new Join();
 				join1.setResumeId(recruitmentInfo2.getId());
 				join1.setState(Constant.INTERVIEW_SUC);
-				Example joinExample = new Example(Join.class);
-				Example.Criteria c = joinExample.createCriteria();
-				c.andEqualTo("resume_id",recruitmentInfo2.getId());
-				c.andEqualTo("status",Constant.INTERVIEW_SUC);
-				int countByParam = joinService.selectCountByExample(joinExample);
+				int countByParam = joinService.selectCount(join1);
 				myRecruitResult.setRecruitedNumber(countByParam+"");//已经招聘的人数
 				myRecruitResult.setRecruitId(recruitmentInfo2.getId().toString());//招聘信息的ID
 				myRecruitResult.setReleaseTime(DateUtil.Date2DTstring(recruitmentInfo2.getCreatetime()));//发布时间
 				Join join2=new Join();
 				join2.setResumeId(recruitmentInfo2.getId());
-				Example joinExample2 = new Example(Join.class);
-				Example.Criteria c2 = joinExample.createCriteria();
-				c2.andEqualTo("resume_id",recruitmentInfo2.getId());
-				int countByParam2 = joinService.selectCountByExample(joinExample2);
+				int countByParam2 = joinService.selectCount(join2);
 				myRecruitResult.setSignUpNumber(countByParam2+"");//报名人数
 				myRecruitResult.setState(stateMap.get(recruitmentInfo2.getState()));//招聘信息的状态 0：全部；1：进行中；2：下架；3：完结
 				myRecruitResult.setTitle(recruitmentInfo2.getTitle());//招聘信息的标题
