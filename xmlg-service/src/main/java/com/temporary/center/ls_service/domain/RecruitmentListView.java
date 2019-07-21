@@ -34,6 +34,10 @@ public class RecruitmentListView {
         this.id = id;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }

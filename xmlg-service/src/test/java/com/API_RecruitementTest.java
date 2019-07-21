@@ -86,6 +86,7 @@ public class API_RecruitementTest{
     @Description("查询职位列表测试")
     public void list(){
         String url = "http://localhost:8081/recruitment/list.do?";
+//        String url = "http://47.107.103.97:8081/recruitment/list.do?";
         Map<String,Object> params = new HashMap<>();
         params.put("district","北京市");
         params.put("search_text","兼职");

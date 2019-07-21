@@ -238,9 +238,11 @@ public class RecruitmentController {
 			
 			//纬度不能为空
 			String latitude = recruitmentInfo.getLatitude();
+			boolean noLat = false;
 			if(null==latitude || latitude.equals("")) {
 				recruitmentInfo.setSort("1");
 				latitude = "0.0";
+				noLat = true;
 			}
 			
 			//经度不能为空
@@ -248,6 +250,7 @@ public class RecruitmentController {
 			if(null==longitude || longitude.equals("")) {
 				recruitmentInfo.setSort("1");
 				longitude = "0.0";
+				noLat = true;
 			}
 			 
 			String sort = recruitmentInfo.getSort();
@@ -334,6 +337,9 @@ public class RecruitmentController {
 					rInfo.setEmployeeReputation(user.getEmployeeReputation());
 					rInfo.setBossReputation(user.getBossReputation());
 					RecruitmentListView view  = JSONObject.parseObject(JSONObject.toJSONString(rInfo),RecruitmentListView.class);
+					if(noLat){
+						view.setDistance(0);
+					}
 					viewList.add(view);
 
 				}
