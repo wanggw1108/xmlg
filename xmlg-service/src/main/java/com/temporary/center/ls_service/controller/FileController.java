@@ -4,6 +4,10 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.SignUtil;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.dao.CurriculumVitaeMapper;
+import com.temporary.center.ls_service.dao.UserDao;
+import com.temporary.center.ls_service.domain.CurriculumVitae;
+import com.temporary.center.ls_service.domain.User;
 import org.apache.solr.common.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -39,6 +43,11 @@ public class FileController {
 
 	@Autowired
 	private RedisBean redisBean;
+
+	@Autowired
+	CurriculumVitaeMapper curriculumVitaeMapper;
+	@Autowired
+	UserDao userDao;
 	
 	@RequestMapping(value = "/upload.do", method = RequestMethod.POST)
     @ResponseBody
@@ -79,6 +88,20 @@ public class FileController {
 				JSONObject obj = ocrUtil.icardOCR(path);
 				card = obj.getJSONObject("words_result").getJSONObject("公民身份号码").getString("words");
 				name = obj.getJSONObject("words_result").getJSONObject("姓名").getString("words");
+				String age = obj.getJSONObject("words_result").getJSONObject("出生").getString("words");
+				String sex = obj.getJSONObject("words_result").getJSONObject("性别").getString("words");
+				String minzu = obj.getJSONObject("words_result").getJSONObject("民族").getString("words");
+				String huji = obj.getJSONObject("words_result").getJSONObject("住址").getString("words");
+
+				CurriculumVitae vitae = new CurriculumVitae();
+				vitae.setCreate_by(Integer.valueOf(user_id));
+				vitae = curriculumVitaeMapper.selectOne(vitae);
+				if(age.length()==8){
+					vitae.setAge(Integer.valueOf(age.substring(0,age.length()-2)));
+				}
+				vitae.setHousehold_register(huji);
+				vitae.setName(name);
+				curriculumVitaeMapper.updateByPrimaryKey(vitae);
 				obj.put("card",card);
 				obj.put("name",name);
 				if(StringUtils.isEmpty(card)|| StringUtils.isEmpty(name)){

@@ -1,60 +1,64 @@
 package com.temporary.center.ls_service.domain;
 
+import com.temporary.center.ls_service.common.NotNullEmpty;
+
 import javax.persistence.*;
 import java.util.Date;
 @Table(name="education_experience")
 public class EducationExperience {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
+    @NotNullEmpty
+    private Integer curriculum_vitea_id;
 
-    private Long curriculum_vitea_id;
+    private String begin;
 
-    private Date begin;
-
-    private Date end;
+    private String end;
     private String major_name;
 
     private String cv;
     private Integer is_unified;
     private String school_name;
-    private Long create_by;
+    private Integer create_by;
 
     private Date create_time;
 
-    private Long update_by;
+    private Integer update_by;
 
     private Date update_time;
+    private String msg;
 
-    public Long getId() {
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getCurriculum_vitea_id() {
-        return curriculum_vitea_id;
-    }
 
-    public void setCurriculum_vitea_id(Long curriculum_vitea_id) {
-        this.curriculum_vitea_id = curriculum_vitea_id;
-    }
-
-    public Date getBegin() {
+    public String getBegin() {
         return begin;
     }
 
-    public void setBegin(Date begin) {
+    public void setBegin(String begin) {
         this.begin = begin;
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
@@ -90,11 +94,19 @@ public class EducationExperience {
         this.school_name = school_name;
     }
 
-    public Long getCreate_by() {
+    public Integer getCurriculum_vitea_id() {
+        return curriculum_vitea_id;
+    }
+
+    public void setCurriculum_vitea_id(Integer curriculum_vitea_id) {
+        this.curriculum_vitea_id = curriculum_vitea_id;
+    }
+
+    public Integer getCreate_by() {
         return create_by;
     }
 
-    public void setCreate_by(Long create_by) {
+    public void setCreate_by(Integer create_by) {
         this.create_by = create_by;
     }
 
@@ -106,11 +118,11 @@ public class EducationExperience {
         this.create_time = create_time;
     }
 
-    public Long getUpdate_by() {
+    public Integer getUpdate_by() {
         return update_by;
     }
 
-    public void setUpdate_by(Long update_by) {
+    public void setUpdate_by(Integer update_by) {
         this.update_by = update_by;
     }
 

@@ -1,14 +1,15 @@
 package com.temporary.center.ls_service.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_common.RedisKey;
-import com.temporary.center.ls_service.common.Json;
-import com.temporary.center.ls_service.common.RequestParams;
-import com.temporary.center.ls_service.common.StatusCode;
-import com.temporary.center.ls_service.common.TokenUtil;
+import com.temporary.center.ls_service.common.*;
+import com.temporary.center.ls_service.dao.CurriculumVitaeMapper;
+import com.temporary.center.ls_service.dao.EducationExperienceMapper;
 import com.temporary.center.ls_service.dao.ProjectExperienceMapper;
+import com.temporary.center.ls_service.dao.WorkExperienceMapper;
 import com.temporary.center.ls_service.domain.CurriculumVitae;
 import com.temporary.center.ls_service.domain.EducationExperience;
 import com.temporary.center.ls_service.domain.ProjectExperience;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +44,14 @@ public class CurriculumController {
 	private static final Logger logger = LoggerFactory.getLogger(CurriculumController.class);
 	
 	@Autowired
-	private CurriculumService curriculumService;
+	private CurriculumVitaeMapper curriculumService;
+	@Autowired
+	private EducationExperienceMapper educationExperienceService;
+	@Autowired
+	private WorkExperienceMapper workExperienceService;
+
+	@Autowired
+	ProjectExperienceMapper projectExperienceService;
 	
 	@Autowired
 	private RedisBean redisBean;
@@ -65,8 +74,8 @@ public class CurriculumController {
 			
 //			dictionaries.setType(Constant.PART_TIME_TYPE);
 			
-			List<CurriculumVitae> list= curriculumService.list(curriculumVitae);
-			json.setData(list);
+//			List<CurriculumVitae> list= curriculumService.list(curriculumVitae);
+//			json.setData(list);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -80,44 +89,137 @@ public class CurriculumController {
 	}
 	
 	/**
-	 * 提交简历信息
+	 * 提交简历基本信息
 	 * @return
 	 */
-	@RequestMapping(value = "/add.do",produces = "application/json; charset=UTF-8" ,method = RequestMethod.POST)
+	@RequestMapping(value = "/updateBase.do",method = RequestMethod.POST)
     @ResponseBody
-	public Json add(@RequestBody RequestParams<CurriculumParam> param ) {
-		long startTime = System.currentTimeMillis();
-		String uuid=UUID.randomUUID().toString();
-		String title="提交团队资料,"+uuid;
-		logger.info(title+",list"+Constant.METHOD_BEGIN);
-		 
+	public Json updateBase(@RequestBody String body ) {
 		//String json 转  对象
 		Json json=new Json ();
-		
-		//token验证 
-		boolean validateToken = TokenUtil.validateToken(param.getToken(), redisBean);
-		if(!validateToken) {
+		logger.info("更新简历:"+body);
+		com.alibaba.fastjson.JSONObject params = JSON.parseObject(body);
+		String token = params.getString("token");
+		CurriculumVitae curriculum = params.toJavaObject(CurriculumVitae.class);
+		if(!redisBean.exists(RedisKey.USER_TOKEN+token)){
 			json.setSattusCode(StatusCode.TOKEN_ERROR);
 			return json;
 		}
+		String user_id = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
+		curriculum.setCreate_by(Integer.valueOf(user_id));
 		try {
-			CurriculumParam curriculumParam=param.getParams();
-			curriculumService.add(curriculumParam);
- 			String userId = redisBean.hget(RedisKey.USER_TOKEN+param.getToken(),"user_id");
- 			if(null==userId) {
- 				json.setSattusCode(StatusCode.TOKEN_ERROR);
- 				return json;
- 			}
+			json= ValidateParam.validateParamNotNull(curriculum);
 
-			json.setSuc();
-		}catch(Exception e) {
+		} catch (IllegalAccessException e) {
 			e.printStackTrace();
-			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
 		}
-		
-		logger.info(title+",list"+Constant.METHOD_END);
-		long endTime = System.currentTimeMillis();
-		logger.info(title+"耗时{0}", endTime-startTime);
+		if(!json.getCode().equals(StatusCode.SUC.getCode())) {
+			return json;
+		}
+		curriculum.setUpdate_time(new Date());
+		curriculum.setUpdate_by(Integer.valueOf(user_id));
+		curriculumService.updateById(curriculum);
+		json.setSuc();
+		return json;
+	}
+	/**
+	 * 添加工作经历
+	 * @return
+	 */
+	@RequestMapping(value = "/addWork.do",method = RequestMethod.POST)
+	@ResponseBody
+	public Json updateEdu(@RequestBody String body ) {
+		//String json 转  对象
+		Json json=new Json ();
+		logger.info("添加工作经历：");
+		com.alibaba.fastjson.JSONObject params = JSON.parseObject(body);
+		String token = params.getString("token");
+		WorkExperience work = params.toJavaObject(WorkExperience.class);
+		if(!redisBean.exists(RedisKey.USER_TOKEN+token)){
+			json.setSattusCode(StatusCode.TOKEN_ERROR);
+			return json;
+		}
+		String user_id = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
+		work.setCreate_by(Integer.valueOf(user_id));
+		work.setCreate_time(new Date());
+		try {
+			json= ValidateParam.validateParamNotNull(work);
+
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		if(!json.getCode().equals(StatusCode.SUC.getCode())) {
+			return json;
+		}
+		workExperienceService.insert(work);
+		json.setSuc();
+		return json;
+	}
+	/**
+	 * 添加教育经历
+	 * @return
+	 */
+	@RequestMapping(value = "/addEdu.do",method = RequestMethod.POST)
+	@ResponseBody
+	public Json updateWork(@RequestBody String body) {
+		//String json 转  对象
+		com.alibaba.fastjson.JSONObject params = JSON.parseObject(body);
+		String token = params.getString("token");
+		EducationExperience edu = params.toJavaObject(EducationExperience.class);
+		Json json=new Json ();
+		if(!redisBean.exists(RedisKey.USER_TOKEN+token)){
+			json.setSattusCode(StatusCode.TOKEN_ERROR);
+			return json;
+		}
+		String user_id = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
+		edu.setCreate_by(Integer.valueOf(user_id));
+		edu.setCreate_time(new Date());
+		try {
+			json= ValidateParam.validateParamNotNull(edu);
+
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		if(!json.getCode().equals(StatusCode.SUC.getCode())) {
+			return json;
+		}
+		educationExperienceService.insert(edu);
+		json.setSuc();
+		return json;
+	}
+	/**
+	 * 查询简历
+	 * @return
+	 */
+	@RequestMapping(value = "/query.do" ,method = RequestMethod.GET)
+	@ResponseBody
+	public Json query(String token,Long timeStamp ) {
+		//String json 转  对象
+		Json json=new Json ();
+		if(!redisBean.exists(RedisKey.USER_TOKEN+token)){
+			json.setSattusCode(StatusCode.TOKEN_ERROR);
+			return json;
+		}
+		int user_id = Integer.valueOf(redisBean.hget(RedisKey.USER_TOKEN+token,"user_id"));
+		CurriculumVitae vitae = curriculumService.selectByCreateBy(user_id);
+		if(vitae==null){
+			json.setSattusCode(StatusCode.DATA_ERROR);
+			return json;
+		}
+		CurriculumParam param = new CurriculumParam();
+		param.setCurriculum(vitae);
+		EducationExperience educationExperience = new EducationExperience();
+		educationExperience.setCurriculum_vitea_id(vitae.getId());
+		param.setEducationList(educationExperienceService.select(educationExperience));
+		WorkExperience work = new WorkExperience();
+		work.setCurriculum_vitea_id(vitae.getId());
+		param.setWorkList(workExperienceService.select(work));
+		ProjectExperience project = new ProjectExperience();
+		project.setCurriculum_vitea_id(vitae.getId());
+		param.setProjectList(projectExperienceService.select(project));
+		json.setData(param);
+		json.setSuc();
+
 		return json;
 	}
 

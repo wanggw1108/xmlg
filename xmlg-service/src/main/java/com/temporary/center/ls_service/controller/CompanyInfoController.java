@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,7 +100,7 @@ public class CompanyInfoController {
 				}
 				
 				if(null==companyInfo2.getCompanyIsAuth()) {
-					companyInfo2.setCompanyIsAuth(1);//公司是否做过企业认证 0:已认证；1：未认证
+					companyInfo2.setCompanyIsAuth(0);//公司是否做过企业认证 0:已认证；1：未认证
 				}
 				json.setData(companyInfo2);
 				json.setSuc();
@@ -137,6 +138,9 @@ public class CompanyInfoController {
 			CompanyInfo  param=new CompanyInfo();
 			param.setCompanyId(companyId);
 			CompanyInfo companyInfo=companyInfoService.selectOne(param);
+			if(StringUtil.isEmpty(companyInfo.getCompanyPortraitUrl())){
+
+			}
 			json.setData(companyInfo);
 			json.setSuc();
 		}catch(Exception e) {
@@ -215,8 +219,6 @@ public class CompanyInfoController {
 	
 	/**
 	 * 填写认证信息
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/createAuthInfo.do", method = RequestMethod.POST)
@@ -260,6 +262,7 @@ public class CompanyInfoController {
 			//新增
 			companyInfo.setCreateBy(Long.parseLong(userId));
 			companyInfo.setCreateTime(new Date());
+			companyInfo.setBusinessLicenseUrl(companyInfo.getFileName());
 			CompanyInfo companyInfoadd=new CompanyInfo();
 			BeanUtils.copyProperties(companyInfo, companyInfoadd);
 			companyInfoadd.setCompanyIsAuth(3);//

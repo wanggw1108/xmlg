@@ -7,7 +7,7 @@ import com.temporary.center.ls_service.domain.WorkExperience;
 
 import java.util.List;
 
-public class CurriculumParam extends CurriculumVitae{
+public class CurriculumParam{
 
 	private CurriculumVitae curriculum;
 	

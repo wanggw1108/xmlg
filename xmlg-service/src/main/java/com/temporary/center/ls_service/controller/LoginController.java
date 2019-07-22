@@ -4,13 +4,11 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.ValidateParam;
+import com.temporary.center.ls_service.dao.CurriculumVitaeMapper;
 import com.temporary.center.ls_service.dao.IntensionMapper;
 import com.temporary.center.ls_service.dao.UserAddressMapper;
 import com.temporary.center.ls_service.dao.UserDao;
-import com.temporary.center.ls_service.domain.CarouselPicture;
-import com.temporary.center.ls_service.domain.Intension;
-import com.temporary.center.ls_service.domain.User;
-import com.temporary.center.ls_service.domain.UserAddress;
+import com.temporary.center.ls_service.domain.*;
 import com.temporary.center.ls_service.service.LogUserService;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
@@ -61,6 +59,9 @@ public class LoginController {
 
 	@Autowired
 	SMSUtil smsService;
+
+	@Autowired
+	CurriculumVitaeMapper curriculumService;
 
 	@Value("${fileBasePath}")
 	String fileBasePath;
@@ -304,6 +305,12 @@ public class LoginController {
 			intension.setCreate_time(new Date());
 			intension.setUser_id(createdUser.getId());
 			intensionService.insert(intension);
+			//创建一份空简历
+			CurriculumVitae vitae = new CurriculumVitae();
+			vitae.setCreate_by(createdUser.getId());
+			vitae.setCreate_time(new Date());
+			vitae.setTel(phone);
+			curriculumService.insert(vitae);
 			json.setData(jgResultMap);
 		}catch(Exception e) {
 			e.printStackTrace();

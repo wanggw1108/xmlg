@@ -91,9 +91,9 @@ public class Constant {
 	public static final long INTERFACE_TIME_OUT = 3*60*1000;
 
 	/**
-	 * token 的有效时间 单位 秒，5天
+	 * token 的有效时间 单位 秒，90天
 	 */
-	public static final int TOKEN_EFFECTIVE_TIME = 5*24*60*60;
+	public static final int TOKEN_EFFECTIVE_TIME = 90*24*60*60;
 
 	/**
 	 * 1：报名成功

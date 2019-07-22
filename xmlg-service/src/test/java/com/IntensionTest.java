@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class IntensionTest {
 
-    public static String token = "7a64e738-b349-46f1-8cd3-64300b7b527e";
+    public static String token = "743b1ddb-cd3d-47f5-bb54-275f511346a5";
     public static HashMap<String,String> header = new HashMap<>();
     {
         header.put("Content-Type","application/x-www-form-urlencoded");

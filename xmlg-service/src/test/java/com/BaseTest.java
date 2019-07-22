@@ -3,12 +3,8 @@ package com;
 import app.MyApplication;
 import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.MD5Utils;
-import com.temporary.center.ls_service.dao.CarouselPictureMapper;
-import com.temporary.center.ls_service.dao.TypeWorkMapper;
-import com.temporary.center.ls_service.dao.UserDao;
-import com.temporary.center.ls_service.domain.CarouselPicture;
-import com.temporary.center.ls_service.domain.TypeWork;
-import com.temporary.center.ls_service.domain.User;
+import com.temporary.center.ls_service.dao.*;
+import com.temporary.center.ls_service.domain.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +31,10 @@ public class BaseTest {
     CarouselPictureMapper dao;
     @Autowired
     TypeWorkMapper typeWorkMapper;
+    @Autowired
+    CurriculumVitaeMapper curriculumVitaeMapper;
+    @Autowired
+    ProjectExperienceMapper projectExperienceMapper;
     @Test
     public void dbTest(){
 
@@ -51,10 +51,11 @@ public class BaseTest {
 //        List<CarouselPicture> pictureList = dao.selectByExample(example);
 //
 //        System.out.println(pictureList.size());
-        TypeWork typeWork = new TypeWork();
-        typeWork.setName("实习");
-        typeWork.setId(null);
-        List<TypeWork> list = typeWorkMapper.select(typeWork);
+        CurriculumVitae v = curriculumVitaeMapper.selectByCreateBy(14);
+        System.out.println(v.getId());
+        ProjectExperience project = new ProjectExperience();
+        project.setCurriculum_vitea_id(1);
+        List<ProjectExperience>list = projectExperienceMapper.select(project);
         System.out.println(list);
 
     }

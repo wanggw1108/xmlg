@@ -1,5 +1,7 @@
 package com.temporary.center.ls_service.domain;
 
+import com.temporary.center.ls_service.common.NotNullEmpty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,6 +9,7 @@ import java.util.Date;
 public class CurriculumVitae {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @NotNullEmpty
     private Integer id;
     private String name;
     private String current_company;
@@ -34,9 +37,9 @@ public class CurriculumVitae {
     private Integer create_by;
     private Date create_time;
 
-    private Long updateby;
+    private Integer update_by;
 
-    private Date updatetime;
+    private Date update_time;
 
     public Integer getId() {
         return id;
@@ -246,19 +249,19 @@ public class CurriculumVitae {
         this.create_time = create_time;
     }
 
-    public Long getUpdateby() {
-        return updateby;
+    public Integer getUpdate_by() {
+        return update_by;
     }
 
-    public void setUpdateby(Long updateby) {
-        this.updateby = updateby;
+    public void setUpdate_by(Integer update_by) {
+        this.update_by = update_by;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdate_time() {
+        return update_time;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }

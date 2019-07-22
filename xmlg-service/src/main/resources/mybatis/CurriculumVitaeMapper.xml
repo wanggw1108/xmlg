@@ -1,4 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.temporary.center.ls_service.dao.CurriculumVitaeMapper" >
+    <select id="selectByCreateBy" resultType="com.temporary.center.ls_service.domain.CurriculumVitae">
+        select * from curriculum_vitae where create_by=#{create_by};
+
+    </select>
+    <update id="updateById" parameterType="com.temporary.center.ls_service.domain.CurriculumVitae">
+        update curriculum_vitae
+        <set>
+            <if test="name != null and name != ''">
+                 `name`=#{name},
+            </if>
+            <if test="current_company != null and current_company != ''">
+                current_company=#{current_company} ,
+            </if>
+            <if test="current_position != null and current_position != ''">
+                current_position=#{current_position} ,
+            </if>
+            <if test="working_life != null and working_life != ''">
+                working_life=#{working_life},
+            </if>
+            <if test="age != null and age != ''">
+                age=#{age},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel=#{tel},
+            </if>
+            <if test="nationality != null and nationality != ''">
+                nationality=#{nationality},
+            </if>
+            <if test="status != null and status != ''">
+                status=#{status},
+            </if>
+            <if test="household_register != null and household_register != ''">
+                household_register=#{household_register},
+            </if>
+            <if test="email != null and email != ''">
+                email=#{email},
+            </if>
+            <if test="city != null and city != ''">
+                city=#{city},
+            </if>
+            <if test="height != null and height != ''">
+                height=#{height},
+            </if>
+            <if test="expect_type != null and expect_type != ''">
+                expect_type=#{expect_type},
+            </if>
+            <if test="expect_time != null and expect_time != ''">
+                expect_time=#{expect_time},
+            </if>
+            <if test="ok_work_time != null and ok_work_time != ''">
+                ok_work_time=#{ok_work_time},
+            </if>
+            <if test="full_time != null and full_time != ''">
+                full_time=#{full_time},
+            </if>
+            <if test="self_evaluation != null and self_evaluation != ''">
+                self_evaluation=#{self_evaluation},
+            </if>
+            <if test="expect_industry != null and expect_industry != ''">
+                expect_industry=#{expect_industry},
+            </if>
+            <if test="expect_position != null and expect_position != ''">
+                expect_position=#{expect_position},
+            </if>
+            <if test="expect_city != null and expect_city != ''">
+                expect_city=#{expect_city},
+            </if>
+            <if test="expect_salary != null and expect_salary != ''">
+                expect_salary=#{expect_salary},
+            </if>
+            <if test="language != null and language != ''">
+                language=#{language},
+            </if>
+            <if test="additional != null and additional != ''">
+                additional=#{additional},
+            </if>
+            <if test="create_by != null and create_by != ''">
+                create_by=#{create_by},
+            </if>
+            <if test="create_time != null and create_time != ''">
+                create_time=#{create_time},
+            </if>
+            <if test="update_by != null and update_by != ''">
+                update_by=#{update_by},
+            </if>
+            <if test="update_time != null and update_time != ''">
+                update_time=#{update_time},
+            </if>
+        </set>
+        where id=#{id}
+
+    </update>
 </mapper>
+

@@ -7,28 +7,23 @@ public class ProjectExperience {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    @Column(name="curriculum_vitea_id")
-    private Integer curriculumViteaId;
+    private Integer curriculum_vitea_id;
 
     private String name;
 
-    private String describe;
+    private String des;
 
     private String duty;
 
     private String achievement;
 
-    private Date begin;
+    private String begin;
 
-    private Date end;
-    @Column(name="create_by")
-    private Integer createby;
-    @Column(name="create_time")
-    private Date createtime;
-    @Column(name="update_by")
-    private Integer updateby;
-    @Column(name="update_time")
-    private Date updatetime;
+    private String end;
+    private Integer create_by;
+    private Date create_time;
+    private Integer update_by;
+    private Date update_time;
 
     public Integer getId() {
         return id;
@@ -38,12 +33,12 @@ public class ProjectExperience {
         this.id = id;
     }
 
-    public Integer getCurriculumViteaId() {
-        return curriculumViteaId;
+    public Integer getCurriculum_vitea_id() {
+        return curriculum_vitea_id;
     }
 
-    public void setCurriculumViteaId(Integer curriculumViteaId) {
-        this.curriculumViteaId = curriculumViteaId;
+    public void setCurriculum_vitea_id(Integer curriculum_vitea_id) {
+        this.curriculum_vitea_id = curriculum_vitea_id;
     }
 
     public String getName() {
@@ -54,12 +49,12 @@ public class ProjectExperience {
         this.name = name;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDes() {
+        return des;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDes(String des) {
+        this.des = des;
     }
 
     public String getDuty() {
@@ -78,51 +73,51 @@ public class ProjectExperience {
         this.achievement = achievement;
     }
 
-    public Date getBegin() {
+    public String getBegin() {
         return begin;
     }
 
-    public void setBegin(Date begin) {
+    public void setBegin(String begin) {
         this.begin = begin;
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
-    public Integer getCreateby() {
-        return createby;
+    public Integer getCreate_by() {
+        return create_by;
     }
 
-    public void setCreateby(Integer createby) {
-        this.createby = createby;
+    public void setCreate_by(Integer create_by) {
+        this.create_by = create_by;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
-    public Integer getUpdateby() {
-        return updateby;
+    public Integer getUpdate_by() {
+        return update_by;
     }
 
-    public void setUpdateby(Integer updateby) {
-        this.updateby = updateby;
+    public void setUpdate_by(Integer update_by) {
+        this.update_by = update_by;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdate_time() {
+        return update_time;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdate_time(Date update_time) {
+        this.update_time = update_time;
     }
 }
