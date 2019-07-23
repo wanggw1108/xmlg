@@ -35,6 +35,10 @@ public class BaseTest {
     CurriculumVitaeMapper curriculumVitaeMapper;
     @Autowired
     ProjectExperienceMapper projectExperienceMapper;
+
+    @Autowired
+    private RecruitmentInfoMapper recruitmentInfoMapper;
+
     @Test
     public void dbTest(){
 
@@ -51,12 +55,7 @@ public class BaseTest {
 //        List<CarouselPicture> pictureList = dao.selectByExample(example);
 //
 //        System.out.println(pictureList.size());
-        CurriculumVitae v = curriculumVitaeMapper.selectByCreateBy(14);
-        System.out.println(v.getId());
-        ProjectExperience project = new ProjectExperience();
-        project.setCurriculum_vitea_id(1);
-        List<ProjectExperience>list = projectExperienceMapper.select(project);
-        System.out.println(list);
+        System.out.println(recruitmentInfoMapper.getEmployeeByUserId(4));
 
     }
 

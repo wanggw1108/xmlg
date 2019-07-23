@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class API_RecruitementTest{
 //http://47.107.103.97:8081
-    public static String token = "743b1ddb-cd3d-47f5-bb54-275f511346a5";
+    public static String token = "af29bea1-5446-4647-8e3f-1d9c97d7de94";
     public static HashMap<String,String> header = new HashMap<>();
     {
         header.put("Content-Type","application/x-www-form-urlencoded");
@@ -133,6 +133,24 @@ public class API_RecruitementTest{
             e.printStackTrace();
         }
 
+
+    }
+    @Test
+    @Description("发布的职位")
+    public void myRecruit(){
+
+        String url = "http://localhost:8081/recruitment/myRecruit.do?";
+        Map<String,Object> params = new HashMap<>();
+        params.put("token",token);
+        params.put("curr",1);
+        params.put("pageSize",20);
+        String str = HttpUtil.buildPostStr(params);
+        try {
+            String res = HttpUtil.send(url+str);
+            System.out.println(res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

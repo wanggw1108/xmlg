@@ -108,17 +108,11 @@ public class RecruitmentController {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			
-			
-			
 			List<MyRecruitResult> myRecruitResultList=new ArrayList<>();
-			
 			RecruitmentInfo recruitmentInfo=new RecruitmentInfo();
 			recruitmentInfo.setCreateby(redisBean.hget(RedisKey.USER_TOKEN+token,"user_id"));
 			List<RecruitmentInfo> list = recruitmentService.list(recruitmentInfo);
-			
 			Long countByParams = recruitmentService.countByParams(recruitmentInfo);
-			
 			for (RecruitmentInfo recruitmentInfo2:list) {
 				MyRecruitResult myRecruitResult=new MyRecruitResult();
 				myRecruitResult.setBasePay(recruitmentInfo2.getBasePay().toString());//
@@ -135,7 +129,7 @@ public class RecruitmentController {
 				join1.setState(Constant.INTERVIEW_SUC);
 				int countByParam = joinService.selectCount(join1);
 				myRecruitResult.setRecruitedNumber(countByParam+"");//已经招聘的人数
-				myRecruitResult.setRecruitId(recruitmentInfo2.getId().toString());//招聘信息的ID
+				myRecruitResult.setId(recruitmentInfo2.getId());//招聘信息的ID
 				myRecruitResult.setReleaseTime(DateUtil.Date2DTstring(recruitmentInfo2.getCreatetime()));//发布时间
 				Join join2=new Join();
 				join2.setResumeId(recruitmentInfo2.getId());
@@ -145,12 +139,8 @@ public class RecruitmentController {
 				myRecruitResult.setTitle(recruitmentInfo2.getTitle());//招聘信息的标题
 				myRecruitResultList.add(myRecruitResult);
 			}
-			
-			
-			Map<String, Object> result=new HashMap<>();
-			result.put("list", myRecruitResultList);
-			result.put("count", countByParams);
-			json.setData(result);
+			PageData pageData=new PageData(myRecruitResultList,countByParams,curr,pageSize);
+			json.setData(pageData);
 			json.setSuc();
 			
 		}catch(Exception e) {
@@ -388,14 +378,14 @@ public class RecruitmentController {
 		CompanyInfo companyInfo = new CompanyInfo();
 		companyInfo.setCreateBy(Long.valueOf(userid));
 		companyInfo = companyService.selectOne(companyInfo);
-		info.setUserImageUrl(companyInfo.getBusinessLicenseUrl()==null?imageUtil.getFileUrl(null,"4"):companyInfo.getBusinessLicenseUrl());
+		info.setUserImageUrl(companyInfo.getCompanyPortraitUrl()==null?imageUtil.getFileUrl(null,"4"):companyInfo.getCompanyPortraitUrl());
 		json.setData(info);
 		json.setSuc();
 		return json;
 	}
 	
 	/**
-	 * 发布兼职
+	 * 发布职位
 	 */
 	@Transactional
 	@RequestMapping(value = "/add.do", method = RequestMethod.POST)

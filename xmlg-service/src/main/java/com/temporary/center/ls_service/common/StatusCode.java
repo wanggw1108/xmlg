@@ -10,8 +10,9 @@ public enum StatusCode {
 	
 	FAIL("200", "请求失败"),
 	
-	PROGRAM_EXCEPTION("300","程序异常"), 
-	
+	PROGRAM_EXCEPTION("300","程序异常"),
+	JOIN_ERROR("301","已报名"),
+
 	TOKEN_ERROR("401","token过期"), 
 	SIGN_ERROR("403","sign签名错误"),
 	SMS_ERROR("402","一分钟后再发送"),

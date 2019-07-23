@@ -22,5 +22,9 @@ public interface RecruitmentService {
 	RecruitmentInfo findById(Long parseInt);
 
 	void update(RecruitmentInfo recruitmentInfo);
+
+	List<String> getEmployeeByUserId(Integer user_id);
+
+	List<String> getServiceArea(Integer user_id);
 	
 }

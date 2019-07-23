@@ -4,7 +4,7 @@ public class PageData {
 
 	private  Object list;
 	
-	private  Object count;
+	private  long count;
 
 	private int currentPage;
 	private int totalPage;
@@ -12,12 +12,19 @@ public class PageData {
 	public PageData(){
 
 	}
-	public PageData(Object list,Object count,int currentPage,int size,int totalPage){
+	public PageData(Object list,long count,int currentPage,int size,int totalPage){
 		this.list = list;
 		this.count = count;
 		this.currentPage = currentPage;
 		this.totalPage = totalPage;
 		this.size = size;
+	}
+	public PageData(Object list,long count,int currentPage,int size){
+		this.list = list;
+		this.count = count;
+		this.currentPage = currentPage;
+		this.size = size;
+		this.totalPage = count%size==0?(int)count/size:((int)(count/size))+1;
 	}
 
 	public Object getList() {
@@ -28,11 +35,11 @@ public class PageData {
 		this.list = list;
 	}
 
-	public Object getCount() {
+	public long getCount() {
 		return count;
 	}
 
-	public void setCount(Object count) {
+	public void setCount(long count) {
 		this.count = count;
 	}
 

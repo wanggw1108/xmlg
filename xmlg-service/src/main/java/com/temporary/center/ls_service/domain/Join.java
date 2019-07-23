@@ -5,7 +5,7 @@ import com.temporary.center.ls_service.common.Page;
 import javax.persistence.*;
 import java.util.Date;
 @Table(name="w_join")
-public class Join extends Page{
+public class Join{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

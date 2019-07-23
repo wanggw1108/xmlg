@@ -5,7 +5,7 @@ package com.temporary.center.ls_service.result;
  * @author  fuyuanming
  */
 public class MyRecruitResult {
-	private String recruitId;
+	private Integer id;
 	private String title;
 	private String state;
 	private String signUpNumber;
@@ -15,12 +15,15 @@ public class MyRecruitResult {
 	private String basePayUnit;
 	private String releaseTime;
 	private String browse;
-	public String getRecruitId() {
-		return recruitId;
+
+	public Integer getId() {
+		return id;
 	}
-	public void setRecruitId(String recruitId) {
-		this.recruitId = recruitId;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}

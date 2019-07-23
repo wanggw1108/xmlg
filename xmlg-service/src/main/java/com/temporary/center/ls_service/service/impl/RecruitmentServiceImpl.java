@@ -47,4 +47,14 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 		recruitmentInfoMapper.updateByPrimaryKeySelective(recruitmentInfo);
 	}
 
+	@Override
+	public List<String> getEmployeeByUserId(Integer user_id) {
+		return recruitmentInfoMapper.getEmployeeByUserId(user_id);
+	}
+
+	@Override
+	public List<String> getServiceArea(Integer user_id) {
+		return recruitmentInfoMapper.getServiceArea(user_id);
+	}
+
 }

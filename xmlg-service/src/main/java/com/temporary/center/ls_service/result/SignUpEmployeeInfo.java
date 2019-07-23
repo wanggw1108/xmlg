@@ -1,5 +1,7 @@
 package com.temporary.center.ls_service.result;
 
+import java.util.List;
+
 /**
  * 报名的雇员信息
  * @author  fuyuanming
@@ -18,9 +20,9 @@ public class SignUpEmployeeInfo {
 	
 	private Integer employeeReputation;
 	
-	private String employeeServiceDistrict;
+	private List<String> employeeServiceDistrict;
 	
-	private String employeeJobExperience;
+	private List<String> employeeJobExperience;
 
 
 	public Integer getEmployeeId() {
@@ -71,20 +73,19 @@ public class SignUpEmployeeInfo {
 		this.employeeReputation = employeeReputation;
 	}
 
-	public String getEmployeeServiceDistrict() {
+	public List<String> getEmployeeServiceDistrict() {
 		return employeeServiceDistrict;
 	}
 
-	public void setEmployeeServiceDistrict(String employeeServiceDistrict) {
+	public void setEmployeeServiceDistrict(List<String> employeeServiceDistrict) {
 		this.employeeServiceDistrict = employeeServiceDistrict;
 	}
 
-	public String getEmployeeJobExperience() {
+	public List<String> getEmployeeJobExperience() {
 		return employeeJobExperience;
 	}
 
-	public void setEmployeeJobExperience(String employeeJobExperience) {
+	public void setEmployeeJobExperience(List<String> employeeJobExperience) {
 		this.employeeJobExperience = employeeJobExperience;
 	}
-	
 }

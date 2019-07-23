@@ -430,7 +430,7 @@ public class LoginController {
             json.setSuc("密码重置成功");
 
 		}catch(Exception e) {
-			e.printStackTrace();
+			logger.info("重置密码错误:",e);
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
 		}
 		
