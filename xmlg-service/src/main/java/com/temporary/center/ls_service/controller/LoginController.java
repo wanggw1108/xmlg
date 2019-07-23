@@ -267,7 +267,7 @@ public class LoginController {
 			User user = new User();
 			user.setEmployeeReputation(0);//默认雇员信誉0
 			user.setBossReputation(0);//默认雇主信誉
-            user.setUserName(phone);
+//            user.setUserName(phone);
 			user.setPassword(MD5Utils.getMD5(password));
 			user.setEffective(Constant.EFFECTIVE);
 			user.setCreateBy("system");
@@ -462,11 +462,7 @@ public class LoginController {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			
 			String userId=redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
-			
-	        String time = request.getParameter("timeStamp");
-	        String sign=request.getParameter("sign");
 	        String chineseName=request.getParameter("chineseName");
 	        String sex=request.getParameter("sex");
 	        String city=request.getParameter("city");
@@ -474,49 +470,18 @@ public class LoginController {
 	        String height=request.getParameter("height");
 	        String qq=request.getParameter("qq");
 	        String wx=request.getParameter("wx");
-	        
-	        Long timeStamp=Long.parseLong(time);
-	        
-	        Date currDate=new Date();
-	        long countTime=currDate.getTime()-timeStamp;
-	        if(countTime<0 || countTime>Constant.INTERFACE_TIME_OUT) {
-	        	logger.info("时间相差countTime="+countTime);
-	    		json.setSattusCode(StatusCode.TIME_OUT_FIVE_MINUTE);
-	    		return json;
-	        }
-	        
-	        
-	        Map<String,String> params=new HashMap<String,String>();
-	        params.put("time", time);
-	        params.put("token", token);
-	        params.put("chineseName", chineseName);
-	        params.put("sex", sex);
-	        params.put("city", city);
-	        params.put("birthday", birthday);
-	        params.put("height", height);
-	        params.put("qq", qq);
-	        params.put("wx", wx);
-	        
-	        String signGenerateByParams=createSign(params, false);
-	        
-	        
-	        if(sign.equals(signGenerateByParams)) {
-	        	Map<String,Object> param=new HashMap<String,Object>();
-	        	param.put("id", userId);
-	        	param.put("updateBy", userId);
-	        	param.put("updateTime", new Date());
-	        	param.put("chineseName", chineseName);
-	        	param.put("sex", sex);
-	        	param.put("city", city);
-	        	param.put("birthday", birthday);
-	        	param.put("height", height);
-	        	param.put("qq", qq);
-	        	param.put("wx", wx);
-				logUserService.updateUser(param);
-	        }else {
-	        	logger.debug("签名不对，需要签名="+signGenerateByParams);
-	        	json.setSattusCode(StatusCode.SIG_ERROR);
-	        }
+			Map<String,Object> param=new HashMap<String,Object>();
+			param.put("id", userId);
+			param.put("updateBy", userId);
+			param.put("updateTime", new Date());
+			param.put("chineseName", chineseName);
+			param.put("sex", sex);
+			param.put("city", city);
+			param.put("birthday", birthday);
+			param.put("height", height);
+			param.put("qq", qq);
+			param.put("wx", wx);
+			logUserService.updateUser(param);
 		}catch(Exception e) {
 			e.printStackTrace();
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);

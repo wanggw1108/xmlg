@@ -979,7 +979,7 @@
     `recruitment_info` r
     JOIN w_join j
       ON j.recruitment_info_id = r.id
-  WHERE j.user_id = #{user_id} and j.status=5 GROUP BY r.type_work ORDER BY COUNT(1) DESC LIMIT 3
+  WHERE j.user_id = #{user_id} and j.state=5 GROUP BY r.type_work ORDER BY COUNT(1) DESC LIMIT 3
 
     </select>
     <select id="getServiceArea" resultType="string">
@@ -989,7 +989,7 @@
     `recruitment_info` r
     JOIN w_join j
       ON j.recruitment_info_id = r.id
-  WHERE j.user_id = #{user_id} and j.status=5 group by r.`district` order by COUNT(1) desc limit 3
+  WHERE j.user_id = #{user_id} and j.state=5 group by r.`district` order by COUNT(1) desc limit 3
 
     </select>
 </mapper>

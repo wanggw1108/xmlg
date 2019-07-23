@@ -2,9 +2,11 @@ package com.temporary.center.ls_service.dao;
 
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+@Component
 public interface RecruitmentInfoMapper {
     int deleteByPrimaryKey(Long id);
 

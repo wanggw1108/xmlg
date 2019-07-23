@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Table(name="collection")
-public class MyCollection extends Page {
+public class MyCollection {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

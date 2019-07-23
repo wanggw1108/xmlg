@@ -72,17 +72,13 @@ public class FileController {
 			result.put("imgUrl",imageUtil.getFileUrl(user_id,type));
 			String name = null;
 			String card = null;
-			if(type.equals("4")){
-				JSONObject obj = ocrUtil.businessLicense(path);
-				card = obj.getJSONObject("words_result").getJSONObject("社会信用代码").getString("words");
-				name = obj.getJSONObject("words_result").getJSONObject("单位名称").getString("words");
-				obj.put("card",card);
-				obj.put("name",name);
-				if(StringUtils.isEmpty(card)|| StringUtils.isEmpty(name)){
-					json.setSattusCode(StatusCode.AUTH_Company_ERROR);
-					return json;
-				}
-
+			//如果上传的图像类型是1，更新用户头像地址
+			if(type.equals("1")){
+				User user = new User();
+				user.setId(Integer.valueOf(user_id));
+				user = userDao.selectOne(user);
+				user.setUserImageUrl(imageUtil.getFileUrl(user_id,type));
+				userDao.updateByPrimaryKey(user);
 			}
 			if(type.equals("2")){
 				JSONObject obj = ocrUtil.icardOCR(path);
@@ -96,8 +92,9 @@ public class FileController {
 				CurriculumVitae vitae = new CurriculumVitae();
 				vitae.setCreate_by(Integer.valueOf(user_id));
 				vitae = curriculumVitaeMapper.selectOne(vitae);
+
 				if(age.length()==8){
-					vitae.setAge(Integer.valueOf(age.substring(0,age.length()-2)));
+					vitae.setAge(Integer.valueOf(age.substring(0,age.length()-4)));
 				}
 				vitae.setHousehold_register(huji);
 				vitae.setName(name);
@@ -108,6 +105,19 @@ public class FileController {
 					json.setSattusCode(StatusCode.AUTH_CHECK_ERROR);
 					return json;
 				}
+			}
+
+			if(type.equals("4")){
+				JSONObject obj = ocrUtil.businessLicense(path);
+				card = obj.getJSONObject("words_result").getJSONObject("社会信用代码").getString("words");
+				name = obj.getJSONObject("words_result").getJSONObject("单位名称").getString("words");
+				obj.put("card",card);
+				obj.put("name",name);
+				if(StringUtils.isEmpty(card)|| StringUtils.isEmpty(name)){
+					json.setSattusCode(StatusCode.AUTH_Company_ERROR);
+					return json;
+				}
+
 			}
 			result.put("card",card);
 			result.put("name",name);

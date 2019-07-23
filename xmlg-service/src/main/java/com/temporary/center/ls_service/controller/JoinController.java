@@ -6,7 +6,9 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.PageData;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.dao.CurriculumVitaeMapper;
 import com.temporary.center.ls_service.dao.JoinMapper;
+import com.temporary.center.ls_service.domain.CurriculumVitae;
 import com.temporary.center.ls_service.domain.Join;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 import com.temporary.center.ls_service.domain.User;
@@ -14,6 +16,7 @@ import com.temporary.center.ls_service.result.JoinResult;
 import com.temporary.center.ls_service.result.SignUpEmployeeInfo;
 import com.temporary.center.ls_service.service.LogUserService;
 import com.temporary.center.ls_service.service.RecruitmentService;
+import org.apache.http.client.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +52,8 @@ public class JoinController {
 	private RecruitmentService recruitmentService;
 	@Autowired
 	ImageUtil imageUtil;
+	@Autowired
+	private CurriculumVitaeMapper curriculumVitaeService;
 	
 	
 	@RequestMapping(value = "/seeSignUp.do", method = RequestMethod.GET)
@@ -114,27 +119,22 @@ public class JoinController {
 			joinParam.setRecruitmentInfoId(recruitmentInfo.getId());
 			List<Join> joinList=joinService.select(joinParam);
 			//装换
-			List<SignUpEmployeeInfo> signUpEmployeeInfo =new ArrayList<>(); 
+			List<SignUpEmployeeInfo> signUpEmployeeInfo =new ArrayList<>();
+			int currentYear = Integer.valueOf(DateUtils.formatDate(new Date(),"yyyy"));
 			for(Join join2:joinList) {
-				
 				Integer userId = join2.getUserId();
 				User userById = logUserService.getUserById(userId);
-				
-				
 				SignUpEmployeeInfo signUpEmployeeInfo2=new SignUpEmployeeInfo();
-				
-				if(null!=userById.getBirthday()) {
-					Date birthday = DateUtil.parase(userById.getBirthday(), "yy/MM/dd");
-					int age = DateUtil.getAgeByBirth(birthday);
-					signUpEmployeeInfo2.setEmployeeAge(age);//雇员的年龄
+				CurriculumVitae vitae = curriculumVitaeService.selectByCreateBy(userId);
+				if(vitae!=null){
+					int age = vitae.getAge();
+					signUpEmployeeInfo2.setEmployeeAge(currentYear - age);//雇员的年龄
 				}
 				//查询该雇员所参加过的职位信息
 				signUpEmployeeInfo2.setEmployeeJobExperience(recruitmentService.getEmployeeByUserId(userId));//雇员的工作经历
-				
-				signUpEmployeeInfo2.setEmployeeName(join2.getUserName());//雇员的姓名
+				signUpEmployeeInfo2.setEmployeeName(userById.getChineseName());//雇员的姓名
 				signUpEmployeeInfo2.setEmployeeportraitUrl(userById.getUserImageUrl());//雇员的头像URL
 				signUpEmployeeInfo2.setEmployeeReputation(userById.getEmployeeReputation());//雇员的信誉
-				
 				signUpEmployeeInfo2.setEmployeeServiceDistrict(recruitmentService.getServiceArea(userId));//雇员的服务区域，多个服务区域以英文逗号隔开
 				signUpEmployeeInfo2.setEmployeeSex(userById.getSex());//雇员的性别
 				signUpEmployeeInfo2.setEmployeeId(join2.getId());
