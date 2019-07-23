@@ -400,6 +400,7 @@ public class LoginController {
 	@RequestMapping(value = "/updatePassword.do", method = RequestMethod.POST)
     @ResponseBody
     public Json updatePassword(String phoneNum,String verifyCode,String newPassword) {
+		logger.info(phoneNum+"	"+verifyCode+"	"+newPassword);
 		Json json=new Json();
 		json.setSuc();
 		json.setData("");
@@ -417,7 +418,7 @@ public class LoginController {
             Map<String,Object> queryUser = new HashedMap();
             queryUser.put("phone",phoneNum);
             List<User> userList = userService.queryUserByParams(queryUser);
-            if(userList ==null){
+            if(userList ==null || userList.size()==0){
                 json.setSattusCode(StatusCode.USER_NULL_REGISTERED);
                 return json;
             }

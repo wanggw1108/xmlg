@@ -38,6 +38,8 @@ public class BaseTest {
 
     @Autowired
     private RecruitmentInfoMapper recruitmentInfoMapper;
+    @Autowired
+    private UserDao userService;
 
     @Test
     public void dbTest(){
@@ -55,7 +57,10 @@ public class BaseTest {
 //        List<CarouselPicture> pictureList = dao.selectByExample(example);
 //
 //        System.out.println(pictureList.size());
-        System.out.println(recruitmentInfoMapper.getEmployeeByUserId(4));
+        Map<String,Object> queryUser = new HashedMap();
+        queryUser.put("phone","17318035749");
+        List<User> userList = userService.queryUserByParams(queryUser);
+        System.out.println(userList);
 
     }
 
