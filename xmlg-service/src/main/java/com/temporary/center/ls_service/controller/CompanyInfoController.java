@@ -6,7 +6,9 @@ import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
 import com.temporary.center.ls_service.common.ValidateParam;
 import com.temporary.center.ls_service.dao.CompanyInfoMapper;
+import com.temporary.center.ls_service.dao.IdCardMapper;
 import com.temporary.center.ls_service.domain.CompanyInfo;
+import com.temporary.center.ls_service.domain.IdCard;
 import com.temporary.center.ls_service.domain.User;
 import com.temporary.center.ls_service.params.CompanyInfoParam;
 import com.temporary.center.ls_service.service.CompanyInfoService;
@@ -48,6 +50,8 @@ public class CompanyInfoController {
 	ImageUtil imageUtil;
 	@Autowired
 	AipOcrUtil ocrUtil;
+	@Autowired
+	IdCardMapper idCardMapper;
 	
 	/**
 	 * 查询公司简介
@@ -255,6 +259,15 @@ public class CompanyInfoController {
 				if(null==companyInfo.getCompanyCode() || "".equals(companyInfo.getCompanyCode())) {
 					json.setSattusCode(StatusCode.PARAMS_NO_NULL);
 					json.setMsg(StatusCode.PARAMS_NO_NULL.getMessage()+"(companyCode)");
+					return json;
+				}
+			}
+			if(companyInfo.getCompanyType().equals("1")){
+				IdCard idCard = new IdCard();
+				idCard.setCreateby(userId);
+				idCard = idCardMapper.selectOne(idCard);
+				if(idCard==null ){
+					json.setSattusCode(StatusCode.NOT_CARD_AUTH);
 					return json;
 				}
 			}

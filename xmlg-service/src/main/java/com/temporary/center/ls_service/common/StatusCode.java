@@ -43,7 +43,8 @@ public enum StatusCode {
 	USERNAME_PASS_ERROR("800","用户名或密码有误"), 
 	DATA_ERROR("801","数据有误"), 
 	EXIST_DATA("802","数据已存在"),
-	ThirdID_ERROR("803","三方ID错误");
+	ThirdID_ERROR("803","三方ID错误"),
+	NOT_CARD_AUTH("804","请先进行实名认证");
 
 
 	private String code;
