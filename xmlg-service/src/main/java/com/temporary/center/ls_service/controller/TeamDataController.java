@@ -122,12 +122,12 @@ public class TeamDataController {
 //				idCard.setCreateby(userId);
 //				idCard = idCardMapper.selectOne(idCard);
 //				if(idCard==null){
-//					logger.info("没有数据，未认证");
-//					result.put("status", "1");
-//					result.put("reason", "");
-//					json.setData(result);//
-//					json.setSuc();
-//					return json;
+					logger.info("没有数据，未认证");
+					result.put("status", "1");
+					result.put("reason", "");
+					json.setData(result);//
+					json.setSuc();
+					return json;
 //				}
 //				status = idCard.getStatus();
 			}else {
