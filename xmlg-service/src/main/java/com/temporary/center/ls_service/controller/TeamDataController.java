@@ -115,6 +115,17 @@ public class TeamDataController {
 			int status=1;
 			String reason = null;
 			Map<String, Object> result=new HashMap<String, Object>();
+							IdCard idCard = new IdCard();
+				idCard.setCreateby(userId);
+				idCard = idCardMapper.selectOne(idCard);
+				if(idCard==null){
+			logger.info("没有数据，未认证");
+			result.put("status", "1");
+			result.put("reason", "");
+			json.setData(result);//
+			json.setSuc();
+			return json;
+				}
 			if(null==company) {
 
 				//查看id_card表

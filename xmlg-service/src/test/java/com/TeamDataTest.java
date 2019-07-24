@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class TeamDataTest {
 
-    public static String token = "7a64e738-b349-46f1-8cd3-64300b7b527e";
+    public static String token = "c5c0e0ff-4fb5-4c99-a06e-82b2149f5d82";
     public static HashMap<String,String> header = new HashMap<>();
     {
         header.put("Content-Type","application/x-www-form-urlencoded");
@@ -23,7 +23,7 @@ public class TeamDataTest {
     @Test
     @Description("查询认证状态")
     public void status(){
-        String url = "http://47.107.103.97:8081/teamdata/status.do";
+        String url = "http://localhost:8081/teamdata/status.do";
         Map<String,Object> params = new HashMap<>();
         params.put("token",token);
         params.put("timeStamp",System.currentTimeMillis());
