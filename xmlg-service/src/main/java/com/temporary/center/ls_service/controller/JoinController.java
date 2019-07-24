@@ -6,6 +6,7 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.PageData;
 import com.temporary.center.ls_service.common.StatusCode;
+import com.temporary.center.ls_service.common.StringUtil;
 import com.temporary.center.ls_service.dao.CurriculumVitaeMapper;
 import com.temporary.center.ls_service.dao.JoinMapper;
 import com.temporary.center.ls_service.domain.CurriculumVitae;
@@ -21,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -171,6 +173,11 @@ public class JoinController {
 		String startDate = jsonParams.getString("startDate");
 		logger.info("报名 "+recruitment_id);
 		Json json=new Json ();
+		if(StringUtils.isEmpty(startDate)){
+			json.setSattusCode(StatusCode.PARAMS_NO_NULL);
+			return json;
+		}
+
 
 		try {
 			if(redisBean.exists(RedisKey.USER_TOKEN+token)) {
