@@ -262,14 +262,6 @@ public class CompanyInfoController {
 					return json;
 				}
 			}
-				IdCard idCard = new IdCard();
-				idCard.setCreateby(userId);
-				idCard = idCardMapper.selectOne(idCard);
-				if(idCard==null ){
-					json.setSattusCode(StatusCode.NOT_CARD_AUTH);
-					return json;
-				}
-
 			//新增
 			companyInfo.setCreateBy(Long.parseLong(userId));
 			companyInfo.setCreateTime(new Date());
