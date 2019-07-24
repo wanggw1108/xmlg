@@ -115,6 +115,7 @@ public class IdCardController {
 			businessLicense.setStatus(Constant.IN_AUDIT);
 			businessLicense.setManagerId(managerId);
 			businessLicense.setManagerName(managerName);
+			businessLicense.setStatus(3);
 			Example example = new Example(IdCard.class);
 			Example.Criteria c = example.createCriteria();
 			c.andEqualTo("createby",userId);

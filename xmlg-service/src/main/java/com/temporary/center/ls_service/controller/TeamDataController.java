@@ -8,8 +8,10 @@ import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
 import com.temporary.center.ls_service.dao.CompanyInfoMapper;
+import com.temporary.center.ls_service.dao.IdCardMapper;
 import com.temporary.center.ls_service.dao.TeamDataMapper;
 import com.temporary.center.ls_service.domain.CompanyInfo;
+import com.temporary.center.ls_service.domain.IdCard;
 import com.temporary.center.ls_service.domain.TeamData;
 import com.temporary.center.ls_service.service.CompanyInfoService;
 import com.temporary.center.ls_service.service.LogUserService;
@@ -48,6 +50,9 @@ public class TeamDataController {
 	
 	@Autowired
 	private CompanyInfoMapper companyInfoService;
+
+	@Autowired
+	private IdCardMapper idCardMapper;
 	
 	
 	@RequestMapping(value = "/list.do", method = RequestMethod.POST)
@@ -104,29 +109,30 @@ public class TeamDataController {
 				return json;
 			}
 			
-			
-			/*TeamData businessLicense=new TeamData();
-			businessLicense.setCreateBy(userId);
-			List<TeamData> list = teamDataService.list(businessLicense);*/
-			
 			CompanyInfo companyInfo=new CompanyInfo();
 			companyInfo.setCreateBy(Long.parseLong(userId));
 			CompanyInfo company = companyInfoService.selectOne(companyInfo);
-			
+			int status=1;
+			String reason = null;
 			Map<String, Object> result=new HashMap<String, Object>();
 			if(null==company) {
-				logger.info("没有数据，未认证");
-				result.put("status", "1");
-				result.put("reason", "");
-				json.setData(result);//
-				json.setSuc();
-				return json;
-			}
-			
-			Integer status = company.getCompanyIsAuth();
-			String reason = company.getReason();
-			if(null==status) {
-				status=1;
+
+				//查看id_card表
+//				IdCard idCard = new IdCard();
+//				idCard.setCreateby(userId);
+//				idCard = idCardMapper.selectOne(idCard);
+//				if(idCard==null){
+//					logger.info("没有数据，未认证");
+//					result.put("status", "1");
+//					result.put("reason", "");
+//					json.setData(result);//
+//					json.setSuc();
+//					return json;
+//				}
+//				status = idCard.getStatus();
+			}else {
+				status = company.getCompanyIsAuth();
+				reason = company.getReason();
 			}
 			result.put("status", status);
 			if(null!=reason) {
@@ -175,7 +181,7 @@ public class TeamDataController {
  			}
  			teamData.setCreateBy(userId);
  			teamData.setCreatetime(new Date());
-			teamData.setStatus(Constant.IN_AUDIT);
+			teamData.setStatus(Constant.AUDIT_COMPLETED);
 			teamDataService.insert(teamData);
 			json.setSuc();
 		}catch(Exception e) {
