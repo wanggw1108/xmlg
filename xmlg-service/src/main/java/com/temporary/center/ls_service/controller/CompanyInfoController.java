@@ -262,7 +262,6 @@ public class CompanyInfoController {
 					return json;
 				}
 			}
-			if(companyInfo.getCompanyType().equals("1")){
 				IdCard idCard = new IdCard();
 				idCard.setCreateby(userId);
 				idCard = idCardMapper.selectOne(idCard);
@@ -270,8 +269,7 @@ public class CompanyInfoController {
 					json.setSattusCode(StatusCode.NOT_CARD_AUTH);
 					return json;
 				}
-			}
-			
+
 			//新增
 			companyInfo.setCreateBy(Long.parseLong(userId));
 			companyInfo.setCreateTime(new Date());
