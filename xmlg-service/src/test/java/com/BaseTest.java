@@ -3,6 +3,7 @@ package com;
 import app.MyApplication;
 import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.MD5Utils;
+import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_service.dao.*;
 import com.temporary.center.ls_service.domain.*;
 import org.apache.commons.collections.map.HashedMap;
@@ -40,6 +41,8 @@ public class BaseTest {
     private RecruitmentInfoMapper recruitmentInfoMapper;
     @Autowired
     private UserDao userService;
+    @Autowired
+    RedisBean redisBean;
 
     @Test
     public void dbTest(){
@@ -57,10 +60,16 @@ public class BaseTest {
 //        List<CarouselPicture> pictureList = dao.selectByExample(example);
 //
 //        System.out.println(pictureList.size());
-        Map<String,Object> queryUser = new HashedMap();
-        queryUser.put("phone","17318035749");
-        List<User> userList = userService.queryUserByParams(queryUser);
-        System.out.println(userList);
+//        Map<String,Object> queryUser = new HashedMap();
+//        queryUser.put("phone","17318035749");
+//        List<User> userList = userService.queryUserByParams(queryUser);
+//        System.out.println(userList);
+        System.out.println(redisBean.lpop("testpush"));
+        redisBean.lpush("testpush","a");
+        System.out.println(redisBean.lpop("testpush"));
+        System.out.println(redisBean.lpop("testpush"));
+
+
 
     }
 

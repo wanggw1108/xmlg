@@ -12,6 +12,7 @@ public class RedisKey {
 	 * 用户token
 	 */
 	public static final String USER_TOKEN = "user:token:";
+	public static final String USER_MSG= "user:msg:";
 	/**
 	 * 记录发送的短信验证码
 	 */
