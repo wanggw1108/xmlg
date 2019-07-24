@@ -576,7 +576,7 @@ public class LoginController {
 	 *地址列表
 	 * @return
 	 */
-	@RequestMapping(value = "/addressList.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/addressList.do", method = RequestMethod.GET)
     @ResponseBody
 	public Json addressList( String token) {
 		long startTime = System.currentTimeMillis();
