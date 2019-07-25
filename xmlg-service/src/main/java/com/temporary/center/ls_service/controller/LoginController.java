@@ -576,10 +576,9 @@ public class LoginController {
 	 *地址列表
 	 * @return
 	 */
-	@RequestMapping(value = "/addressList.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/addressList.do", method = RequestMethod.GET)
     @ResponseBody
-	public Json addressList(HttpServletRequest request,
-                            HttpServletResponse response, String token, String sign, String timeStamp, String random) {
+	public Json addressList( String token) {
 		long startTime = System.currentTimeMillis();
 		String uuid=UUID.randomUUID().toString();
 		String title="地址列表,"+uuid;
@@ -598,17 +597,8 @@ public class LoginController {
 			
 			UserAddress userAddress=new UserAddress();
 			userAddress.setCreateby(Integer.valueOf(userId));
-			userAddress.setPageSize(20);
-			userAddress.setCurr(1);
 			userAddress.setActive(Integer.parseInt(Constant.EFFECTIVE));
-			addressService.insert(userAddress);
-			Example example = new Example(UserAddress.class);
-			Example.Criteria criteria = example.createCriteria();
-			criteria.andEqualTo("create_by",Integer.valueOf(userId));
-			List<UserAddress> list = addressService.selectByExample(example);
-			for(UserAddress ua:list) {
-				ua.setCity("");
-			}
+			List<UserAddress> list = addressService.select(userAddress);
 			if(null==list || list.size()==0) {
 				json.setData(StatusCode.NO_DATA.getMessage());
 				json.setSattusCode(StatusCode.NO_DATA);

@@ -6,7 +6,7 @@ import com.temporary.center.ls_service.common.Page;
 import javax.persistence.*;
 import java.util.Date;
 @Table(name="user_address")
-public class UserAddress extends Page{
+public class UserAddress{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
