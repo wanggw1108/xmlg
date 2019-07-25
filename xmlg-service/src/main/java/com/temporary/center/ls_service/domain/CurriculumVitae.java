@@ -12,6 +12,7 @@ public class CurriculumVitae {
     @NotNullEmpty
     private Integer id;
     private String name;
+    private String sex;
     private String current_company;
     private String current_position;
     private String working_life;
@@ -40,6 +41,14 @@ public class CurriculumVitae {
     private Integer update_by;
 
     private Date update_time;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     public Integer getId() {
         return id;

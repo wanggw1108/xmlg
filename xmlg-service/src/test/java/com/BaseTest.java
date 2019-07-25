@@ -64,10 +64,12 @@ public class BaseTest {
 //        queryUser.put("phone","17318035749");
 //        List<User> userList = userService.queryUserByParams(queryUser);
 //        System.out.println(userList);
-        System.out.println(redisBean.lpop("testpush"));
-        redisBean.lpush("testpush","a");
-        System.out.println(redisBean.lpop("testpush"));
-        System.out.println(redisBean.lpop("testpush"));
+//        System.out.println(redisBean.lpop("testpush"));
+//        redisBean.lpush("testpush","a");
+//        System.out.println(redisBean.lpop("testpush"));
+//        System.out.println(redisBean.lpop("testpush"));
+        Map<String ,Object> map = curriculumVitaeMapper.searchByParams("杭州",null,null,null,null,null,null);
+        System.out.println(map);
 
 
 

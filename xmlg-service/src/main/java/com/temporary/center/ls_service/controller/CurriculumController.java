@@ -62,29 +62,17 @@ public class CurriculumController {
 	
 	@RequestMapping(value = "/list.do", method = RequestMethod.POST)
     @ResponseBody
-	public Json list() {
-		long startTime = System.currentTimeMillis();
-		String uuid=UUID.randomUUID().toString();
-		String title="查询营业执照,"+uuid;
-		logger.info(title+",list"+Constant.METHOD_BEGIN);
+	public Json list(String cityName,String areaName,int ageMin,int ageMax,String sex,String expectPosition,String employeeReputation) {
+		logger.info("搜索简历cityName{},areaName{},ageMin{},ageMax{},sex{},expectPosition{},employeeRequtation{}",cityName,areaName,ageMin,ageMax,sex,expectPosition,employeeReputation);
 		
 		Json json=new Json ();
 		try {
 			CurriculumVitae curriculumVitae=new CurriculumVitae();
 			
-//			dictionaries.setType(Constant.PART_TIME_TYPE);
-			
-//			List<CurriculumVitae> list= curriculumService.list(curriculumVitae);
-//			json.setData(list);
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
 		}
-		
-		logger.info(title+",list"+Constant.METHOD_END);
-		long endTime = System.currentTimeMillis();
-		logger.info(title+"耗时{0}", endTime-startTime);
 		return json;
 	}
 	

@@ -5,6 +5,34 @@
         select * from curriculum_vitae where create_by=#{create_by};
 
     </select>
+    <select id="searchByParams" resultType="map">
+        SELECT c.`id` AS curriculum_id,c.`name`,c.`sex`,c.`age`,u.`userImageUrl`,u.`employeeReputation` FROM `w_user` u  JOIN `curriculum_vitae` c ON c.`create_by`=u.`id` JOIN intension  i ON i.`user_id`=u.`id`
+
+        WHERE c.`city`=#{cityName}
+        <if test="areaName != null and areaName != ''">
+            AND i.`area`=#{areaName}
+        </if>
+        <if test="areaName != null and areaName != ''">
+            AND i.`area`=#{areaName}
+        </if>
+        <if test="ageMin != null">
+            AND c.`age`<![CDATA[ >= ]]> #{ageMin}
+        </if>
+        <if test="ageMax != null">
+            AND c.`age`<![CDATA[ <= ]]> #{ageMix}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND c.`sex`=#{sex}
+        </if>
+        <if test="expectPosition != null and expectPosition != ''">
+            AND i.`area` like '%${expectPosition}%'
+        </if>
+        <if test="employeeReputation != null and employeeReputation != ''">
+            AND i.`area` like '%${employeeReputation}%'
+        </if>
+
+
+    </select>
     <update id="updateById" parameterType="com.temporary.center.ls_service.domain.CurriculumVitae">
         update curriculum_vitae
         <set>
