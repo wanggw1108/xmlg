@@ -30,9 +30,9 @@ public class CurriculumTest {
 //        header.put("Content-Type","application/json");
         try {
             StringBuilder builder = new StringBuilder("?token=");
-            builder.append(token)
-                    .append("&timeStamp=")
-                    .append(System.currentTimeMillis());
+            builder.append(token);
+//                    .append("&timeStamp=")
+//                    .append(System.currentTimeMillis());
             String resp = HttpUtil.send(url+builder.toString());
             System.out.println(resp);
         } catch (IOException e) {

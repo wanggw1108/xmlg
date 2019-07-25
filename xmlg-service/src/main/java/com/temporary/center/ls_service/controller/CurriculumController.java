@@ -201,12 +201,12 @@ public class CurriculumController {
 		return json;
 	}
 	/**
-	 * 查询简历
+	 * 查询自己简历
 	 * @return
 	 */
 	@RequestMapping(value = "/query.do" ,method = RequestMethod.GET)
 	@ResponseBody
-	public Json query(String token,Long timeStamp ) {
+	public Json query(String token ,Integer curriculum_id) {
 		//String json 转  对象
 		Json json=new Json ();
 		if(!redisBean.exists(RedisKey.USER_TOKEN+token)){
@@ -214,7 +214,12 @@ public class CurriculumController {
 			return json;
 		}
 		int user_id = Integer.valueOf(redisBean.hget(RedisKey.USER_TOKEN+token,"user_id"));
-		CurriculumVitae vitae = curriculumService.selectByCreateBy(user_id);
+        CurriculumVitae vitae = null;
+		if(curriculum_id!=null){
+            vitae = curriculumService.selectByPrimaryKey(curriculum_id);
+        }else {
+            vitae = curriculumService.selectByCreateBy(user_id);
+        }
 		if(vitae==null){
 			json.setSattusCode(StatusCode.DATA_ERROR);
 			return json;
@@ -235,6 +240,7 @@ public class CurriculumController {
 
 		return json;
 	}
+
 
 	
 }
