@@ -122,14 +122,11 @@ public class CompanyInfoController {
 	
 	/**
 	 * 查询公司资质，主要是营业执照，其他。
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	@RequestMapping(value = "/qualifications.do", method = RequestMethod.GET)
     @ResponseBody
-    public Json qualifications(HttpServletRequest request,
-                               HttpServletResponse response, String token, Long companyId) {
+    public Json qualifications( String token) {
 		String title="查询公司资质，主要是营业执照，其他。,"+UUID.randomUUID().toString();
 		logger.info(title+",qualifications"+Constant.METHOD_BEGIN);
 		Json json=new Json();
@@ -139,8 +136,9 @@ public class CompanyInfoController {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
+			String user_id = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			CompanyInfo  param=new CompanyInfo();
-			param.setCompanyId(companyId);
+			param.setCreateBy(Long.valueOf(user_id));
 			CompanyInfo companyInfo=companyInfoService.selectOne(param);
 			if(StringUtil.isEmpty(companyInfo.getCompanyPortraitUrl())){
 
