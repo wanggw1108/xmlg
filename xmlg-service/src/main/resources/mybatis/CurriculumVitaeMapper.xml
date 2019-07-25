@@ -5,31 +5,61 @@
         select * from curriculum_vitae where create_by=#{create_by};
 
     </select>
-    <select id="searchByParams" resultType="map">
-        SELECT c.`id` AS curriculum_id,c.`name`,c.`sex`,c.`age`,u.`userImageUrl`,u.`employeeReputation` FROM `w_user` u  JOIN `curriculum_vitae` c ON c.`create_by`=u.`id` JOIN intension  i ON i.`user_id`=u.`id`
+    <select id="searchByParams" resultType="com.temporary.center.ls_service.domain.CurriculumView">
+        SELECT u.id as user_id,c.`id` AS curriculum_id,c.`name`,c.`sex`,c.`age`,u.`userImageUrl`,u.`employeeReputation` FROM `w_user` u  JOIN `curriculum_vitae` c ON c.`create_by`=u.`id` JOIN intension  i ON i.`user_id`=u.`id`
 
-        WHERE c.`city`=#{cityName}
-        <if test="areaName != null and areaName != ''">
-            AND i.`area`=#{areaName}
+        WHERE 1=1
+        <if test="cityName != null">
+            AND c.`city`=#{cityName}
         </if>
-        <if test="areaName != null and areaName != ''">
-            AND i.`area`=#{areaName}
+
+        <if test="startYear != null and startYear > 0">
+            AND c.`age`<![CDATA[ >= ]]> #{startYear}
         </if>
-        <if test="ageMin != null">
-            AND c.`age`<![CDATA[ >= ]]> #{ageMin}
-        </if>
-        <if test="ageMax != null">
-            AND c.`age`<![CDATA[ <= ]]> #{ageMix}
+        <if test="endYear != null and endYear > 0">
+            AND c.`age`<![CDATA[ <= ]]> #{endYear}
         </if>
         <if test="sex != null and sex != ''">
             AND c.`sex`=#{sex}
         </if>
+        <if test="areaName != null and areaName != ''">
+            AND i.`area` like '%${areaName}%'
+        </if>
         <if test="expectPosition != null and expectPosition != ''">
-            AND i.`area` like '%${expectPosition}%'
+            AND i.`job_type` like '%${expectPosition}%'
+        </if>
+        <if test="employeeReputation != null and employeeReputation != '' and employeeReputation !='null'">
+            AND u.`employeeReputation` like '%${employeeReputation}%'
+        </if>
+
+
+    </select>
+    <select id="countByParams" resultType="int">
+        SELECT count(1) FROM `w_user` u  JOIN `curriculum_vitae` c ON c.`create_by`=u.`id` JOIN intension  i ON i.`user_id`=u.`id`
+
+        WHERE 1=1
+        <if test="cityName != null">
+            AND  c.`city`=#{cityName}
+        </if>
+        <if test="startYear != null and startYear > 0">
+            AND c.`age`<![CDATA[ >= ]]> #{startYear}
+        </if>
+        <if test="endYear != null and endYear > 0">
+            AND c.`age`<![CDATA[ <= ]]> #{endYear}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND c.`sex`=#{sex}
+        </if>
+        <if test="areaName != null and areaName != ''">
+            AND i.`area` like '%${areaName}%'
+        </if>
+        <if test="expectPosition != null and expectPosition != ''">
+            AND i.`job_type` like '%${expectPosition}%'
         </if>
         <if test="employeeReputation != null and employeeReputation != ''">
-            AND i.`area` like '%${employeeReputation}%'
+            AND u.`employeeReputation` like '%${employeeReputation}%'
         </if>
+        order by c.update_time desc
 
 
     </select>

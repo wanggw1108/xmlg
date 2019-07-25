@@ -1,23 +1,17 @@
 package com.temporary.center.ls_service.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.temporary.center.ls_common.Constant;
-import com.temporary.center.ls_common.LogUtil;
+import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.*;
-import com.temporary.center.ls_service.dao.CurriculumVitaeMapper;
-import com.temporary.center.ls_service.dao.EducationExperienceMapper;
-import com.temporary.center.ls_service.dao.ProjectExperienceMapper;
-import com.temporary.center.ls_service.dao.WorkExperienceMapper;
-import com.temporary.center.ls_service.domain.CurriculumVitae;
-import com.temporary.center.ls_service.domain.EducationExperience;
-import com.temporary.center.ls_service.domain.ProjectExperience;
-import com.temporary.center.ls_service.domain.WorkExperience;
+import com.temporary.center.ls_service.dao.*;
+import com.temporary.center.ls_service.domain.*;
 import com.temporary.center.ls_service.params.CurriculumParam;
-import com.temporary.center.ls_service.service.CurriculumService;
 import com.temporary.center.ls_service.service.LogUserService;
-import net.sf.json.JSONObject;
+import com.temporary.center.ls_service.service.RecruitmentService;
+import org.apache.http.client.utils.DateUtils;
+import org.apache.solr.common.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import tk.mybatis.mapper.entity.Example;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -58,17 +49,45 @@ public class CurriculumController {
 	
 	@Autowired
 	private LogUserService logUserService;
+    @Autowired
+    private RecruitmentService recruitmentService;
 	
 	
 	@RequestMapping(value = "/list.do", method = RequestMethod.POST)
     @ResponseBody
-	public Json list(String cityName,String areaName,int ageMin,int ageMax,String sex,String expectPosition,String employeeReputation) {
-		logger.info("搜索简历cityName{},areaName{},ageMin{},ageMax{},sex{},expectPosition{},employeeRequtation{}",cityName,areaName,ageMin,ageMax,sex,expectPosition,employeeReputation);
+	public Json list(String cityName,String areaName,Integer ageMin,Integer ageMax,String sex,String expectPosition,String employeeReputation,Integer crr,Integer pageSize) {
+		logger.info("搜索简历cityName {},areaName {},ageMin {},ageMax {},sex {},expectPosition {},employeeReputation {}",cityName,areaName,ageMin,ageMax,sex,expectPosition,employeeReputation);
 		
 		Json json=new Json ();
 		try {
-			CurriculumVitae curriculumVitae=new CurriculumVitae();
-			
+
+            int year = Integer.valueOf(DateUtils.formatDate(new Date(),"yyyy"));
+            //实际年龄换算为出生年份
+            if(ageMin ==null){
+                ageMin = 0;
+            }
+            if(ageMax==null){
+                ageMax=100;
+            }
+            int endYear = year - ageMin;
+            int startYear = year - ageMax;
+            int count = curriculumService.countByParams(cityName,areaName,startYear,endYear,sex,expectPosition,employeeReputation);
+            if(count==0){
+                PageData pageData = new PageData(new ArrayList<CurriculumView>(),0,crr,pageSize);
+                json.setData(pageData);
+                json.setSuc("未搜索到简历");
+                return json;
+            }
+            PageHelper.startPage(crr,pageSize);
+            List<CurriculumView> result = curriculumService.searchByParams(cityName,areaName,startYear,endYear,sex,expectPosition,employeeReputation);
+            for(CurriculumView v:result){
+                v.setEmployeeJobExperience(recruitmentService.getEmployeeByUserId(v.getUser_id()));
+                v.setEmployeeServiceDistrict(recruitmentService.getServiceArea(v.getUser_id()));
+            }
+            PageData pageData = new PageData(result,count,crr,pageSize);
+            json.setData(pageData);
+            json.setSuc();
+            return json;
 		}catch(Exception e) {
 			e.printStackTrace();
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
@@ -140,6 +159,9 @@ public class CurriculumController {
 			return json;
 		}
 		workExperienceService.insert(work);
+		CurriculumVitae vitae = curriculumService.selectByCreateBy(Integer.valueOf(user_id));
+		vitae.setUpdate_time(new Date());
+		curriculumService.updateById(vitae);
 		json.setSuc();
 		return json;
 	}
@@ -172,6 +194,9 @@ public class CurriculumController {
 			return json;
 		}
 		educationExperienceService.insert(edu);
+        CurriculumVitae vitae = curriculumService.selectByCreateBy(Integer.valueOf(user_id));
+        vitae.setUpdate_time(new Date());
+        curriculumService.updateById(vitae);
 		json.setSuc();
 		return json;
 	}

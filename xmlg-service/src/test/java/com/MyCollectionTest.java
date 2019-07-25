@@ -28,7 +28,7 @@ public class MyCollectionTest {
         String url = "http://localhost:8081/employee/collection.do";
         Map<String,Object> params = new HashMap<>();
         params.put("token",token);
-        params.put("recruitmentid",39);
+        params.put("recruitmentid",38);
         String str = HttpUtil.buildPostStr(params);
         try {
             String resp = HttpUtil.post(url,str,header);

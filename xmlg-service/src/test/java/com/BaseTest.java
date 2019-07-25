@@ -6,6 +6,8 @@ import com.temporary.center.ls_common.MD5Utils;
 import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_service.dao.*;
 import com.temporary.center.ls_service.domain.*;
+import com.temporary.center.ls_service.service.RecruitmentService;
+import net.minidev.json.JSONArray;
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +46,9 @@ public class BaseTest {
     @Autowired
     RedisBean redisBean;
 
+    @Autowired
+    private RecruitmentService recruitmentService;
+
     @Test
     public void dbTest(){
 
@@ -68,8 +73,11 @@ public class BaseTest {
 //        redisBean.lpush("testpush","a");
 //        System.out.println(redisBean.lpop("testpush"));
 //        System.out.println(redisBean.lpop("testpush"));
-        Map<String ,Object> map = curriculumVitaeMapper.searchByParams("杭州",null,null,null,null,null,null);
-        System.out.println(map);
+//        PageHelper.startPage(1,1);
+        int count = curriculumVitaeMapper.countByParams("深圳市","宝坻区",1919,1999,"男","家教",null);
+        System.out.println(count);
+        List<CurriculumView>  list= curriculumVitaeMapper.searchByParams("深圳市","宝坻区",1919,1999,"男","",null);
+        System.out.println(JSONArray.toJSONString(list));
 
 
 

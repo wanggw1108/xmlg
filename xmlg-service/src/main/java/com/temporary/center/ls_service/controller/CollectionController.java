@@ -58,7 +58,7 @@ public class CollectionController {
 			return json;
 		}
 		MyCollection collection = new MyCollection();
-		collection.setCreate_by(Long.valueOf(userId));
+		collection.setRecruitment_id(recruitmentid);
 		int cnt = collectionService.selectCount(collection);
 		if(cnt>0){
 			logger.info("已收藏");
