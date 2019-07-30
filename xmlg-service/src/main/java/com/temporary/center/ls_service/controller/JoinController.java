@@ -139,7 +139,7 @@ public class JoinController {
 				signUpEmployeeInfo2.setEmployeeReputation(userById.getEmployeeReputation());//雇员的信誉
 				signUpEmployeeInfo2.setEmployeeServiceDistrict(recruitmentService.getServiceArea(userId));//雇员的服务区域，多个服务区域以英文逗号隔开
 				signUpEmployeeInfo2.setEmployeeSex(userById.getSex());//雇员的性别
-				signUpEmployeeInfo2.setEmployeeId(join2.getId());
+				signUpEmployeeInfo2.setEmployeeId(userById.getId());
 				signUpEmployeeInfo.add(signUpEmployeeInfo2);
 			}
 			joinResult.setSignUpEmployeeInfo(signUpEmployeeInfo);
@@ -171,6 +171,7 @@ public class JoinController {
 		String token = jsonParams.getString("token");
 		String remark = jsonParams.getString("remark");
 		String startDate = jsonParams.getString("startDate");
+		String endDate  = jsonParams.getString("endDate");
 		logger.info("报名 "+recruitment_id);
 		Json json=new Json ();
 		if(StringUtils.isEmpty(startDate)){
@@ -192,6 +193,12 @@ public class JoinController {
 					return json;
 				}
 				User user=logUserService.getUserById(Long.parseLong(userId));
+				CurriculumVitae vitae = curriculumVitaeService.selectByCreateBy(Integer.valueOf(userId));
+				if(vitae==null){
+					json.setSattusCode(StatusCode.DATA_ERROR);
+					json.setMsg("无简历");
+					return json;
+				}
 				join.setCreatetime(new Date());
 				join.setUserId(Integer.parseInt(userId));//报名者id
 				join.setUserName(user.getUserName());//报名者姓名
@@ -200,7 +207,9 @@ public class JoinController {
 				join.setRecruitmentInfoCreateby(info.getCreateby());
 				join.setRemark(remark);
 				join.setStartDate(startDate);
+				join.setEndDate(endDate);
 				join.setState(1);//报名成功
+				join.setResumeId(vitae.getId());
 				joinService.insert(join);
 				json.setSuc();
 				

@@ -431,7 +431,7 @@ public class RecruitmentController {
  			recruitmentInfo.setHourlyWage(hourlyWage);
 			recruitmentInfo.setActive(Integer.parseInt(Constant.EFFECTIVE) );
 			recruitmentInfo.setRecruitment(0);//已经招聘人数 默认为0
-			
+			//2019-06-13,2019-06-17
 			//拆分工作时间 工作开始时间 如果有多条以英文逗号隔开 如：2019-06-13,2019-06-17
 			String[] workingStartTimeArr = recruitmentInfo.getWorkingStartTime().split(",");
 			String[] workingEndTimeArr = recruitmentInfo.getWorkingEndTime().split(",");
@@ -457,6 +457,7 @@ public class RecruitmentController {
 				workTime.setSort(i);
 				workTimeService.insert(workTime);
 			}
+			//9:00-12:00,2:00-6:00
 			
 			if(null!= recruitmentInfo.getWorkingTime() && !"".equals(recruitmentInfo.getWorkingTime())) {
 				//上班时段 如果有多条以英文逗号隔开 如：9:00-12:00,2:00-6:00

@@ -15,8 +15,8 @@ public class CurriculumView {
     private String age;
     private String userImageUrl;
     private String employeeReputation;
-    private List<String> employeeServiceDistrict;
-    private List<String> employeeJobExperience;
+    private List<Locus> employeeServiceDistrict;
+    private List<Locus> employeeJobExperience;
 
     public Integer getUser_id() {
         return user_id;
@@ -74,19 +74,19 @@ public class CurriculumView {
         this.employeeReputation = employeeReputation;
     }
 
-    public List<String> getEmployeeServiceDistrict() {
+    public List<Locus> getEmployeeServiceDistrict() {
         return employeeServiceDistrict;
     }
 
-    public void setEmployeeServiceDistrict(List<String> employeeServiceDistrict) {
+    public void setEmployeeServiceDistrict(List<Locus> employeeServiceDistrict) {
         this.employeeServiceDistrict = employeeServiceDistrict;
     }
 
-    public List<String> getEmployeeJobExperience() {
+    public List<Locus> getEmployeeJobExperience() {
         return employeeJobExperience;
     }
 
-    public void setEmployeeJobExperience(List<String> employeeJobExperience) {
+    public void setEmployeeJobExperience(List<Locus> employeeJobExperience) {
         this.employeeJobExperience = employeeJobExperience;
     }
 }

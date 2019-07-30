@@ -107,6 +107,22 @@ public class DateUtil {
 		if(d==null)return "";
 		return format2.format(d);
 	}
+	/**
+	 * 计算两个日期之间相差的天数
+	 * @param first
+	 * @param second
+	 * @return
+	 */
+	public static int longOfTwoDate(Date first,Date second){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(first);
+		int result = 0;
+		while(calendar.getTime().compareTo(second)!=0){
+			calendar.add(Calendar.DATE, 1);
+			result ++;
+		}
+		return result;
+	}
 	
 	/**
 	 * 获得当前的时间  （Timestamp形式的）

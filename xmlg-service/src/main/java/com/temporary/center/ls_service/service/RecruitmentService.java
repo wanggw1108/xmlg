@@ -1,5 +1,6 @@
 package com.temporary.center.ls_service.service;
 
+import com.temporary.center.ls_service.domain.Locus;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public interface RecruitmentService {
 
 	void update(RecruitmentInfo recruitmentInfo);
 
-	List<String> getEmployeeByUserId(Integer user_id);
+	List<Locus> getEmployeeByUserId(Integer user_id);
 
-	List<String> getServiceArea(Integer user_id);
+	List<Locus> getServiceArea(Integer user_id);
 	
 }

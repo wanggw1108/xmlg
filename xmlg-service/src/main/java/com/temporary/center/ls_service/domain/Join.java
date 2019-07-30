@@ -32,6 +32,17 @@ public class Join{
     @Column(name="start_date")
     private String startDate;
 
+    @Column(name="end_date")
+    private String endDate;
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
     public String getStartDate() {
         return startDate;
     }

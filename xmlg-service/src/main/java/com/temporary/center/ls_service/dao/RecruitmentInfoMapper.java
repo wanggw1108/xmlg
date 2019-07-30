@@ -1,5 +1,6 @@
 package com.temporary.center.ls_service.dao;
 
+import com.temporary.center.ls_service.domain.Locus;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,6 @@ public interface RecruitmentInfoMapper {
 
 	List<RecruitmentInfo> listIndex(RecruitmentInfo recruitmentInfo);
 
-	List<String> getEmployeeByUserId(@Param("user_id") Integer user_id);
-    List<String> getServiceArea(@Param("user_id") Integer user_id);
+	List<Locus> getEmployeeByUserId(@Param("user_id") Integer user_id);
+    List<Locus> getServiceArea(@Param("user_id") Integer user_id);
 }

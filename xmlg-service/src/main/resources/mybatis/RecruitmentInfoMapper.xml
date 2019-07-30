@@ -972,9 +972,9 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="getEmployeeByUserId" resultType="string">
+    <select id="getEmployeeByUserId" resultType="com.temporary.center.ls_service.domain.Locus">
       SELECT
-    r.type_work
+    r.type_work as name,count(1) as `number`
   FROM
     `recruitment_info` r
     JOIN w_join j
@@ -982,9 +982,9 @@
   WHERE j.user_id = #{user_id} and j.state=5 GROUP BY r.type_work ORDER BY COUNT(1) DESC LIMIT 3
 
     </select>
-    <select id="getServiceArea" resultType="string">
+    <select id="getServiceArea" resultType="com.temporary.center.ls_service.domain.Locus">
         SELECT
-    r.district
+    r.district as name,count(1) as `number`
   FROM
     `recruitment_info` r
     JOIN w_join j

@@ -118,29 +118,21 @@ public class TeamDataController {
 							IdCard idCard = new IdCard();
 				idCard.setCreateby(userId);
 				idCard = idCardMapper.selectOne(idCard);
-				if(idCard==null){
-			logger.info("没有数据，未认证");
-			result.put("status", "1");
-			result.put("reason", "");
-			json.setData(result);//
-			json.setSuc();
-			return json;
-				}
+			if(idCard==null){
+				logger.info("没有数据，未认证");
+				result.put("status", "1");
+				result.put("reason", "");
+				json.setData(result);//
+				json.setSuc();
+				return json;
+			}
 			if(null==company) {
-
-				//查看id_card表
-//				IdCard idCard = new IdCard();
-//				idCard.setCreateby(userId);
-//				idCard = idCardMapper.selectOne(idCard);
-//				if(idCard==null){
-					logger.info("没有数据，未认证");
-					result.put("status", "1");
-					result.put("reason", "");
-					json.setData(result);//
-					json.setSuc();
-					return json;
-//				}
-//				status = idCard.getStatus();
+				logger.info("没有数据，未认证");
+				result.put("status", "1");
+				result.put("reason", "");
+				json.setData(result);//
+				json.setSuc();
+				return json;
 			}else {
 				status = company.getCompanyIsAuth();
 				reason = company.getReason();

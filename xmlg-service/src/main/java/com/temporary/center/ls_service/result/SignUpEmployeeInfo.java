@@ -1,5 +1,7 @@
 package com.temporary.center.ls_service.result;
 
+import com.temporary.center.ls_service.domain.Locus;
+
 import java.util.List;
 
 /**
@@ -20,9 +22,9 @@ public class SignUpEmployeeInfo {
 	
 	private Integer employeeReputation;
 	
-	private List<String> employeeServiceDistrict;
+	private List<Locus> employeeServiceDistrict;
 	
-	private List<String> employeeJobExperience;
+	private List<Locus> employeeJobExperience;
 
 
 	public Integer getEmployeeId() {
@@ -73,19 +75,19 @@ public class SignUpEmployeeInfo {
 		this.employeeReputation = employeeReputation;
 	}
 
-	public List<String> getEmployeeServiceDistrict() {
+	public List<Locus> getEmployeeServiceDistrict() {
 		return employeeServiceDistrict;
 	}
 
-	public void setEmployeeServiceDistrict(List<String> employeeServiceDistrict) {
+	public void setEmployeeServiceDistrict(List<Locus> employeeServiceDistrict) {
 		this.employeeServiceDistrict = employeeServiceDistrict;
 	}
 
-	public List<String> getEmployeeJobExperience() {
+	public List<Locus> getEmployeeJobExperience() {
 		return employeeJobExperience;
 	}
 
-	public void setEmployeeJobExperience(List<String> employeeJobExperience) {
+	public void setEmployeeJobExperience(List<Locus> employeeJobExperience) {
 		this.employeeJobExperience = employeeJobExperience;
 	}
 }

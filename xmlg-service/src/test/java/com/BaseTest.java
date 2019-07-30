@@ -48,6 +48,8 @@ public class BaseTest {
 
     @Autowired
     private RecruitmentService recruitmentService;
+    @Autowired
+    CompanyInfoMapper companyInfoMapper;
 
     @Test
     public void dbTest(){
@@ -74,10 +76,10 @@ public class BaseTest {
 //        System.out.println(redisBean.lpop("testpush"));
 //        System.out.println(redisBean.lpop("testpush"));
 //        PageHelper.startPage(1,1);
-        int count = curriculumVitaeMapper.countByParams("深圳市","宝坻区",1919,1999,"男","家教",null);
-        System.out.println(count);
-        List<CurriculumView>  list= curriculumVitaeMapper.searchByParams("深圳市","宝坻区",1919,1999,"男","",null);
-        System.out.println(JSONArray.toJSONString(list));
+        CompanyInfo companyInfo=new CompanyInfo();
+        companyInfo.setCreateBy(Long.parseLong("5"));
+        CompanyInfo company = companyInfoMapper.selectOne(companyInfo);
+        System.out.println(company.getCompanyId()+"" +company.getBusinessLicenseUrl());
 
 
 

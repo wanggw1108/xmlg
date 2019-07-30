@@ -1,6 +1,7 @@
 package com.temporary.center.ls_service.service.impl;
 
 import com.temporary.center.ls_service.dao.RecruitmentInfoMapper;
+import com.temporary.center.ls_service.domain.Locus;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
 import com.temporary.center.ls_service.service.RecruitmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,12 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	}
 
 	@Override
-	public List<String> getEmployeeByUserId(Integer user_id) {
+	public List<Locus> getEmployeeByUserId(Integer user_id) {
 		return recruitmentInfoMapper.getEmployeeByUserId(user_id);
 	}
 
 	@Override
-	public List<String> getServiceArea(Integer user_id) {
+	public List<Locus> getServiceArea(Integer user_id) {
 		return recruitmentInfoMapper.getServiceArea(user_id);
 	}
 
