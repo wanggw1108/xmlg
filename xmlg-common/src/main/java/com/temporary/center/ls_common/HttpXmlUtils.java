@@ -24,11 +24,9 @@ public class HttpXmlUtils {
      * 并接受返回
      * @param url
      * @param xml
-     * @param method
-     * @param contentType
      * @return
      */
-    public static String xmlHttpProxy(String url,String xml,String method,String contentType){
+    public static String xmlHttpProxy(String url,String xml,String charset){
         InputStream is = null;
         OutputStreamWriter os = null;
 
@@ -38,11 +36,11 @@ public class HttpXmlUtils {
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-type", "text/xml");
-            conn.setRequestProperty("Pragma:", "no-cache");
+//            conn.setRequestProperty("Pragma:", "no-cache");
             conn.setRequestProperty("Cache-Control", "no-cache");
             conn.setRequestMethod("POST");
             os = new OutputStreamWriter(conn.getOutputStream());
-            os.write(new String(xml.getBytes(contentType)));
+            os.write(new String(xml.getBytes(charset)));
             os.flush();
 
             //返回值
@@ -144,9 +142,6 @@ public class HttpXmlUtils {
             bf.append(unifiedorder.getNonce_str());
             bf.append("]]></nonce_str>");
 
-            bf.append("<sign><![CDATA[");
-            bf.append(unifiedorder.getSign());
-            bf.append("]]></sign>");
 
             bf.append("<body><![CDATA[");
             bf.append(unifiedorder.getBody());
@@ -176,6 +171,9 @@ public class HttpXmlUtils {
             bf.append(unifiedorder.getTrade_type());
             bf.append("]]></trade_type>");
 
+            bf.append("<sign>");
+            bf.append(unifiedorder.getSign());
+            bf.append("</sign>");
 
             bf.append("</xml>");
             return bf.toString();

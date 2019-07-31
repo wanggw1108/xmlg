@@ -26,7 +26,7 @@ public class CurriculumTest {
     @Description("查询简历")
     public void query(){
 
-        String url = "http://localhost:8081/curriculum/query.do";
+        String url = "http://47.107.103.97:8081/curriculum/query.do";
 //        header.put("Content-Type","application/json");
         try {
             StringBuilder builder = new StringBuilder("?token=");
@@ -44,16 +44,16 @@ public class CurriculumTest {
     @Description("搜索简历")
     public void list(){
 
-        String url = "http://localhost:8081/curriculum/list.do";
+        String url = "http://47.107.103.97:8081/curriculum/list.do";
 //        header.put("Content-Type","application/json");
         try {
             Map<String,Object> params = new HashMap<>();
             params.put("token",token);
-//            params.put("cityName","深圳市");
-//            params.put("areaName","宝坻区");
-//            params.put("ageMin",20);
-//            params.put("sex","男");
-//            params.put("expectPosition","家教");
+            params.put("cityName","深圳市");
+            params.put("areaName","宝坻区");
+            params.put("ageMin",20);
+            params.put("sex","男");
+            params.put("expectPosition","家教");
             params.put("crr",1);
             params.put("pageSize",5);
 

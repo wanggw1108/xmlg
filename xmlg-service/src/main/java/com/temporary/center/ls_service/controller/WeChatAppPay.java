@@ -2,7 +2,6 @@ package com.temporary.center.ls_service.controller;
 
 
 import com.itextpdf.text.pdf.qrcode.BitMatrix;
-import com.sun.xml.internal.ws.util.xml.XmlUtil;
 import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
@@ -65,9 +64,9 @@ public class WeChatAppPay {
         // 微信开放平台审核通过的应用APPID
         System.out.println("appid是：" + weixinpayProperties.getAppid());
         System.out.println("mch_id是：" + weixinpayProperties.getMch_id());
-        String nonce_str = new Random().nextLong()+"";
+        String nonce_str = System.currentTimeMillis()+"";
         System.out.println("随机字符串是：" + nonce_str);
-        String body = "测试微信支付0.01";
+        String body = "123456";
         String total_price = null;// 订单总金额，单位为分，详见支付金额
 		/*
 		 * double totalfee =0; try{
@@ -83,7 +82,7 @@ public class WeChatAppPay {
         String trade_type = "APP";
 
         // 参数：开始生成签名
-        SortedMap<Object, Object> parameters = new TreeMap<Object, Object>();
+        SortedMap<String, Object> parameters = new TreeMap<String, Object>();
         parameters.put("appid", weixinpayProperties.getAppid());
         parameters.put("mch_id", weixinpayProperties.getMch_id());
         parameters.put("nonce_str", nonce_str);
@@ -95,7 +94,7 @@ public class WeChatAppPay {
         parameters.put("trade_type", trade_type);
         parameters.put("spbill_create_ip",spbill_create_ip);
 
-        String sign = WXSignUtils.createSign("UTF-8", parameters);
+        String sign = WXSignUtils.createSign(parameters,weixinpayProperties.getKey());
         System.out.println("签名是：" + sign);
 
         Unifiedorder unifiedorder = new Unifiedorder();
@@ -113,12 +112,9 @@ public class WeChatAppPay {
         // 构造xml参数
         String xmlInfo = HttpXmlUtils.xmlInfo(unifiedorder);
         System.out.println("xmlInfo:" + xmlInfo);
-
-        String wxUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-
         String method = "POST";
-
-        String weixinPost = HttpXmlUtils.httpsRequest(wxUrl, method, xmlInfo).toString();// 请求微信
+//        String weixinPost = HttpUtils.sentPost(weixinpayProperties.getUrl(),xmlInfo,"UTF-8");
+        String weixinPost = HttpXmlUtils.xmlHttpProxy(weixinpayProperties.getUrl(), xmlInfo, "UTF-8").toString();// 请求微信
 
         System.out.println("weixinPost:" + weixinPost);
 
@@ -128,14 +124,14 @@ public class WeChatAppPay {
 
             if ("SUCCESS".equals(unifiedorderResult.getReturn_code())) {
                 // 开始拼接App调起微信的参数
-                SortedMap<Object, Object> wxAppparameters = new TreeMap<Object, Object>();
+                SortedMap<String, Object> wxAppparameters = new TreeMap<String, Object>();
                 wxAppparameters.put("appid", unifiedorderResult.getAppid());
                 wxAppparameters.put("partnerid", unifiedorderResult.getMch_id());
                 wxAppparameters.put("prepayid", unifiedorderResult.getPrepay_id());
                 wxAppparameters.put("package", weixinpayProperties.getWx_package());
                 wxAppparameters.put("noncestr", nonce_str);
                 wxAppparameters.put("timestamp", String.valueOf(new Date().getTime()).substring(0, 10));
-                wxAppparameters.put("sign", WXSignUtils.createSign("UTF-8", wxAppparameters));
+                wxAppparameters.put("sign", WXSignUtils.createSign( wxAppparameters,weixinpayProperties.getKey()));
                 json.setData(wxAppparameters);
                 json.setSuc();
                 return json;
