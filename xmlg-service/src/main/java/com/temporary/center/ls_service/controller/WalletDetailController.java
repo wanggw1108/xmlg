@@ -1,5 +1,6 @@
 package com.temporary.center.ls_service.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.Constant;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
@@ -7,6 +8,7 @@ import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.common.TokenUtil;
+import com.temporary.center.ls_service.dao.WalletDetailMapper;
 import com.temporary.center.ls_service.domain.WalletDetail;
 import com.temporary.center.ls_service.service.LogUserService;
 import com.temporary.center.ls_service.service.WalletDetailService;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +37,7 @@ public class WalletDetailController {
 	private static final Logger logger = LoggerFactory.getLogger(WalletDetailController.class);
 
 	@Autowired
-	private WalletDetailService walletDetailService;
+	private WalletDetailMapper walletDetailService;
 	
 	@Autowired
 	private RedisBean redisBean;
@@ -46,87 +49,39 @@ public class WalletDetailController {
 	/**
 	 * 查询钱包明细列表
 	 * @param token
-	 * @param sign
-	 * @param timeStamp
 	 * @param page
 	 * @param pageSize
 	 * @return
 	 */
-	@RequestMapping(value = "/list.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/list.do", method = RequestMethod.GET)
     @ResponseBody
-	public Json list(String token,String sign,String timeStamp,  String page, String pageSize) {
-		long startTime = System.currentTimeMillis();
-		String uuid=UUID.randomUUID().toString();
-		String title="查询钱包明细,"+uuid;
-		logger.info(title+",list"+Constant.METHOD_BEGIN);
-		
+	public Json list(String token,Integer page, Integer pageSize) {
+		logger.info("查询钱包明细"+Constant.METHOD_BEGIN);
 		Json json=new Json ();
 		try {
-			
-			if(null==page) {
-				page="1";
-			}
-			
-			if(null==pageSize) {
-				pageSize="10";
-			}
-			
-			if(null==token || token.equals("")) {
-				json.setSattusCode(StatusCode.TOKEN_ERROR);
-				return json;
-			}
-			
-			if(null==sign || sign.equals("")) {
-				json.setSattusCode(StatusCode.SIGN_ERROR);
-				return json;
-			}
-			
 			//token验证
 			boolean validateToken = TokenUtil.validateToken(token, redisBean);
 			if(!validateToken) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
-			
-			Long timeStampLong=Long.parseLong(timeStamp);
-	        Date currDate=new Date();
-	        long countTime=currDate.getTime()-timeStampLong;
-	        if(countTime<0 || countTime>Constant.INTERFACE_TIME_OUT) {
-	        	logger.info("时间相差countTime="+countTime);
-	    		json.setSattusCode(StatusCode.TIME_OUT_FIVE_MINUTE);
-	    		return json;
-	        }
-			
-			
-			
-			Map<String,String> allParamsMap=new HashMap<String,String>();
-			allParamsMap.put("token", token);
-			allParamsMap.put("timeStamp", timeStamp);
-			allParamsMap.put("page", page);
-			allParamsMap.put("pageSize", pageSize);
-			
-			String createSign = LoginController.createSign(allParamsMap, false);
-			if(!createSign.equals(sign)) {
-				logger.debug("sign签名={0}", createSign);
-				json.setSattusCode(StatusCode.SIGN_ERROR);
-				return json;
-			}
-			
 			WalletDetail walletDetail=new WalletDetail();
-			
+
 			String userId = redisBean.hget(RedisKey.USER_TOKEN+token,"user_id");
 			if(null==userId) {
 				json.setSattusCode(StatusCode.TOKEN_ERROR);
 				return json;
 			}
+			walletDetail.setCreateby(userId);
+			PageHelper.startPage(page,pageSize);
+			Example example = new Example(WalletDetail.class);
+			Example.Criteria query  = example.createCriteria();
+			query.andEqualTo("user_id",Integer.valueOf(userId));
+			example.setOrderByClause("id desc");
 			
-			walletDetail.setUserid(Integer.valueOf(userId) );
-			walletDetail.setPageSize(Integer.parseInt(pageSize) );
-			walletDetail.setCurr(Integer.parseInt(page));
+			List<WalletDetail> list= walletDetailService.selectByExample(example);
 			
-			List<WalletDetail> list= walletDetailService.list(walletDetail);
-			
-			Long count=walletDetailService.count(walletDetail);
+			int count=walletDetailService.selectCount(walletDetail);
 			
 			Map<String,Object> resultMap=new HashMap<String,Object>();
 			resultMap.put("count", count);
@@ -137,10 +92,6 @@ public class WalletDetailController {
 			e.printStackTrace();
 			json.setSattusCode(StatusCode.PROGRAM_EXCEPTION);
 		}
-		
-		logger.info(title+",list"+Constant.METHOD_END);
-		long endTime = System.currentTimeMillis();
-		logger.info(title+"耗时{0}", endTime-startTime);
 		return json;
 	}
 	
@@ -218,7 +169,7 @@ public class WalletDetailController {
 			
 			walletDetail.setUserid(Integer.valueOf(userId) );
 			
-			Double currAmount=walletDetailService.currAmount(walletDetail);
+			Double currAmount=0.0;
 			 
 			json.setData(currAmount);
 			json.setSuc();
@@ -309,7 +260,7 @@ public class WalletDetailController {
 				return json;
 			}
 			
-			walletDetailService.add(teamData);
+//			walletDetailService.add(teamData);
 			json.setSuc();
 		}catch(Exception e) {
 			e.printStackTrace();

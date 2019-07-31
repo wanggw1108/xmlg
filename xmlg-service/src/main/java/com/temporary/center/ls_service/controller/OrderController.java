@@ -75,7 +75,7 @@ public class OrderController {
             order.setStartDate(recruit.getWorkingStartTime());
             order.setEndDate(recruit.getWorkingEndTime());
             order.setEmployeeId(employeeId);
-            order.setOrderState("0");
+            order.setOrderState(1);//代付款状态
             order.setRecruitId(recruitId);
             order.setUserId(user_id);
             order.setRecruitTitle(recruit.getTitle());
@@ -135,5 +135,17 @@ public class OrderController {
         return null;
 
     }
+
+    @RequestMapping(value="/payCallBack", method = RequestMethod.GET)
+    @ResponseBody
+    public void payCallBack(String token,String orderId){
+
+
+
+
+
+
+    }
+
 
 }

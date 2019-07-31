@@ -22,7 +22,7 @@ public class Order {
     /*订单编号*/
     private String orderId;
     /*订单状态*/
-    private String orderState;
+    private Integer orderState;
     /*雇佣的雇员姓名*/
     private String employeeName;
     /*雇佣的雇员ID*/
@@ -96,11 +96,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public String getOrderState() {
+    public Integer getOrderState() {
         return orderState;
     }
 
-    public void setOrderState(String orderState) {
+    public void setOrderState(Integer orderState) {
         this.orderState = orderState;
     }
 

@@ -5,7 +5,7 @@ import com.temporary.center.ls_service.common.Page;
 import javax.persistence.*;
 import java.util.Date;
 @Table(name="wallet_detail")
-public class WalletDetail extends Page{
+public class WalletDetail{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
