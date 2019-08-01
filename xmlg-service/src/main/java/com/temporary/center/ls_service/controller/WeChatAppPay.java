@@ -6,8 +6,6 @@ import com.temporary.center.ls_common.*;
 import com.temporary.center.ls_service.common.Json;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.dao.OrderMapper;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -17,12 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.CharArrayWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
@@ -75,7 +70,7 @@ public class WeChatAppPay {
 		 */
         String spbill_create_ip; // 用户端实际ip
         int total_fee = (int) (1);
-        spbill_create_ip = "127.0.0.1";// "127.0.0.1";
+        spbill_create_ip = "10.133.37.12";// "127.0.0.1";
         System.out.println("spbill_create_ip===="+spbill_create_ip);
         String notify_url = weixinpayProperties.getNotify_url();
         System.out.println("notify_url是：" + notify_url);

@@ -51,6 +51,11 @@ public class BaseTest {
     @Autowired
     CompanyInfoMapper companyInfoMapper;
 
+    @Autowired
+    WalletDetailMapper walletDetailService;
+    @Autowired
+    WalletMapper walletService;
+
     @Test
     public void dbTest(){
 
@@ -76,10 +81,26 @@ public class BaseTest {
 //        System.out.println(redisBean.lpop("testpush"));
 //        System.out.println(redisBean.lpop("testpush"));
 //        PageHelper.startPage(1,1);
-        CompanyInfo companyInfo=new CompanyInfo();
-        companyInfo.setCreateBy(Long.parseLong("5"));
-        CompanyInfo company = companyInfoMapper.selectOne(companyInfo);
-        System.out.println(company.getCompanyId()+"" +company.getBusinessLicenseUrl());
+//        CompanyInfo companyInfo=new CompanyInfo();
+//        companyInfo.setCreateBy(Long.parseLong("5"));
+//        CompanyInfo company = companyInfoMapper.selectOne(companyInfo);
+//        System.out.println(company.getCompanyId()+"" +company.getBusinessLicenseUrl());
+//
+//        WalletDetail detail = new WalletDetail();
+//        detail.setRemark("123");
+//        detail.setType(1);
+//        detail.setCreatetime(new Date());
+//        detail.setUserid(14);
+//        detail.setReason("123");
+//        detail.setAmount(1.1f);
+//        walletDetailService.insert(detail);
+        Wallet w = new Wallet();
+//        w.setUpdateTime(new Date());
+//        w.setCreateTime(new Date());
+//        w.setAmount(1.1f);
+        w.setCreateBy(14);
+        w = walletService.selectOne(w);
+        System.out.println(w.getAmount());
 
 
 

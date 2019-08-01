@@ -13,7 +13,7 @@ public class WalletDetail{
     @Column(name="user_id")
     private Integer userid;
 
-    private Double amount;
+    private Float amount;
 
     private Integer type;
     @Column(name="create_by")
@@ -23,7 +23,7 @@ public class WalletDetail{
 
     private String remark;
 
-    private String url;
+    private String reason;
 
     public Integer getId() {
         return id;
@@ -41,11 +41,11 @@ public class WalletDetail{
         this.userid = userid;
     }
 
-    public Double getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
@@ -81,11 +81,11 @@ public class WalletDetail{
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public String getUrl() {
-        return url;
+    public String getReason() {
+        return reason;
     }
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

@@ -35,9 +35,7 @@ public class HttpXmlUtils {
             HttpURLConnection conn = (HttpURLConnection) _url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            conn.setRequestProperty("Content-type", "text/xml");
-//            conn.setRequestProperty("Pragma:", "no-cache");
-            conn.setRequestProperty("Cache-Control", "no-cache");
+            conn.setRequestProperty("content-type", "text/xml;charset=utf-8");
             conn.setRequestMethod("POST");
             os = new OutputStreamWriter(conn.getOutputStream());
             os.write(new String(xml.getBytes(charset)));

@@ -38,5 +38,23 @@ public class WeChatPayTest {
         }
 
     }
+    @Test
+    @Description("支付宝支付")
+    public void alipay(){
+
+        String url = "http://localhost:8081/alipay/pay.do";
+//        header.put("Content-Type","application/json");
+        try {
+            HashMap<String,Object> params = new HashMap<>();
+            params.put("token",token);
+            params.put("recruitId",39);
+            params.put("employeeId",14);
+            String resp = HttpUtil.post(url, HttpUtil.buildPostStr(params),header);
+            System.out.println(resp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
