@@ -73,6 +73,7 @@ public class WalletDetailController {
 				return json;
 			}
 			walletDetail.setCreateby(userId);
+			walletDetail.setUserid(Integer.valueOf(userId));
 			PageHelper.startPage(page,pageSize);
 			Example example = new Example(WalletDetail.class);
 			Example.Criteria query  = example.createCriteria();
