@@ -99,6 +99,7 @@ public class ZhiFuBaoController {
 		JSONObject params = new JSONObject();
 		params.put("employeeId",order.getEmployeeId());
 		params.put("userId",order.getUserId());
+		params.put("orderId",orderId);
 		try {
 			model.setPassbackParams(URLEncoder.encode(params.toJSONString(),"utf-8"));
 		} catch (UnsupportedEncodingException e) {
@@ -187,6 +188,9 @@ public class ZhiFuBaoController {
 						walletService.updateByPrimaryKey(wallet);
 					}
 					logger.info("用户钱包已添加余额");
+					int orderId = callbackParams.getIntValue("orderId");
+					Order order = orderService.selectByPrimaryKey(orderId);
+					order.setOrderState(2);//已经支付完成，设置订单状态为进行中
 
 				} catch (Exception e) {
 					logger.error("支付宝回调业务处理报错,params:" + paramsJson, e);

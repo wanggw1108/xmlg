@@ -38,4 +38,23 @@ public class OrderTest {
         }
 
     }
+    @Test
+    @Description("查看订单")
+    public void list(){
+
+        String url = "http://localhost:8081/order/list.do?";
+//        header.put("Content-Type","application/json");
+        try {
+            HashMap<String,Object> params = new HashMap<>();
+            params.put("token",token);
+            params.put("status",1);
+            params.put("crr",1);
+            params.put("pageSize",10);
+            String resp = HttpUtil.send(url+ HttpUtil.buildPostStr(params));
+            System.out.println(resp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -1,9 +1,11 @@
 package com.temporary.center.ls_service.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.temporary.center.ls_common.DateUtil;
 import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_common.RedisKey;
 import com.temporary.center.ls_service.common.Json;
+import com.temporary.center.ls_service.common.PageData;
 import com.temporary.center.ls_service.common.StatusCode;
 import com.temporary.center.ls_service.dao.JoinMapper;
 import com.temporary.center.ls_service.dao.OrderMapper;
@@ -11,6 +13,8 @@ import com.temporary.center.ls_service.dao.RecruitmentInfoMapper;
 import com.temporary.center.ls_service.domain.Join;
 import com.temporary.center.ls_service.domain.Order;
 import com.temporary.center.ls_service.domain.RecruitmentInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tk.mybatis.mapper.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wangguowei
@@ -29,6 +35,8 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/order")
 public class OrderController {
+
+    private Logger logger = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
     RedisBean redisService;
@@ -75,7 +83,7 @@ public class OrderController {
             order.setStartDate(recruit.getWorkingStartTime());
             order.setEndDate(recruit.getWorkingEndTime());
             order.setEmployeeId(employeeId);
-            order.setOrderState(1);//代付款状态
+            order.setOrderState(1);//待付款状态
             order.setRecruitId(recruitId);
             order.setUserId(user_id);
             order.setRecruitTitle(recruit.getTitle());
@@ -133,6 +141,36 @@ public class OrderController {
 
         return null;
 
+    }
+    @RequestMapping(value="/list.do", method = RequestMethod.GET)
+    @ResponseBody
+    public Json list(String token,Integer status,Integer crr,Integer pageSize){
+
+        Json json = new Json();
+        if(!redisService.exists(RedisKey.USER_TOKEN+token)){
+            json.setSattusCode(StatusCode.TOKEN_ERROR);
+            return json;
+        }
+        try {
+            int user_id = Integer.valueOf(redisService.hget(RedisKey.USER_TOKEN+token,"user_id"));
+            PageHelper.startPage(crr,pageSize);
+            Order order = new Order();
+            order.setOrderState(status);
+            order.setUserId(user_id);
+            int cnt = orderService.selectCount(order);
+            List<Order> list = new ArrayList<>();
+            if(cnt>0){
+                list =   orderService.select(order);
+            }
+            PageData pageData = new PageData(list,cnt,crr,pageSize);
+            json.setData(pageData);
+            json.setSuc();
+            return json;
+        }catch (Exception e){
+            logger.error(e.getMessage(),e);
+            json.setSattusCode(StatusCode.FAIL);
+            return json;
+        }
     }
 
     @RequestMapping(value="/payCallBack", method = RequestMethod.GET)
