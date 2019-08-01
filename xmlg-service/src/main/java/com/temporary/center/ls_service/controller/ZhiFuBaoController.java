@@ -92,7 +92,7 @@ public class ZhiFuBaoController {
 		AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 		model.setBody(order.getRecruitTitle());
 		model.setSubject(order.getRecruitTitle());
-		model.setOutTradeNo(System.currentTimeMillis()+"");
+		model.setOutTradeNo(order.getOrderNo());
 		model.setTimeoutExpress("30m");
 		model.setTotalAmount(order.getAmount()+"");//测试情况下，默认0.01
 		model.setProductCode("QUICK_MSECURITY_PAY");
@@ -252,7 +252,7 @@ public class ZhiFuBaoController {
 
 		// 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号，
 		Order order = new Order();
-		order.setOrderId(outTradeNo);
+		order.setOrderNo(outTradeNo);
 		order =orderService.selectOne(order);
 		if (order == null) {
 			throw new AlipayApiException("out_trade_no错误");

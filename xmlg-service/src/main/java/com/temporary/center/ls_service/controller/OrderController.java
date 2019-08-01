@@ -110,11 +110,10 @@ public class OrderController {
                 order.setTotalTime(hours);
                 order.setEmployeeName(join.getUserName());
                 StringBuilder orderId = new StringBuilder();
-                orderId.append("LG")
-                        .append(DateUtil.getyyyyMMddHHmmss())
-                        .append((1000000000+recruitId)+"")
-                        .append((1000000000+employeeId)+"");
-                order.setOrderId(orderId.toString());
+                orderId.append(DateUtil.getyyyyMMddHHmmss())
+                        .append((100000000+recruitId)+"")
+                        .append((100000000+employeeId)+"");
+                order.setOrderNo(orderId.toString());
                 orderService.insert(order);
                 json.setData(order);
                 json.setSuc();

@@ -20,7 +20,7 @@ public class Order {
     /*关联的招聘信息title*/
     private String recruitTitle;
     /*订单编号*/
-    private String orderId;
+    private String orderNo;
     /*订单状态*/
     private Integer orderState;
     /*雇佣的雇员姓名*/
@@ -88,12 +88,12 @@ public class Order {
         this.recruitTitle = recruitTitle;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public Integer getOrderState() {
