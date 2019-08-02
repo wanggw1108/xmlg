@@ -8,9 +8,12 @@ import com.alipay.api.AlipayConstants;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayCodeRecoResult;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.domain.AlipayTradeRefundModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.temporary.center.ls_common.AlipayNotifyParam;
 import com.temporary.center.ls_common.LogUtil;
 import com.temporary.center.ls_common.RedisBean;
@@ -149,54 +152,59 @@ public class ZhiFuBaoController {
 			boolean signVerified = AlipaySignature.rsaCheckV1(params, publicKey, "UTF-8", "RSA2");
 			if (signVerified) {
 				logger.info("支付宝回调签名认证成功");
-				// 按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
-				this.check(params);
-				String trade_status = params.get("trade_status");
-				logger.info("支付结果："+trade_status);
-				if(!"TRADE_SUCCESS".equals(trade_status)){
-					logger.info("交易失败");
-					return "success";
-				}
-				// 处理支付成功逻辑
-				try {
-					//处理业务逻辑
-					//1、生成钱包记录
-					WalletDetail detail = new WalletDetail();
-					detail.setAmount(Float.valueOf(params.get("receipt_amount")));
-					JSONObject callbackParams = JSONObject.parseObject(URLDecoder.decode(params.get("passback_params"),"utf-8"));
-					detail.setCreateby(callbackParams.getString("userId"));
-					detail.setReason("支付宝转入");
-					detail.setUserid(callbackParams.getInteger("userId"));
-					detail.setCreatetime(new Date());
-					detail.setType(1);//1 收入，2 支出
-					detail.setRemark(params.get("out_trade_no"));
-					walletDetailService.insert(detail);
-					logger.info("订单 {} 已产生交易记录",params.get("out_trade_no"));
-					Wallet wallet = new Wallet();
-					wallet.setCreateBy(Integer.valueOf(callbackParams.getInteger("userId")));
-					wallet = walletService.selectOne(wallet);
-					if(wallet==null){
-						wallet = new Wallet();
-						wallet.setCreateBy(callbackParams.getInteger("userId"));
-						wallet.setAmount(Float.valueOf(params.get("receipt_amount")));
-						wallet.setCreateTime(new Date());
-						wallet.setUpdateTime(new Date());
-						walletService.insert(wallet);
-					}else {
-						wallet.setAmount(wallet.getAmount()+Float.valueOf(params.get("receipt_amount")));
-						wallet.setUpdateTime(new Date());
-						walletService.updateByPrimaryKey(wallet);
+				//支付回调与退款回调，分别处理
+				if(!params.containsKey("refund_fee")){
+					// 按照支付结果异步通知中的描述，对支付结果中的业务内容进行1\2\3\4二次校验，校验成功后在response中返回success，校验失败返回failure
+					this.check(params);
+					String trade_status = params.get("trade_status");
+					logger.info("支付结果："+trade_status);
+					if(!"TRADE_SUCCESS".equals(trade_status)){
+						logger.info("交易失败");
+						return "success";
 					}
-					logger.info("用户钱包已添加余额");
-					int orderId = callbackParams.getIntValue("orderId");
-					Order order = orderService.selectByPrimaryKey(orderId);
-					order.setOrderState(2);//已经支付完成，设置订单状态为进行中
+					// 处理支付成功逻辑
+					try {
+						//处理业务逻辑
+						//1、生成钱包记录
+						WalletDetail detail = new WalletDetail();
+						detail.setAmount(Float.valueOf(params.get("receipt_amount")));
+						JSONObject callbackParams = JSONObject.parseObject(URLDecoder.decode(params.get("passback_params"),"utf-8"));
+						detail.setCreateby(callbackParams.getString("userId"));
+						detail.setReason("支付宝转入");
+						detail.setUserid(callbackParams.getInteger("userId"));
+						detail.setCreatetime(new Date());
+						detail.setType(1);//1 收入，2 支出
+						detail.setRemark(params.get("out_trade_no"));
+						detail.setTradeNo(params.get("trade_no"));
+						detail.setOrderNo(params.get("out_trade_no"));
+						walletDetailService.insert(detail);
+						logger.info("订单 {} 已产生交易记录",params.get("out_trade_no"));
+						Wallet wallet = new Wallet();
+						wallet.setCreateBy(Integer.valueOf(callbackParams.getInteger("userId")));
+						wallet = walletService.selectOne(wallet);
+						if(wallet==null){
+							wallet = new Wallet();
+							wallet.setCreateBy(callbackParams.getInteger("userId"));
+							wallet.setAmount(Float.valueOf(params.get("receipt_amount")));
+							wallet.setCreateTime(new Date());
+							wallet.setUpdateTime(new Date());
+							walletService.insert(wallet);
+						}else {
+							wallet.setAmount(wallet.getAmount()+Float.valueOf(params.get("receipt_amount")));
+							wallet.setUpdateTime(new Date());
+							walletService.updateByPrimaryKey(wallet);
+						}
+						logger.info("用户钱包已添加余额");
+						int orderId = callbackParams.getIntValue("orderId");
+						Order order = orderService.selectByPrimaryKey(orderId);
+						order.setOrderState(2);//已经支付完成，设置订单状态为进行中
 
-				} catch (Exception e) {
-					logger.error("支付宝回调业务处理报错,params:" + paramsJson, e);
+					} catch (Exception e) {
+						logger.error("支付宝回调业务处理报错,params:" + paramsJson, e);
+					}
+					// 如果签名验证正确，立即返回success，后续业务另起线程单独处理
+					// 业务处理失败，可查看日志进行补偿，跟支付宝已经没多大关系。
 				}
-				// 如果签名验证正确，立即返回success，后续业务另起线程单独处理
-				// 业务处理失败，可查看日志进行补偿，跟支付宝已经没多大关系。
 				return "success";
 			} else {
 				logger.info("支付宝回调签名认证失败，signVerified=false, paramsJson:{}", paramsJson);
@@ -206,6 +214,42 @@ public class ZhiFuBaoController {
 			logger.error("支付宝回调签名认证失败,paramsJson:{},errorMsg:{}", paramsJson, e.getMessage());
 			return "failure";
 		}
+	}
+
+	/**
+	 * 支付宝退款
+	 * @param orderNo 订单号
+	 * @return
+	 */
+	public boolean alipayRefund(String token,String orderNo) {
+		Order order = new Order();
+		order.setOrderNo(orderNo);
+		order = orderService.selectOne(order);
+		//实例化客户端
+		AlipayClient alipayClient = new DefaultAlipayClient(url, appid, privateKey, "json", "utf-8", publicKey, "RSA2");
+		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest(); //请求对象
+
+		AlipayTradeRefundModel refundModel = new AlipayTradeRefundModel(); //请求实体
+		refundModel.setOutTradeNo(orderNo);
+		refundModel.setRefundAmount(order.getAmount()+"");
+		request.setBizModel(refundModel);//将请求实体添加到请求对象中
+
+		AlipayTradeRefundResponse res = null; //发送退款请求,获得退款结果
+		try {
+			res = alipayClient.execute(request);
+			//判断请求是否发送成功
+			if(res.isSuccess()){
+				System.out.println("退款请求发送成功");
+			}
+			//判断退款是否成功
+			if(res.getFundChange().equals("Y")){
+				System.out.println("退款请求发送成功");
+			}
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	// 将request中的参数转换成Map

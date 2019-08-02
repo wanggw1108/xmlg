@@ -24,6 +24,26 @@ public class WalletDetail{
     private String remark;
 
     private String reason;
+    /*订单号*/
+    private String orderNo;
+    /*第三方支付成功后，返回的第三方交易单号，主要用于发起退款*/
+    private String tradeNo;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getTradeNo() {
+        return tradeNo;
+    }
+
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
+    }
 
     public Integer getId() {
         return id;
