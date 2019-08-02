@@ -41,7 +41,7 @@ public class BaseTest {
     public void dbTest() throws IOException {
         //采集10页数据
         for(int page=1;page<=10;page++){
-            String url = "http://m.maozi33.pw/?m=vod-type-id-5-pg-"+page+".html";
+            String url = "http://m.maozi33.pw/?m=vod-type-id-2-pg-"+page+".html";
             Map<String, String> headers = new HashMap<>();
             headers.put("User-Agent","Mozilla/5.0 (Linux; U; Android 9; zh-cn; MI 8 Build/PKQ1.180729.001) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/71.0.3578.141 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.9.2");
             headers.put("Upgrade-Insecure-Requests","1");
@@ -95,11 +95,11 @@ public class BaseTest {
                     new_video.setImg(img);
                     new_video.setTitle(title);
                     new_video.setTag(span);
-                    new_video.setType("电影/动作");
+                    new_video.setType("电视剧");
                     new_video.setUpdateTime(new Date());
                     new_video.setCreateTime(new Date());
                     videoMapper.insert(new_video);
-                    System.out.println("新的video入库："+video.getTitle());
+                    System.out.println("新的video入库："+new_video.getTitle());
                     for(int j=0;j<list.size();j++){
                         String[] ss = list.get(j).split("\\|");
                         VideoDetail detail = new VideoDetail();
