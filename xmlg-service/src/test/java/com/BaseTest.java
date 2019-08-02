@@ -40,7 +40,7 @@ public class BaseTest {
     @Test
     public void dbTest() throws IOException {
         //采集10页数据
-        for(int page=1;page<=10;page++){
+        for(int page=10;page<=1;page++){
             String url = "http://m.maozi33.pw/?m=vod-type-id-2-pg-"+page+".html";
             Map<String, String> headers = new HashMap<>();
             headers.put("User-Agent","Mozilla/5.0 (Linux; U; Android 9; zh-cn; MI 8 Build/PKQ1.180729.001) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/71.0.3578.141 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.9.2");
@@ -114,6 +114,15 @@ public class BaseTest {
                     Video v = new Video();
                     v.setUrl(u);
                     v = videoMapper.selectOne(v);
+
+                    if(span!=null &&span!=""){
+                        if(!span.equals(v.getTag())){
+                            v.setTag(span);
+                            v.setUpdateTime(new Date());
+                            videoMapper.updateByPrimaryKey(v);
+                            System.out.println("更新video："+v.getTitle());
+                        }
+                    }
                     VideoDetail vd = new VideoDetail();
                     vd.setV_id(v.getId());
                     int detailCount = videoDetailMapper.selectCount(vd);
