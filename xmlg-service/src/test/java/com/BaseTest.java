@@ -2,6 +2,7 @@ package com;
 
 import app.MyApplication;
 import com.github.pagehelper.PageHelper;
+import com.temporary.center.ls_common.HttpUtil;
 import com.temporary.center.ls_common.MD5Utils;
 import com.temporary.center.ls_common.RedisBean;
 import com.temporary.center.ls_service.dao.*;
@@ -9,6 +10,10 @@ import com.temporary.center.ls_service.domain.*;
 import com.temporary.center.ls_service.service.RecruitmentService;
 import net.minidev.json.JSONArray;
 import org.apache.commons.collections.map.HashedMap;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +21,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author wangguowei
@@ -31,77 +34,107 @@ import java.util.Map;
 public class BaseTest {
 
     @Autowired
-    CarouselPictureMapper dao;
+    VideoMapper videoMapper;
     @Autowired
-    TypeWorkMapper typeWorkMapper;
-    @Autowired
-    CurriculumVitaeMapper curriculumVitaeMapper;
-    @Autowired
-    ProjectExperienceMapper projectExperienceMapper;
-
-    @Autowired
-    private RecruitmentInfoMapper recruitmentInfoMapper;
-    @Autowired
-    private UserDao userService;
-    @Autowired
-    RedisBean redisBean;
-
-    @Autowired
-    private RecruitmentService recruitmentService;
-    @Autowired
-    CompanyInfoMapper companyInfoMapper;
-
-    @Autowired
-    WalletDetailMapper walletDetailService;
-    @Autowired
-    WalletMapper walletService;
-
+    VideoDetailMapper videoDetailMapper;
     @Test
-    public void dbTest(){
+    public void dbTest() throws IOException {
+        //采集10页数据
+        for(int page=1;page<=10;page++){
+            String url = "http://m.maozi33.pw/?m=vod-type-id-5-pg-"+page+".html";
+            Map<String, String> headers = new HashMap<>();
+            headers.put("User-Agent","Mozilla/5.0 (Linux; U; Android 9; zh-cn; MI 8 Build/PKQ1.180729.001) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/71.0.3578.141 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.9.2");
+            headers.put("Upgrade-Insecure-Requests","1");
+            headers.put("x-miorigin","b");
+            String resp = HttpUtil.send(url,headers);
+            Document doc = Jsoup.parse(resp);
+            Elements es  =doc.getElementsByClass("vbox");
+            for(Element i:es){
+                Element aEle = i.getElementsByTag("a").get(0);
+                //详情页地址
+                String u = "http://m.maozi33.pw"+aEle.attr("href");
+                //标题
+                String title = aEle.attr("title");
+                System.out.println("标题："+title);
+                //标注：例如：高清，CD等内容
+                String span = aEle.child(1).text();
+                System.out.println("标注："+span);
+                //图片地址
+                String img = aEle.child(0).attr("data-original");
+                System.out.println("图片地址："+img);
+                //进入详情页
+                String detailPage = HttpUtil.send(u,headers);
+                Document docDetail = Jsoup.parse(detailPage);
+                //导演等内容，
+                String dbox = docDetail.getElementsByClass("data").get(0).html();
+                //播放地址
+                Elements tbox_tabs = docDetail.getElementsByClass("list_block show").get(0).getElementsByTag("a");
+                List<String> list = new ArrayList<String>();
+                for(Element t:tbox_tabs){
+                    list.add(t.text()+"|"+"http://m.maozi33.pw"+t.attr("href"));
+                }
+                //剧情介绍
+                String tbox_js = docDetail.getElementsByClass("tbox_js").get(0).html();
+                System.out.println("导演等内容：");
+                System.out.println(dbox);
+                System.out.println("播放地址：");
+                System.out.println(list);
+                System.out.println("剧情介绍：");
+                System.out.println(tbox_js);
+                System.out.println("================================");
 
-//        CarouselPicture user = new CarouselPicture();
-//        user.setSort(5);
-//        dao.insert(user);
-//        System.out.println(user.getId());
-//        PageHelper.startPage(4,1);//分页
-//        Example example = new Example(CarouselPicture.class); //定义对象CarouselPicture
-//        String by="sort";
-//        example.setOrderByClause(by);
-//        Example.Criteria criteria = example.createCriteria();
-//        criteria.andEqualTo("createBy",1);
-//        List<CarouselPicture> pictureList = dao.selectByExample(example);
-//
-//        System.out.println(pictureList.size());
-//        Map<String,Object> queryUser = new HashedMap();
-//        queryUser.put("phone","17318035749");
-//        List<User> userList = userService.queryUserByParams(queryUser);
-//        System.out.println(userList);
-//        System.out.println(redisBean.lpop("testpush"));
-//        redisBean.lpush("testpush","a");
-//        System.out.println(redisBean.lpop("testpush"));
-//        System.out.println(redisBean.lpop("testpush"));
-//        PageHelper.startPage(1,1);
-//        CompanyInfo companyInfo=new CompanyInfo();
-//        companyInfo.setCreateBy(Long.parseLong("5"));
-//        CompanyInfo company = companyInfoMapper.selectOne(companyInfo);
-//        System.out.println(company.getCompanyId()+"" +company.getBusinessLicenseUrl());
-//
-//        WalletDetail detail = new WalletDetail();
-//        detail.setRemark("123");
-//        detail.setType(1);
-//        detail.setCreatetime(new Date());
-//        detail.setUserid(14);
-//        detail.setReason("123");
-//        detail.setAmount(1.1f);
-//        walletDetailService.insert(detail);
-        Wallet w = new Wallet();
-//        w.setUpdateTime(new Date());
-//        w.setCreateTime(new Date());
-//        w.setAmount(1.1f);
-        w.setCreateBy(14);
-        w = walletService.selectOne(w);
-        System.out.println(w.getAmount());
+                Video video = new Video();
+                video.setUrl(u);
+                int count = videoMapper.selectCount(video);
+                if(count==0){
+                    //无重复，入库
+                    Video new_video = new Video();
+                    new_video.setUrl(u);
+                    new_video.setCreateBy(dbox);
+                    new_video.setDetail(tbox_js);
+                    new_video.setImg(img);
+                    new_video.setTitle(title);
+                    new_video.setTag(span);
+                    new_video.setType("电影/动作");
+                    new_video.setUpdateTime(new Date());
+                    new_video.setCreateTime(new Date());
+                    videoMapper.insert(new_video);
+                    System.out.println("新的video入库："+video.getTitle());
+                    for(int j=0;j<list.size();j++){
+                        String[] ss = list.get(j).split("\\|");
+                        VideoDetail detail = new VideoDetail();
+                        detail.setV_id(new_video.getId());
+                        detail.setVideoIndex(ss[0]);
+                        detail.setVideoUrl(ss[1]);
+                        detail.setVideoSort(j);
+                        videoDetailMapper.insert(detail);
+                        System.out.println("新的vidoDetail入库："+detail.getVideoIndex());
+                    }
+                }else {
+                    Video v = new Video();
+                    v.setUrl(u);
+                    v = videoMapper.selectOne(v);
+                    VideoDetail vd = new VideoDetail();
+                    vd.setV_id(v.getId());
+                    int detailCount = videoDetailMapper.selectCount(vd);
+                    if(detailCount<list.size()){
+                        for(int index=list.size()-detailCount;index<list.size();index++){
+                            String[] ss = list.get(index).split("\\|");
+                            VideoDetail detail = new VideoDetail();
+                            detail.setV_id(v.getId());
+                            detail.setVideoIndex(ss[0]);
+                            detail.setVideoUrl(ss[1]);
+                            detail.setVideoSort(index);
+                            videoDetailMapper.insert(detail);
+                            System.out.println("新的vidoDetail入库："+detail.getVideoIndex());
+                        }
+                    }
 
+
+                }
+
+            }
+        }
 
 
     }
