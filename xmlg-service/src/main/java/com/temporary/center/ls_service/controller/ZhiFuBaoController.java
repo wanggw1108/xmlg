@@ -221,10 +221,26 @@ public class ZhiFuBaoController {
 	 * @param orderNo 订单号
 	 * @return
 	 */
-	public boolean alipayRefund(String token,String orderNo) {
+	@RequestMapping(value = "/payback.do", method = RequestMethod.GET)
+	@ResponseBody
+	public Json alipayRefund(String token,String orderNo) {
+		Json json = new Json();
+		logger.info("支付宝网关");
+		if(!redisService.exists(RedisKey.USER_TOKEN+token)){
+			json.setSattusCode(StatusCode.TOKEN_ERROR);
+			return json;
+		}
+
 		Order order = new Order();
 		order.setOrderNo(orderNo);
 		order = orderService.selectOne(order);
+		Wallet wallet = walletService.selectByPrimaryKey(order.getUserId());
+		if(wallet.getAmount()<order.getAmount()){
+			logger.info("余额足，退款失败，用户ID："+order.getUserId());
+			json.setSattusCode(StatusCode.NO_MORE_Amount);
+			return json;
+
+		}
 		//实例化客户端
 		AlipayClient alipayClient = new DefaultAlipayClient(url, appid, privateKey, "json", "utf-8", publicKey, "RSA2");
 		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest(); //请求对象
@@ -239,17 +255,42 @@ public class ZhiFuBaoController {
 			res = alipayClient.execute(request);
 			//判断请求是否发送成功
 			if(res.isSuccess()){
-				System.out.println("退款请求发送成功");
+				logger.info("退款请求发送成功：{}",res.getBody());
 			}
 			//判断退款是否成功
 			if(res.getFundChange().equals("Y")){
-				System.out.println("退款请求发送成功");
+				order.setOrderState(6);
+				order.setUpdateTime(new Date());
+				orderService.updateByPrimaryKey(order);
+				logger.info("退款成功，已变更订单：{} 为退款状态",res.getOutTradeNo());
+				//退款之后，钱包余额扣除
+				wallet.setAmount(wallet.getAmount()-order.getAmount());
+				walletService.updateByPrimaryKey(wallet);
+				logger.info("退款成功，钱包已扣除余额：-{}元 ",order.getAmount());
+				WalletDetail detail = new WalletDetail();
+				detail.setOrderNo(order.getOrderNo());
+				detail.setUserid(order.getUserId());
+				detail.setAmount(Float.valueOf("-"+order.getAmount()));
+				detail.setReason("退款");
+				detail.setRemark("出账");
+				detail.setTradeNo(res.getTradeNo());
+				detail.setCreateby(order.getUserId()+"");
+				detail.setCreatetime(new Date());
+				walletDetailService.insert(detail);
+				logger.info("退款成功，生成交易记录：{}",order.getUserId());
+
+
+
+				json.setSuc();
+				return json;
+			}else {
+				logger.info("退款失败，订单：{} ",res.getBody());
 			}
 		} catch (AlipayApiException e) {
-			e.printStackTrace();
+			logger.info("退款异常，订单：{} ",res.getOutTradeNo());
 		}
-
-		return false;
+		json.setSattusCode(StatusCode.PAY_BACK_Error);
+		return json;
 	}
 
 	// 将request中的参数转换成Map

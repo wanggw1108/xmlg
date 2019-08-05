@@ -45,7 +45,9 @@ public enum StatusCode {
 	EXIST_DATA("802","数据已存在"),
 	ThirdID_ERROR("803","三方ID错误"),
 	NOT_CARD_AUTH("804","请先进行实名认证"),
-	Create_Order_Error("805","创建订单失败");
+	Create_Order_Error("805","创建订单失败"),
+	PAY_BACK_Error("806","退款失败"),
+	NO_MORE_Amount("807","余额不足，退款失败");
 
 
 	private String code;
