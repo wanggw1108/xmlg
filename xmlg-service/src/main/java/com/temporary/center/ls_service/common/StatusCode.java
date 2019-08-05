@@ -47,7 +47,8 @@ public enum StatusCode {
 	NOT_CARD_AUTH("804","请先进行实名认证"),
 	Create_Order_Error("805","创建订单失败"),
 	PAY_BACK_Error("806","退款失败"),
-	NO_MORE_Amount("807","余额不足，退款失败");
+	NO_MORE_Amount("807","余额不足，退款失败"),
+	TRANSFER_ERROR("807","提现失败");
 
 
 	private String code;
