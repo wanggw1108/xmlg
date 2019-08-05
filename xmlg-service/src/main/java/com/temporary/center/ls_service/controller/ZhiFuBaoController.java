@@ -194,10 +194,14 @@ public class ZhiFuBaoController {
 							wallet.setUpdateTime(new Date());
 							walletService.updateByPrimaryKey(wallet);
 						}
-						logger.info("用户钱包已添加余额");
+						logger.info("用户钱包已添加余额:"+wallet.getAmount());
 						int orderId = callbackParams.getIntValue("orderId");
 						Order order = orderService.selectByPrimaryKey(orderId);
 						order.setOrderState(2);//已经支付完成，设置订单状态为进行中
+						order.setPayType("alipay");
+						orderService.updateByPrimaryKey(order);
+						logger.info("变更订单状态为已支付");
+
 
 					} catch (Exception e) {
 						logger.error("支付宝回调业务处理报错,params:" + paramsJson, e);

@@ -56,6 +56,15 @@ public class Order {
     private Date createTime;
     private Date updateTime;
 
+    private String payType;
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
 
     public Integer getId() {
         return id;
