@@ -149,7 +149,7 @@ public class ZhiFuBaoController {
 		logger.info("支付宝回调，{}", paramsJson);
 		try {
 			// 调用SDK验证签名
-			boolean signVerified = AlipaySignature.rsaCheckV1(params, publicKey, "UTF-8", "RSA2");
+			boolean signVerified = AlipaySignature.rsaCheckV2(params, publicKey, "UTF-8", "RSA2");
 			if (signVerified) {
 				logger.info("支付宝回调签名认证成功");
 				//支付回调与退款回调，分别处理
