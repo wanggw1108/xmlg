@@ -144,12 +144,27 @@ public class ZhiFuBaoController {
 	@RequestMapping(value = "/callback.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String callback(HttpServletRequest request) {
-		Map<String, String> params = convertRequestParamsToMap(request); // 将异步通知中收到的待验证所有参数都存放到map中
-		String paramsJson = JSON.toJSONString(params);
-		logger.info("支付宝回调，{}", paramsJson);
+		Map<String, String> params= new HashMap<>();
+
+		Map requestParams = request.getParameterMap();
+		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for(int i = 0; i<values.length;i++){
+				valueStr = (i==values.length-1)?valueStr+values[i]:valueStr+values[i]+",";
+			}
+			params.put(name,valueStr);
+		}
+
+		logger.info("支付宝回调, sign:{},trade_status:{},参数:{}",params.get("sign"),params.get("trade_status"),params.toString());
+
+		//!!! 验证回调的正确性，是不是支付宝发了，而且还要避免重复通知
+
+		params.remove("sign_type");
 		try {
 			// 调用SDK验证签名
-			boolean signVerified = AlipaySignature.rsaCheckV2(params, publicKey, "UTF-8", "RSA2");
+			boolean signVerified = AlipaySignature.rsaCheckV2(params, publicKey, "utf-8", "RSA2");
 			if (signVerified) {
 				logger.info("支付宝回调签名认证成功");
 				//支付回调与退款回调，分别处理
@@ -204,18 +219,18 @@ public class ZhiFuBaoController {
 
 
 					} catch (Exception e) {
-						logger.error("支付宝回调业务处理报错,params:" + paramsJson, e);
+						logger.error("支付宝回调业务处理报错,params:" + params, e);
 					}
 					// 如果签名验证正确，立即返回success，后续业务另起线程单独处理
 					// 业务处理失败，可查看日志进行补偿，跟支付宝已经没多大关系。
 				}
 				return "success";
 			} else {
-				logger.info("支付宝回调签名认证失败，signVerified=false, paramsJson:{}", paramsJson);
+				logger.info("支付宝回调签名认证失败，signVerified=false, paramsJson:{}", params);
 				return "failure";
 			}
 		} catch (AlipayApiException e) {
-			logger.error("支付宝回调签名认证失败,paramsJson:{},errorMsg:{}", paramsJson, e.getMessage());
+			logger.error("支付宝回调签名认证失败,paramsJson:{},errorMsg:{}", params, e.getMessage());
 			return "failure";
 		}
 	}
